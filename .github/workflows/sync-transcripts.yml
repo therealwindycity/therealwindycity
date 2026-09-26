@@ -2,7 +2,7 @@ name: Sync new meeting transcripts
 
 on:
   schedule:
-    - cron: "0 9 * * 1"  # Mondays 09:00 UTC
+    - cron: "0 9 * * *"  # daily 09:00 UTC
   workflow_dispatch:  # manual "Run workflow" button
 
 permissions:
