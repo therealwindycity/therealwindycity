@@ -135,6 +135,7 @@ Why this exists: the City of Cheyenne posts meeting *videos* to YouTube and minu
 
 - **Source:** English captions on the City of Cheyenne's official YouTube channel (`@TheCityofCheyenne`), downloaded with [yt-dlp](https://github.com/yt-dlp/yt-dlp). Human-uploaded subtitles are used where present; otherwise YouTube's auto-generated captions.
 - **Processing** (`scripts/fetch_transcripts.py`): repeated rolling-caption windows are de-duplicated, cues are grouped into paragraphs, and each paragraph is stamped `[HH:MM:SS]`. **Wording is unchanged.**
+- **Cleanup sidecars** (`scripts/stitch_transcripts.py` + `tools/stitch/`): optional second pass using the stitching/correction toolchain ported from `bartimoussmith-oss/therealwindycity` — caption stitching plus glossary correction of names/places/ordinances. Originals are never modified; corrections land in reviewed `.clean.md` + `.changes.json` sidecars (see `stitch_report.md`).
 - **Catalog:** [`meetings.json`](meetings.json) lists every video ID, date, body, and file path — machine-readable for researchers and AI tools.
 - **Not included:** closed-door executive sessions (e.g. the early-2026 fire-negotiation specials), which have no public video, and CTAC "Fireside Chat" interviews, which are not public meetings. Also missing: the 2026-06-18 Board of Adjustment video has no caption track on YouTube, so no transcript could be produced unless the city adds one.
 
@@ -144,4 +145,4 @@ Auto-generated captions mis-transcribe words and names. Timestamps let you verif
 
 ## License
 
-Transcript text: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public domain dedication). Scripts: MIT. Video remains © City of Cheyenne / YouTube.
+Transcript text: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) (public domain dedication). Scripts: MIT — except `tools/stitch/` (ported from `bartimoussmith-oss/therealwindycity`, reproduced with attribution; see `tools/stitch/README.md`). Video remains © City of Cheyenne / YouTube.
