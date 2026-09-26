@@ -108,7 +108,7 @@ Why this exists: the City of Cheyenne posts meeting *videos* to YouTube and minu
 | 2026-02-19 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=YZp8nOWtFsk) | [board-of-adjustment/2026-02-19-board-of-adjustment.md](board-of-adjustment/2026-02-19-board-of-adjustment.md) |
 | 2026-04-16 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=dp7BxPMiBc8) | [board-of-adjustment/2026-04-16-board-of-adjustment.md](board-of-adjustment/2026-04-16-board-of-adjustment.md) |
 | 2026-05-21 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=klmSqd148Og) | [board-of-adjustment/2026-05-21-board-of-adjustment.md](board-of-adjustment/2026-05-21-board-of-adjustment.md) |
-| 2026-06-18 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=c-rdM6D4RMo) | [board-of-adjustment/2026-06-18-board-of-adjustment.md](board-of-adjustment/2026-06-18-board-of-adjustment.md) |
+| 2026-06-18 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=c-rdM6D4RMo) | *no captions on file — transcript unavailable* |
 | 2026-06-25 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=FnQgytLIkTY) | [board-of-adjustment/2026-06-25-board-of-adjustment.md](board-of-adjustment/2026-06-25-board-of-adjustment.md) |
 | 2026-07-16 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=fNwLJO6tX4g) | [board-of-adjustment/2026-07-16-board-of-adjustment.md](board-of-adjustment/2026-07-16-board-of-adjustment.md) |
 
