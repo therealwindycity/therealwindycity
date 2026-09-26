@@ -137,6 +137,7 @@ def download_captions(ytid):
     existing = sorted(RAW.glob(ytid + ".*.vtt"))
     if existing:
         return existing[0], "English captions (previously downloaded)"
+    last_err = ""
     for flag, kind in (("--write-subs", "Human-uploaded English subtitles"),
                        ("--write-auto-subs", "English (auto-generated)")):
         cmd = [
@@ -147,10 +148,17 @@ def download_captions(ytid):
             "-o", str(RAW / "%(id)s.%(ext)s"), flag,
             "https://www.youtube.com/watch?v=" + ytid,
         ]
-        subprocess.run(cmd, capture_output=True)
+        r = subprocess.run(cmd, capture_output=True, text=True)
         matches = sorted(RAW.glob(ytid + ".*.vtt"))
         if matches:
             return matches[0], kind
+        for line in r.stderr.splitlines():
+            if line.strip():
+                last_err = line.strip()[-300:]
+    # Surface yt-dlp's final error so Actions logs are diagnosable.
+    # Safe: yt-dlp never echoes cookie values, only ERROR summaries.
+    if last_err:
+        print("  yt-dlp: %s" % last_err, flush=True)
     return None, None
 
 

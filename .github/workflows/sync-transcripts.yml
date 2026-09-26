@@ -29,7 +29,9 @@ jobs:
           python-version: "3.13"
 
       - name: Set up Deno (YouTube challenge solver)
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x  # v1.x cannot run the ejs:github challenge solver reliably
 
       - name: Install yt-dlp
         run: pip install yt-dlp
@@ -43,6 +45,14 @@ jobs:
           else
             printf '%s' "$YT_COOKIES" > cookies.txt
             chmod 600 cookies.txt
+            # Validate format (counts only — values never touch the log).
+            LINES=$(grep -c -v -e '^#' -e '^$' cookies.txt || true)
+            YT=$(grep -c 'youtube\.com' cookies.txt || true)
+            echo "cookies.txt: $LINES cookie line(s), $YT youtube.com line(s)"
+            if [ "$LINES" -lt 5 ] || [ "$YT" -lt 1 ]; then
+              echo "::error::YOUTUBE_COOKIES secret is malformed (expect a full Netscape cookies.txt export with youtube.com entries). Re-export from a logged-in YouTube session and update the secret."
+              exit 1
+            fi
           fi
 
       - name: Sync new meetings
