@@ -77,13 +77,13 @@ Why this exists: the City of Cheyenne posts meeting *videos* to YouTube and minu
 
 | Date | Meeting | Video | Transcript |
 |---|---|---|---|
+| 2026 | Cheyenne Data Center Panel | [▶](https://www.youtube.com/watch?v=Hq26nwpjs2k) | [work-sessions/2026-data-center-panel.md](work-sessions/2026-data-center-panel.md) |
 | 2026-01-14 | Committee of the Whole | [▶](https://www.youtube.com/watch?v=tUTtHJp87Iw) | [work-sessions/2026-01-14-committee-of-the-whole.md](work-sessions/2026-01-14-committee-of-the-whole.md) |
 | 2026-01-15 | City Council Goal Setting 2026 | [▶](https://www.youtube.com/watch?v=Ro4BGPNnMMM) | [work-sessions/2026-01-15-goal-setting.md](work-sessions/2026-01-15-goal-setting.md) |
-| 2026-01-30 | Work Session: 6th Penny Projects — Municipal Building Renovation | [▶](https://www.youtube.com/watch?v=uxdbgW5oXIE) | [work-sessions/2026-01-30-6th-penny-municipal-building.md](work-sessions/2026-01-30-6th-penny-municipal-building.md) |
+| 2026-01-30 | 6th Penny Projects — Municipal Building Renovation | [▶](https://www.youtube.com/watch?v=uxdbgW5oXIE) | [work-sessions/2026-01-30-6th-penny-municipal-building.md](work-sessions/2026-01-30-6th-penny-municipal-building.md) |
 | 2026-07-29 | 2026 Goal Setting Review | [▶](https://www.youtube.com/watch?v=CNvVfCztL_c) | [work-sessions/2026-07-29-goal-setting-review.md](work-sessions/2026-07-29-goal-setting-review.md) |
-| 2026-08-21 | Work Session: Urban Farm UDC Updates | [▶](https://www.youtube.com/watch?v=kAPVTM1oJTo) | [work-sessions/2026-08-21-urban-farm-udc.md](work-sessions/2026-08-21-urban-farm-udc.md) |
+| 2026-08-21 | Urban Farm Unified Development Code Updates | [▶](https://www.youtube.com/watch?v=kAPVTM1oJTo) | [work-sessions/2026-08-21-urban-farm-udc.md](work-sessions/2026-08-21-urban-farm-udc.md) |
 | 2026-08-28 | Cox Ranch Work Session | [▶](https://www.youtube.com/watch?v=MG6Zaw7ATGA) | [work-sessions/2026-08-28-cox-work-session.md](work-sessions/2026-08-28-cox-work-session.md) |
-| 2026 | Cheyenne Data Center Panel | [▶](https://www.youtube.com/watch?v=Hq26nwpjs2k) | [work-sessions/2026-data-center-panel.md](work-sessions/2026-data-center-panel.md) |
 
 ### Planning Commission
 
@@ -108,7 +108,7 @@ Why this exists: the City of Cheyenne posts meeting *videos* to YouTube and minu
 | 2026-02-19 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=YZp8nOWtFsk) | [board-of-adjustment/2026-02-19-board-of-adjustment.md](board-of-adjustment/2026-02-19-board-of-adjustment.md) |
 | 2026-04-16 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=dp7BxPMiBc8) | [board-of-adjustment/2026-04-16-board-of-adjustment.md](board-of-adjustment/2026-04-16-board-of-adjustment.md) |
 | 2026-05-21 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=klmSqd148Og) | [board-of-adjustment/2026-05-21-board-of-adjustment.md](board-of-adjustment/2026-05-21-board-of-adjustment.md) |
-| 2026-06-18 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=c-rdM6D4RMo) | *no captions on file — city never published a caption track* |
+| 2026-06-18 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=c-rdM6D4RMo) | [board-of-adjustment/2026-06-18-board-of-adjustment.md](board-of-adjustment/2026-06-18-board-of-adjustment.md) |
 | 2026-06-25 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=FnQgytLIkTY) | [board-of-adjustment/2026-06-25-board-of-adjustment.md](board-of-adjustment/2026-06-25-board-of-adjustment.md) |
 | 2026-07-16 | Board of Adjustment | [▶](https://www.youtube.com/watch?v=fNwLJO6tX4g) | [board-of-adjustment/2026-07-16-board-of-adjustment.md](board-of-adjustment/2026-07-16-board-of-adjustment.md) |
 

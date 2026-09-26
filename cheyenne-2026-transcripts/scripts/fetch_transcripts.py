@@ -192,8 +192,11 @@ def main():
     done = 0
     for n, entry in enumerate(catalog, 1):
         ytid = entry["youtube_id"]
-        dest = ROOT / entry["file"]
+        dest = ROOT / entry["file"] if entry.get("file") else None
         tag = "%d/%d %s %s" % (n, len(catalog), entry["date"], ytid)
+        if dest is None:
+            print(tag + " unavailable (%s), skip" % entry.get("unavailable", "no file"), flush=True)
+            continue
         if dest.exists() and not refresh:
             print(tag + " exists, skip", flush=True)
             done += 1
