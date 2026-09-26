@@ -48,9 +48,14 @@ jobs:
             # Validate format (counts only — values never touch the log).
             LINES=$(grep -c -v -e '^#' -e '^$' cookies.txt || true)
             YT=$(grep -c 'youtube\.com' cookies.txt || true)
-            echo "cookies.txt: $LINES cookie line(s), $YT youtube.com line(s)"
+            SESS=$(grep -c -P '\t(LOGIN_INFO|SID|__Secure-3PSID)\t' cookies.txt || true)
+            echo "cookies.txt: $LINES cookie line(s), $YT youtube.com line(s), $SESS session cookie(s)"
             if [ "$LINES" -lt 5 ] || [ "$YT" -lt 1 ]; then
               echo "::error::YOUTUBE_COOKIES secret is malformed (expect a full Netscape cookies.txt export with youtube.com entries). Re-export from a logged-in YouTube session and update the secret."
+              exit 1
+            fi
+            if [ "$SESS" -lt 1 ]; then
+              echo "::error::YOUTUBE_COOKIES has no session cookies — it was exported while LOGGED OUT of YouTube. Log in at youtube.com (avatar visible), re-export, and update the secret."
               exit 1
             fi
           fi
