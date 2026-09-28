@@ -1,7 +1,0 @@
-# NEVER commit browser cookies or intermediate files
-cookies.txt
-raw/
-failed.json
-__pycache__/
-*.pyc
-.venv/
