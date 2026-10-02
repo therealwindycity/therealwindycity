@@ -1,6 +1,6 @@
 # Phase 6 — source access and recording status
 
-**Checked:** 2026-10-02. **No new source clips or edited/rendered videos were produced in this pass.** The nine pre-existing renders, bundled in [`existing-video-delivery.zip`](existing-video-delivery.zip) with provenance notes in [`available-existing-videos/README.md`](available-existing-videos/README.md), remain the only video outputs available in this pass.
+**Checked:** 2026-10-02. **No new source clips or local edited/rendered videos were produced in this pass.** The nine pre-existing renders are bundled in [`existing-video-delivery.zip`](existing-video-delivery.zip), with provenance notes in [`available-existing-videos/README.md`](available-existing-videos/README.md). Three additional externally hosted rendered cuts analogous to requested rows 1, 3, and 4 were found in a related public repository; their links, hashes, limited checks, and evidentiary gaps are recorded in [`phase-06-external-render-inventory.md`](phase-06-external-render-inventory.md). Those external cuts are not in this checkout and do **not** meet the source, caption-sidecar, EDL, and full audiovisual-QA requirements for completed deliverables.
 
 ## Download attempt
 
