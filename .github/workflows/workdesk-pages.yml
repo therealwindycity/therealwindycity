@@ -1,0 +1,75 @@
+name: workdesk-pages
+
+# Publishes the WorkDesk app (workdesk/) as the GitHub Pages site for this repo,
+# and — because Pages can only have one source — also republishes the existing
+# static civic ledger (public/) alongside it under /ledger/ so turning Pages on
+# for WorkDesk takes nothing away from the civic build.
+#
+# Site layout once this has run:
+#   https://<org>.github.io/<repo>/            -> WorkDesk (workdesk/index.html)
+#   https://<org>.github.io/<repo>/ledger/     -> civic ledger (public/index.html)
+#   https://<org>.github.io/<repo>/ledger/feed.xml
+#
+# ADDITIVE: this file only creates a Pages artifact from paths that already
+# exist. It does not touch engine/, data/, the Streamlit twins, or the civic
+# workflows.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workdesk/**'
+      - 'public/**'
+      - '.github/workflows/workdesk-pages.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble the Pages artifact
+        run: |
+          set -euo pipefail
+          rm -rf _site && mkdir -p _site
+          # WorkDesk is the site root
+          cp -r workdesk/. _site/
+          # the civic ledger keeps a home under /ledger/
+          if [ -d public ]; then
+            mkdir -p _site/ledger
+            cp -r public/. _site/ledger/
+          fi
+          # WorkDesk must never be the thing that 404s
+          test -f _site/index.html || { echo "_site/index.html missing"; exit 1; }
+          # dev-only material stays out of the published site
+          rm -rf _site/tests _site/node_modules
+          # no secrets, no stray build output
+          find _site -name '.DS_Store' -delete || true
+          echo "artifact contents:"; find _site -maxdepth 2 -type f | head -40
+          du -sh _site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,124 @@
+name: workdesk-poll
+
+# Pulls work orders from the OFFICIAL Field Nation / WorkMarket APIs and commits
+# workdesk/data/feed.json, which the WorkDesk board reads automatically.
+#
+# IMPORTANT — read workdesk/worker/poll.py's docstring before expecting magic.
+# Neither platform has a provider-side "show me available work" API:
+#   • Field Nation's REST API is the *Client API*: it needs a Buyer account plus
+#     a signed integration contract, and it only exposes work orders that buyer
+#     posted.
+#   • WorkMarket's Open API belongs to the company tenant managing contractors.
+# So this workflow is DORMANT BY DEFAULT. With no secrets set it logs what is
+# missing and exits 0 (green run, nothing committed). Your job hunt keeps being
+# fed by the Sidekick userscript, which needs no keys at all.
+#
+# To wake it up, add these repo secrets (Settings → Secrets and variables →
+# Actions). Add only the pair you actually hold; the poller skips the other:
+#
+#   Field Nation (from your integration contract):
+#     FIELD_NATION_CLIENT_ID
+#     FIELD_NATION_CLIENT_SECRET
+#     FIELD_NATION_USERNAME
+#     FIELD_NATION_PASSWORD
+#     FIELD_NATION_BASE_URL        optional; defaults to the production host.
+#                                  Set https://api-sandbox.fndev.net/api/rest/v2
+#                                  to develop against the sandbox.
+#   WorkMarket (from developer.workmarket.com for your tenant):
+#     WORKMARKET_TOKEN
+#     WORKMARKET_SECRET
+#     WORKMARKET_BASE_URL          optional
+#     WORKMARKET_LIST_PATH         optional; tenants differ by vintage
+#     WORKMARKET_DETAIL_PATH       optional
+#
+# Credentials are only ever read here, inside the runner. They are never written
+# to a committed file, and the committed feed carries order data only.
+
+on:
+  schedule:
+    - cron: "23 */4 * * *"    # every 4 hours, offset off the civic cycle at :17
+  workflow_dispatch:
+    inputs:
+      sandbox:
+        description: "Use Field Nation's sandbox instead of production"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: workdesk-poll
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Self-test the poller (no credentials, no network)
+        run: python3 -u workdesk/worker/poll.py selftest
+
+      - name: Report which credentials are present
+        env:
+          FIELD_NATION_CLIENT_ID: ${{ secrets.FIELD_NATION_CLIENT_ID }}
+          FIELD_NATION_CLIENT_SECRET: ${{ secrets.FIELD_NATION_CLIENT_SECRET }}
+          FIELD_NATION_USERNAME: ${{ secrets.FIELD_NATION_USERNAME }}
+          FIELD_NATION_PASSWORD: ${{ secrets.FIELD_NATION_PASSWORD }}
+          WORKMARKET_TOKEN: ${{ secrets.WORKMARKET_TOKEN }}
+          WORKMARKET_SECRET: ${{ secrets.WORKMARKET_SECRET }}
+        run: python3 -u workdesk/worker/poll.py check
+
+      - name: Poll the APIs
+        env:
+          FIELD_NATION_CLIENT_ID: ${{ secrets.FIELD_NATION_CLIENT_ID }}
+          FIELD_NATION_CLIENT_SECRET: ${{ secrets.FIELD_NATION_CLIENT_SECRET }}
+          FIELD_NATION_USERNAME: ${{ secrets.FIELD_NATION_USERNAME }}
+          FIELD_NATION_PASSWORD: ${{ secrets.FIELD_NATION_PASSWORD }}
+          FIELD_NATION_BASE_URL: ${{ secrets.FIELD_NATION_BASE_URL }}
+          WORKMARKET_TOKEN: ${{ secrets.WORKMARKET_TOKEN }}
+          WORKMARKET_SECRET: ${{ secrets.WORKMARKET_SECRET }}
+          WORKMARKET_BASE_URL: ${{ secrets.WORKMARKET_BASE_URL }}
+          WORKMARKET_LIST_PATH: ${{ secrets.WORKMARKET_LIST_PATH }}
+          WORKMARKET_DETAIL_PATH: ${{ secrets.WORKMARKET_DETAIL_PATH }}
+        run: |
+          ARGS="once --limit 200"
+          if [ "${{ inputs.sandbox }}" = "true" ]; then ARGS="$ARGS --sandbox"; fi
+          python3 -u workdesk/worker/poll.py $ARGS
+
+      - name: Commit the feed if it changed
+        run: |
+          git config user.name "workdesk-bot"
+          git config user.email "workdesk@localhost"
+          git add workdesk/data/feed.json
+          if git diff --cached --quiet; then
+            echo "feed unchanged — no new work orders this cycle"
+          else
+            COUNT=$(python3 -c "import json;print(json.load(open('workdesk/data/feed.json'))['count'])" 2>/dev/null || echo "?")
+            git commit -m "workdesk feed: ${COUNT} orders from official APIs"
+            git push
+          fi
+
+      # NB: the `secrets` context is not available in a step-level `if:` — using it
+      # there makes the whole workflow fail to parse. The secret is injected as env
+      # and tested in the shell instead, which also keeps the step green-and-skipped
+      # when NTFY_TOPIC is not set.
+      - name: Optional phone push via ntfy.sh (set repo secret NTFY_TOPIC)
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          if [ -z "${NTFY_TOPIC:-}" ]; then
+            echo "NTFY_TOPIC not set — skipping the optional phone push"
+            exit 0
+          fi
+          COUNT=$(python3 -c "import json;print(json.load(open('workdesk/data/feed.json'))['count'])" 2>/dev/null || echo 0)
+          if [ "$COUNT" -gt 0 ] 2>/dev/null; then
+            curl -fsS -H "Title: WorkDesk feed refreshed" -H "Tags: zap" \
+              -d "${COUNT} work orders available from the API feed" \
+              "https://ntfy.sh/${NTFY_TOPIC}" || echo "ntfy push failed (non-fatal)"
+          fi
