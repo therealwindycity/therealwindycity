@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WorkDesk — setup guide</title>
+<meta name="description" content="How to connect Field Nation and WorkMarket to WorkDesk, step by step, including why there is no API key to enter.">
+<link rel="stylesheet" href="../assets/workdesk.css">
+<style>
+  /* Doc page only — the app's own stylesheet supplies the theme variables. */
+  body { background: var(--bg, #0e1116); color: var(--fg, #e6e9ef); margin: 0;
+         font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .doc { max-width: 860px; margin: 0 auto; padding: 28px 20px 90px; }
+  .doc-top { display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+             padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,.12); margin-bottom: 26px; }
+  .doc-top .mark { font-size: 22px; }
+  .doc-top h1 { font-size: 19px; margin: 0; letter-spacing: .2px; }
+  .doc-top .spacer { flex: 1; }
+  .doc-top a { color: var(--amber, #ffb020); text-decoration: none; font-weight: 600; font-size: 14px; }
+  .doc-top a:hover { text-decoration: underline; }
+  .toc { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+         border-radius: 12px; padding: 14px 18px; margin-bottom: 30px; }
+  .toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; margin: 0 0 8px;
+            color: rgba(230,233,239,.55); }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 26px; }
+  .toc li { margin: 3px 0; break-inside: avoid; font-size: 14px; }
+  .toc a { color: var(--fg, #e6e9ef); text-decoration: none; }
+  .toc a:hover { color: var(--amber, #ffb020); text-decoration: underline; }
+  section { margin-bottom: 42px; scroll-margin-top: 20px; }
+  h2.sec { font-size: 23px; margin: 0 0 4px; padding-top: 6px; }
+  h3 { font-size: 17px; margin: 26px 0 6px; }
+  .lede { color: rgba(230,233,239,.68); margin: 0 0 18px; font-size: 15px; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+  code, kbd, pre { font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace); }
+  code { background: rgba(255,255,255,.09); padding: 1px 6px; border-radius: 5px; font-size: 13.5px; }
+  kbd { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+        border-bottom-width: 2px; border-radius: 5px; padding: 1px 7px; font-size: 12.5px; }
+  pre { background: #080a0e; border: 1px solid rgba(255,255,255,.12); border-radius: 10px;
+        padding: 13px 15px; overflow-x: auto; font-size: 13px; line-height: 1.55; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.1); vertical-align: top; }
+  th { color: rgba(230,233,239,.6); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .6px; }
+  .callout { border-radius: 12px; padding: 14px 17px; margin: 18px 0; border: 1px solid; }
+  .callout h4 { margin: 0 0 6px; font-size: 14.5px; }
+  .callout p { margin: 6px 0; font-size: 14.5px; }
+  .callout.warn { background: rgba(255,176,32,.09); border-color: rgba(255,176,32,.4); }
+  .callout.warn h4 { color: var(--amber, #ffb020); }
+  .callout.stop { background: rgba(232,90,90,.09); border-color: rgba(232,90,90,.4); }
+  .callout.stop h4 { color: #ff8f8f; }
+  .callout.ok   { background: rgba(77,212,172,.08); border-color: rgba(77,212,172,.35); }
+  .callout.ok h4 { color: var(--green, #4dd4ac); }
+  .callout.info { background: rgba(47,125,209,.09); border-color: rgba(47,125,209,.4); }
+  .callout.info h4 { color: #7fb6ea; }
+  .step { display: flex; gap: 14px; margin: 20px 0; }
+  .step .n { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--amber, #ffb020);
+             color: #1a1206; font-weight: 800; display: flex; align-items: center; justify-content: center;
+             font-size: 15px; }
+  .step .b { flex: 1; min-width: 0; }
+  .step .b h3 { margin: 3px 0 6px; }
+  .fn { color: #7fb6ea; font-weight: 600; }
+  .wm { color: #f0a177; font-weight: 600; }
+  .doc-foot { border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px; margin-top: 40px;
+              color: rgba(230,233,239,.55); font-size: 13.5px; }
+  .doc-foot a { color: var(--amber, #ffb020); }
+  a { color: #7fb6ea; }
+  @media (max-width: 640px) { .toc ol { columns: 1; } .doc { padding: 18px 14px 70px; } }
+  @media print { body { background: #fff; color: #111; } .doc-top, .toc { display: none; }
+                 .callout { border-color: #999; background: #f6f6f6; } pre { background: #f6f6f6; } }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-top">
+    <span class="mark">⚡</span>
+    <h1>WorkDesk — setup guide</h1>
+    <span class="spacer"></span>
+    <a href="../index.html">← back to the board</a>
+  </div>
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#what-this-is">What WorkDesk actually is</a></li>
+      <li><a href="#honest-limits">The honest limits</a></li>
+      <li><a href="#sidekick">1 · Install the Sidekick</a></li>
+      <li><a href="#profile">2 · Set your base &amp; pay floor</a></li>
+      <li><a href="#first-data">3 · Get your first real orders</a></li>
+      <li><a href="#pitch">4 · Write your pitch once</a></li>
+      <li><a href="#apply">5 · Apply (you always press submit)</a></li>
+      <li><a href="#relay">Syncing between devices</a></li>
+      <li><a href="#api-poller">The API poller (and why it is off)</a></li>
+      <li><a href="#notifications">Phone notifications</a></li>
+      <li><a href="#keyboard">Keyboard</a></li>
+      <li><a href="#privacy">Privacy &amp; credentials</a></li>
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+      <li><a href="#own-repo">Moving WorkDesk to your own repo</a></li>
+    </ol>
+  </nav>
+
+  <section id="what-this-is">
+    <h2 class="sec">What WorkDesk actually is</h2>
+    <p class="lede">One ranked board for the work you can actually take, fed from the two platforms you already use.</p>
+    <p>WorkDesk merges <span class="fn">Field Nation</span> and <span class="wm">WorkMarket</span> listings into a single feed,
+       scores each one against <em>your</em> base location, pay floor, skills and radius, and keeps track of what you did with it —
+       saved, applied, won, lost, ignored. Everything lives in your browser. There is no WorkDesk account and no WorkDesk server.</p>
+    <p>It does three things that neither platform does on its own:</p>
+    <ul>
+      <li><b>One board.</b> Both platforms side by side, deduplicated, sorted by a score that is explained on every card.</li>
+      <li><b>Net $/hr, not posted pay.</b> A $340 flat job with a posted 6-hour window is compared honestly against a $51/hr job,
+          after the platform's fee.</li>
+      <li><b>Distance from your base.</b> Not from wherever the platform guessed. A 1,467-city coordinate table runs offline,
+          so distance is computed in the browser with no map API key.</li>
+    </ul>
+  </section>
+
+  <section id="honest-limits">
+    <h2 class="sec">The honest limits</h2>
+    <p>Read this once and the rest of the guide will make sense.</p>
+    <div class="callout stop">
+      <h4>Neither platform gives technicians an API.</h4>
+      <p><span class="fn">Field Nation's</span> REST API is the <b>Client (buyer) API</b>. Its published prerequisites are an active
+         <em>Buyer</em> account, a signed integration contract, and credentials issued by Field Nation. There is no
+         provider/technician-side endpoint for browsing available work orders.</p>
+      <p><span class="wm">WorkMarket's</span> Open API is aimed at <b>client companies</b> — creating and managing assignments,
+         labour pools, webhooks, bulk upload. There is no public contributor-side API for browsing available assignments.</p>
+      <p>So there is no key for you to paste, and no button WorkDesk could press to make one appear. Anyone who tells you
+         otherwise is selling something.</p>
+    </div>
+    <div class="callout warn">
+      <h4>Why the Sidekick exists instead.</h4>
+      <p>You are <em>already</em> logged in and <em>already</em> looking at these listings in your own browser. The Sidekick is a
+         userscript that runs inside your own session and hands what your browser already downloaded to WorkDesk. No credentials
+         are read, stored, or transmitted, and nothing is fetched that your browsing did not already request.</p>
+    </div>
+    <div class="callout info">
+      <h4>WorkDesk never submits an application for you.</h4>
+      <p>Both platforms prohibit automated session activity, and a bot-signed application is worse than no application.
+         WorkDesk copies your pitch, opens the real work order in a new tab, and tracks the outcome. <b>You press submit.</b></p>
+    </div>
+  </section>
+
+  <section id="sidekick">
+    <h2 class="sec">1 · Install the Sidekick</h2>
+    <p class="lede">About five minutes. This is the only part that touches your browser.</p>
+    <div class="step"><div class="n">1</div><div class="b">
+      <h3>Install a userscript manager</h3>
+      <p><b>Tampermonkey</b> is the recommended one — it is on the Chrome Web Store, Firefox Add-ons, Safari's App Store and
+         the Edge Add-ons store. Violentmonkey and Greasemonkey also work.</p>
+    </div></div>
+    <div class="step"><div class="n">2</div><div class="b">
+      <h3>Add the Sidekick</h3>
+      <p>Open the Tampermonkey dashboard → <b>Utilities</b> → <b>Install from URL</b>, and paste:</p>
+      <pre><code id="sk-url">…/workdesk/sidekick/workdesk-sidekick.user.js</code></pre>
+      <p>Or simply open <a href="../sidekick/workdesk-sidekick.user.js">the userscript file</a> in a new tab — Tampermonkey
+         intercepts <code>.user.js</code> URLs and offers to install it.</p>
+      <p>Full detail, including what each permission is for: <a href="../sidekick/install.md">sidekick/install.md</a>.</p>
+    </div></div>
+    <div class="step"><div class="n">3</div><div class="b">
+      <h3>Point it at your WorkDesk URL</h3>
+      <p>Click the Tampermonkey icon → <b>⚡ WorkDesk settings</b>. The default board URL is this site. If you spin WorkDesk off
+         into your own repo (see <a href="#own-repo">the last section</a>), change it there once.</p>
+    </div></div>
+    <div class="step"><div class="n">4</div><div class="b">
+      <h3>Confirm the handshake</h3>
+      <p>Reload WorkDesk. Within a few seconds the setup pill in the top bar turns green for the Sidekick step, because the
+         userscript checks in with a version stamp. That check-in is all WorkDesk needs to know it is installed and reachable.</p>
+    </div></div>
+    <div class="callout ok">
+      <h4>What the Sidekick will and will not do</h4>
+      <p><b>Will:</b> watch the network responses and rendered cards on pages <em>you</em> open, on
+         <code>*.fieldnation.com</code> and <code>*.workmarket.com</code>; hand those captures to WorkDesk; optionally fill your
+         pitch into a text box when you click <b>⚡ Fill my pitch</b>.</p>
+      <p><b>Will not:</b> read or store passwords or cookies; submit an application; call an endpoint your browsing did not
+         already call; send anything to anyone but your own WorkDesk board; phone home.</p>
+    </div>
+  </section>
+
+  <section id="profile">
+    <h2 class="sec">2 · Set your base &amp; pay floor</h2>
+    <p class="lede">Until this is right, every distance and $/hr number on the board is a guess.</p>
+    <p>Open <b>⋯ → Guided setup wizard → Set your base</b>, or press <kbd>?</kbd> and choose <b>My profile</b>.</p>
+    <table>
+      <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>Home base</td><td>Your city/state, or exact coordinates. <b>Look up from city/state</b> uses the built-in
+            1,467-city table — no map key, works offline. <b>📍 Use my location</b> asks the browser, and nothing is sent anywhere.</td></tr>
+        <tr><td>Pay floor / target</td><td>Floor = the net $/hr below which a job is nearly always skipped. Target = what makes you
+            say yes. Both drive the biggest weight in the score.</td></tr>
+        <tr><td>Ideal / max miles</td><td>Inside ideal miles scores a full 1.0. Past max miles it drops to 0.05.</td></tr>
+        <tr><td>Skills</td><td>Matched against the title, description, work types and requirements of each order.</td></tr>
+        <tr><td>Platform fee</td><td>The haircut taken before net $/hr. Field Nation defaults to 10%; WorkMarket to 0% because it
+            is usually bill-rate rather than fee-deducted. Change it if your contract says otherwise.</td></tr>
+        <tr><td>Typical job length</td><td>Used only when a flat-fee posting has <em>no</em> window posted, so a $340 job can still be
+            compared against hourly ones.</td></tr>
+      </tbody>
+    </table>
+    <p>Press <b>Check it</b>. The wizard verifies the step and only advances when it really passes — and when it fails it tells you
+       exactly which field to fix.</p>
+  </section>
+
+  <section id="first-data">
+    <h2 class="sec">3 · Get your first real orders</h2>
+    <p>Open <span class="fn">Field Nation</span>'s available-work page or <span class="wm">WorkMarket</span>'s assignments list in
+       another tab. The Sidekick pill shows a live count of what it captured. Then:</p>
+    <ul>
+      <li><b>Send to WorkDesk</b> — pushes to an already-open WorkDesk tab instantly, or opens one.</li>
+      <li><b>Auto-send</b> — sends every capture as you browse, so the board fills itself.</li>
+      <li><b>Copy code</b> — a compact sync code for the clipboard, for when pop-ups are blocked.</li>
+      <li><b>Teach me the page</b> — if a platform redesigns and the count stays at 0, click this on a listing card. It learns your
+          selector and remembers it. This is the escape hatch that keeps a UI change from being a dead end.</li>
+    </ul>
+    <p>Three other ways in, if the Sidekick is not an option right now:</p>
+    <ul>
+      <li><b>Paste text.</b> Copy a listing (or twenty) straight off the page and paste it into <b>⋯ → Import work orders</b>.
+          The parser finds city/state, pay, dates and skills in free text.</li>
+      <li><b>Drop a CSV or JSON file.</b> Drag it anywhere on the board. A spreadsheet you keep yourself works fine.</li>
+      <li><b>Paste a sync code</b> from another device.</li>
+    </ul>
+    <div class="callout info">
+      <h4>Nothing loaded? Look at the sample board first.</h4>
+      <p>The board auto-loads 24 sample orders on a first run so you can see how ranking behaves before any real data arrives.
+         Clear them from <b>⋯ → Import work orders</b> once your real feed is flowing.</p>
+    </div>
+  </section>
+
+  <section id="pitch">
+    <h2 class="sec">4 · Write your pitch once</h2>
+    <p>Open <b>⋯ → Pitch templates</b>. Tokens are filled per job at apply time:</p>
+    <pre><code>{first_name} {last_name} {phone} {email} {certifications} {experience_years} {tools} {vehicle}
+{company} {title} {city} {state} {home_city} {home_state} {distance} {drive_time} {start_day}
+{pay} {hourly} {skills} {platform} {order_id} {completed_jobs}</code></pre>
+    <p>Keep several templates — a short one for retail reset work, a detailed one for structured cabling — and pick per job from the
+       dropdown in the drawer. If a token cannot be filled, the drawer shows a red badge listing exactly which ones, so you never
+       paste <code>{first_name}</code> into a real application by accident.</p>
+    <p>The Sidekick also injects a <b>⚡ Fill my pitch</b> button beside every text box on the platform's own page, so you can fill
+       your template <em>without leaving the platform</em>. It types into the box and stops. It never presses submit.</p>
+  </section>
+
+  <section id="apply">
+    <h2 class="sec">5 · Apply (you always press submit)</h2>
+    <p>Press <b>Apply + copy pitch</b> on a card, or in the drawer. WorkDesk then:</p>
+    <ol>
+      <li>fills your template for that specific order and copies it to the clipboard;</li>
+      <li>opens the <b>real work order</b> in a new tab — a deep link like
+          <code>app.fieldnation.com/workorder/8841207</code>, not a search page;</li>
+      <li>moves the order to your <b>Applied</b> tab with a timestamp and the exact pitch you sent;</li>
+      <li>tells you plainly: <em>paste and press submit there</em>.</li>
+    </ol>
+    <p>Afterwards, record the outcome — <b>🏆 Won</b>, <b>✗ Lost / no reply</b>, or <b>↩ Reopen</b>. Outcomes feed the buyer-history
+       component of the score, so buyers who actually award you work drift up the board over time and buyers who never reply drift down.</p>
+    <div class="callout warn">
+      <h4>Follow up on your own terms</h4>
+      <p>The drawer has a notes box and a follow-up list. WorkDesk will remind you; it will never message a buyer for you.</p>
+    </div>
+  </section>
+
+  <section id="relay">
+    <h2 class="sec">Syncing between devices</h2>
+    <p>WorkDesk stores everything in IndexedDB in the browser that holds it. To move data between a laptop and a phone, use
+       <b>⋯ → Sync &amp; relay</b>:</p>
+    <table>
+      <thead><tr><th>Mode</th><th>How it works</th><th>Needs</th></tr></thead>
+      <tbody>
+        <tr><td><b>Sync code</b></td><td>A gzipped, checksummed <code>WD1-…</code> string. Copy on one device, paste on the other.
+            Typically under 1 KB per order.</td><td>nothing</td></tr>
+        <tr><td><b>Same browser, two tabs</b></td><td><code>postMessage</code> with a one-time nonce. Instant, automatic.</td><td>nothing</td></tr>
+        <tr><td><b>ntfy.sh relay</b></td><td>The Sidekick pushes captures to a private <code>ntfy.sh</code> topic; WorkDesk polls that
+            topic. Free, no account.</td><td>a topic name you invent</td></tr>
+        <tr><td><b>Gist relay</b></td><td>The Sidekick PATCHes a secret Gist; WorkDesk reads it.</td><td>a fine-grained PAT with the
+            <code>gist</code> scope only</td></tr>
+        <tr><td><b>Custom URL</b></td><td>Any endpoint you control that accepts and returns JSON.</td><td>your own endpoint</td></tr>
+        <tr><td><b>Committed feed</b></td><td>WorkDesk also reads <code>data/feed.json</code> from this repo if something has written it.
+            See <a href="#api-poller">the API poller</a>.</td><td>repo secrets, set by you</td></tr>
+      </tbody>
+    </table>
+    <div class="callout stop">
+      <h4>Never put a platform password in a relay.</h4>
+      <p>A relay carries <em>work orders</em>. A Gist token, if you use one, must be a fine-grained PAT scoped to <code>gist</code>
+         and nothing else. It is stored in your browser only, and WorkDesk's own export strips it before writing a backup file.</p>
+    </div>
+  </section>
+
+  <section id="api-poller">
+    <h2 class="sec">The API poller (and why it is off)</h2>
+    <p class="lede">This is the part people go looking for. Here is exactly what it is, what it needs, and why it does nothing today.</p>
+    <p>The repo ships <code>workdesk/worker/poll.py</code> and a GitHub Actions workflow
+       (<code>.github/workflows/workdesk-poll.yml</code>) that runs it on a schedule and commits
+       <code>workdesk/data/feed.json</code>. WorkDesk reads that file on boot, so a poller that works would mean the board fills
+       itself even when your browser is closed.</p>
+    <div class="callout stop">
+      <h4>It is dormant on purpose.</h4>
+      <p>With provider/technician accounts there are no credentials to give it. The workflow runs green with no secrets set, writes
+         nothing, and costs nothing. It is scaffolding for the day you have buyer-side access — not a broken feature.</p>
+    </div>
+    <h3>Path A — Field Nation Client (buyer) API</h3>
+    <p>Only available if you hold, or work for someone who holds, a <b>Field Nation Buyer account with a signed integration
+       contract</b>. Field Nation issues the credentials; they are not self-service. The API uses an OAuth 2.0 password grant that
+       returns a token valid for one hour and issues no refresh token, and the token must be appended as a query parameter on every
+       request.</p>
+    <pre><code>FIELD_NATION_CLIENT_ID=...
+FIELD_NATION_CLIENT_SECRET=...
+FIELD_NATION_USERNAME=...
+FIELD_NATION_PASSWORD=...
+FIELD_NATION_BASE_URL=https://api.fieldnation.com/api/rest/v2
+# sandbox instead: https://api-sandbox.fndev.net/api/rest/v2</code></pre>
+    <h3>Path B — WorkMarket API</h3>
+    <p>Company-side. Needs an <b>API token and secret</b> issued to a client company, and works against
+       <code>api.dev.workmarket.com</code> in their documented samples.</p>
+    <pre><code>WORKMARKET_TOKEN=...
+WORKMARKET_SECRET=...
+WORKMARKET_BASE_URL=https://api.workmarket.com/v2
+WORKMARKET_LIST_PATH=/assignments/list_updated
+WORKMARKET_DETAIL_PATH=/assignments/{id}</code></pre>
+    <h3>Turning it on, if you ever get credentials</h3>
+    <ol>
+      <li>In the repo: <b>Settings → Secrets and variables → Actions → New repository secret</b>, one per variable above.
+          Secrets can only be added through the web UI — a workflow cannot set its own secrets.</li>
+      <li>Run <code>python3 workdesk/worker/poll.py check</code> locally to confirm which credentials are present. It prints
+          <code>MISSING</code> for anything absent and exits 0 either way, so it is safe to run blind.</li>
+      <li>Run <code>python3 workdesk/worker/poll.py selftest</code> — it exercises the extraction and feed-writing path against three
+          built-in sample orders with no network access. This passes today, offline.</li>
+      <li>Trigger <b>workdesk-poll</b> from the Actions tab with <code>sandbox: true</code> to hit a sandbox environment first.</li>
+      <li>The cron is <code>23 */4 * * *</code> — four times a day, off the top of the hour so it does not pile up with everyone
+          else's <code>0 * * * *</code>. Edit that line in the workflow to change the cadence.</li>
+    </ol>
+    <div class="callout info">
+      <h4>Why the poller is not the recommended path even when it works</h4>
+      <p>A buyer-side API shows the work orders <em>you posted</em>, not the ones available to you as a technician. For a provider,
+         the Sidekick reading your own logged-in session is the only thing that actually sees available work. The poller earns its
+         place when you start buying work as well as selling it.</p>
+    </div>
+  </section>
+
+  <section id="notifications">
+    <h2 class="sec">Phone notifications</h2>
+    <p><b>⋯ → Notifications</b> asks the browser for permission and then fires a desktop/phone notification when a newly arrived
+       order clears your minimum score, minimum pay and maximum miles. Settings:</p>
+    <ul>
+      <li>Minimum WorkScore to notify on (default 70).</li>
+      <li>Minimum pay, and maximum miles.</li>
+      <li>Quiet hours, so a 2 a.m. relay sync does not wake you.</li>
+    </ul>
+    <p>Notifications only fire for orders that arrive while the board is open, or on a manual refresh — a static site has no server
+       to push from. For alerts that reach you with the board closed, use the <a href="#relay">ntfy relay</a>: the Sidekick can push
+       straight to a topic on <code>ntfy.sh</code>, and the ntfy phone app delivers it even when nothing is open.</p>
+    <p>The poller workflow also supports an <code>NTFY_TOPIC</code> secret — set it and every successful poll can ping your phone.</p>
+  </section>
+
+  <section id="keyboard">
+    <h2 class="sec">Keyboard</h2>
+    <table>
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Jump to search</td></tr>
+        <tr><td><kbd>J</kbd> / <kbd>K</kbd></td><td>Next / previous card</td></tr>
+        <tr><td><kbd>Enter</kbd> or <kbd>O</kbd></td><td>Open the focused card in the drawer</td></tr>
+        <tr><td><kbd>A</kbd></td><td>Apply to the open order (copy pitch + open the platform)</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Save / unsave</td></tr>
+        <tr><td><kbd>X</kbd></td><td>Ignore</td></tr>
+        <tr><td><kbd>1</kbd>–<kbd>6</kbd></td><td>Switch tab: Available, New, Saved, Applied, Outcomes, Ignored</td></tr>
+        <tr><td><kbd>G</kbd> then <kbd>P</kbd></td><td>Open your profile</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Refresh from the store and re-rank</td></tr>
+        <tr><td><kbd>?</kbd></td><td>This list, in-app</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Close the drawer or the topmost pop-up</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="privacy">
+    <h2 class="sec">Privacy &amp; credentials</h2>
+    <ul>
+      <li><b>No account, no server, no telemetry.</b> WorkDesk is static files. Your orders, settings, pitches and outcomes live in
+          IndexedDB in your own browser.</li>
+      <li><b>No credentials, ever.</b> WorkDesk never asks for a Field Nation or WorkMarket password, and has no field to put one in.
+          The Sidekick never reads cookies or password fields.</li>
+      <li><b>Exports are scrubbed.</b> A backup file strips any relay token before it is written.</li>
+      <li><b>Diagnostics are scrubbed.</b> The "advance the program" report contains settings shapes, counts and error messages —
+          never passwords, tokens, or the contents of your work orders.</li>
+      <li><b>Deleting is deleting.</b> <b>⋯ → Import work orders → Clear the board</b> removes every stored order. Clearing your
+          browser's site data removes everything including settings.</li>
+    </ul>
+    <div class="callout warn">
+      <h4>Respect the platforms' terms</h4>
+      <p>Both platforms restrict automated access to their services. WorkDesk deliberately stays on the right side of that: it reads
+         what your own browsing already loaded, it never logs in as you, it never submits anything, and it applies no more often than
+         you click. Keep it that way — do not wire it up to hammer an endpoint on a timer.</p>
+    </div>
+  </section>
+
+  <section id="troubleshooting">
+    <h2 class="sec">Troubleshooting</h2>
+    <p>Start in-app: <b>⋯ → Diagnostics</b> runs sixteen self-tests against your actual browser — storage backend, compression
+       support, the city table, a geocode, a haversine check, three pay parses, both platform adapters, CSV, pasted text, a sync-code
+       round trip, dedupe stability, the relay and the committed feed. Anything red there is the thing to fix first.</p>
+    <p>The full symptom-by-symptom table is in <a href="TROUBLESHOOTING.md">TROUBLESHOOTING.md</a>. The short version:</p>
+    <table>
+      <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Sidekick pill shows 0 on a platform page</td><td>The page markup changed. Click the listing card, then
+            <b>Teach me the page</b>. Or reload with the pill's <b>Rescan</b>.</td></tr>
+        <tr><td>Nothing arrives in WorkDesk</td><td>Pop-ups blocked. Use <b>Copy code</b> in the pill and paste it into
+            <b>⋯ → Import work orders</b>.</td></tr>
+        <tr><td>Board is empty on first load</td><td>The sample file did not load. Check <b>⋯ → Diagnostics</b>; if the site is served
+            over <code>file://</code>, use a local web server instead.</td></tr>
+        <tr><td>Distances look wrong</td><td>Your base is unset, or a listing posted only a state. State-only rows are badged
+            <b>rough</b> and scored down, never silently trusted.</td></tr>
+        <tr><td>$/hr missing on a job</td><td>No window and no duration posted. Set <b>Typical job length</b> in your profile, or open
+            the order and read the posted text.</td></tr>
+        <tr><td>An order mapped wrong</td><td>In the drawer press <b>🩺 Not mapped right?</b>. It copies a diagnostic and opens a
+            pre-filled issue.</td></tr>
+        <tr><td>Data disappeared</td><td>Browser cleared site data, or you are in a private window. Restore from
+            <b>⋯ → Export &amp; backup</b> if you took one.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="own-repo">
+    <h2 class="sec">Moving WorkDesk to your own repo</h2>
+    <p>WorkDesk currently lives in <code>workdesk/</code> inside the <code>therealwindycity/therealwindycity</code> repo, which is
+       primarily a civic-transparency project. If you want it standalone — its own URL, its own issue tracker, its own Actions
+       history — the repo ships a script for exactly that:</p>
+    <pre><code>cd workdesk
+./spin-off.sh --help
+./spin-off.sh --owner YOUR_GITHUB_USERNAME --repo workdesk</code></pre>
+    <p>It copies the app into a clean directory, initialises a fresh git history, rewrites the Sidekick's default board URL,
+       generates the Pages and poller workflows for the new repo, and prints the two commands to run to create and push it.
+       It does not need to guess anything about your account and it does not touch this repo.</p>
+    <p>After the spin-off, change one thing in the Sidekick: <b>⚡ WorkDesk settings → Board URL</b>.</p>
+    <div class="callout info">
+      <h4>And turning Pages on here</h4>
+      <p>For this repo: <b>Settings → Pages → Source: GitHub Actions</b>. That is a one-click setting that only a repository admin
+         can change through the web UI — the workflow file
+         <code>.github/workflows/workdesk-pages.yml</code> is already in place and will publish WorkDesk at the site root with the
+         existing civic ledger preserved under <code>/ledger/</code>.</p>
+    </div>
+  </section>
+
+  <div class="doc-foot">
+    <p>⚡ WorkDesk v1.0.0 · order schema <code>workdesk.order.v1</code> · no account, no server, no telemetry.</p>
+    <p><a href="../index.html">Back to the board</a> · <a href="TROUBLESHOOTING.md">Troubleshooting</a> ·
+       <a href="../sidekick/install.md">Sidekick install</a> · <a href="../README.md">WorkDesk README</a></p>
+  </div>
+
+</div>
+<script>
+  // fill in the real absolute URL of the userscript for wherever this is hosted
+  (function () {
+    var base = location.href.replace(/\/[^\/]*$/, '/').replace(/\/docs\/$/, '/');
+    var n = document.getElementById('sk-url');
+    if (n) n.textContent = base + 'sidekick/workdesk-sidekick.user.js';
+  })();
+</script>
+</body>
+</html>
