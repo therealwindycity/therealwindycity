@@ -66,6 +66,15 @@ Coordination is not optional here.
 
 ## Active claims
 
+### claim: workdesk — merged Field Nation + WorkMarket work-order board (owner-requested, separate app)
+- worker: arena-agent-workdesk
+- status: done
+- stage: complete on branch arena/01a10a60-therealwindycity — 9 web assets + Sidekick userscript + dormant API poller + docs + spin-off script; both harnesses green (82 core / 114 jsdom boot checks, 0 runtime errors); both Pages builds simulated successfully. Pages enablement and any repo secrets still require the owner in the web UI.
+- scope: NEW PATHS ONLY — `workdesk/**` (index.html, assets/, sidekick/, worker/poll.py, data/workorders.sample.json, docs/, tests/, README.md, spin-off.sh) and TWO NEW workflow files `.github/workflows/workdesk-pages.yml` + `.github/workflows/workdesk-poll.yml`; READ-FIRST.md (this claim only). `public/**` is READ-ONLY here: workdesk-pages.yml copies it verbatim into the Pages artifact under `/ledger/` and never modifies it. Explicitly NOT touching: streamlit_app.py, Transparency_Index_App.py (twins), requirements.txt, data/, engine/, pipeline/, rag/, youtube-archive/, uploads/, Entity_Database/, public/, README.md, DEPLOY.md, PERSISTENCE.md, LEGAL.md, civic-cycle.yml, or any other existing workflow.
+- started: 2026-10-04T00:00Z
+- updated: 2026-10-05T07:00Z
+- notes: Owner-requested in chat: merge their Field Nation + WorkMarket provider accounts into one feed of available work orders, apply from there, deploy via GitHub Pages. Owner directed the whole package plus pop-up-driven progression (the 7-stage guided wizard, each stage verified before it advances). Owner chose a brand-new separate public repo — `gh repo create` fails with `Resource not accessible by integration (createRepository)` on this token, so `workdesk/spin-off.sh` is the owner's path to a standalone repo; it is verified end-to-end and the spun-off copy passes both harnesses. No credentials were requested, stored, or committed: neither platform offers a provider-side API for browsing available work (Field Nation's is buyer-side and contract-gated; WorkMarket's is company-side), so ingestion is a userscript bridge inside the owner's own logged-in session, plus paste/CSV/sync-code paths. `workdesk-poll.yml` is dormant-by-design and green with no secrets; the Actions API and `gh secret list` both 403 here, so secrets and Settings → Pages → Source: GitHub Actions must be set by the owner. Nothing was deleted or rewritten; the two new workflows are additive and leave the civic build intact.
+
 ### claim: miller-tapes — auto-playing theater for every Miller intervention
 - worker: arena-agent
 - status: done
