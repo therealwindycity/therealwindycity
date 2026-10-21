@@ -95,12 +95,12 @@ Coordination is not optional here.
 
 ### claim: streamlit-freshness-guard — prevent stale cached Ledger HQ previews from appearing current
 - worker: arena-agent
-- status: active
-- stage: explicit 48-hour freshness expiry and Denver DST fall-back checks added; six tests and regenerated HTML pass; replacing stale PR #3 head with a fresh PR from the latest branch
+- status: done
+- stage: replacement PR #4 open from the latest session-branch tip; no CI checks reported; deployment/public revision not verified
 - scope: `streamlit_app.py`, `Transparency_Index_App.py` (identical twins), `rwc_views.py`, `engine/publish.py`, generated `public/index.html`, `tests/test_publish_freshness.py`, and this claim/work-log entry in `READ-FIRST.md`. No edits to `data/`, `.github/`, `requirements.txt`, or `README.md` without expanding this claim first.
 - started: 2026-10-21T14:58Z
-- updated: 2026-10-21T15:13Z
-- notes: The committed ledger's latest per-document check is `2026-09-06T14:20:57Z` (45 days old at render). Streamlit builds its preview from the stored ledger in a temporary directory, shows a prominent stale/unknown warning, and recalculates the election metric in America/Denver with an as-of date. Static output gives a machine-readable 48-hour freshness deadline and explicitly says when the window ended; unknown timestamps have no invented deadline. Six deterministic tests (including the Nov. 1 Denver DST repeated hour), compilation, generated-page checks, and twin parity pass. `run.py selftest` is blocked by a pre-existing fixture path `/home/user/civic-engine/data/snapshots/c63daae848d0_gview` absent in this checkout; Streamlit is not installed in this sandbox, so no interactive runtime smoke was run. Commits `23c116e`, `a9308e0`, and `8839784` are pushed. GitHub's PR #3 head remains at `23c116e` while the remote branch is at `8839784`; no CI checks, deployment, or public-revision verification. Replacing PR #3 so the expiry change is included in review.
+- updated: 2026-10-21T15:14Z
+- notes: The committed ledger's latest per-document check is `2026-09-06T14:20:57Z` (45 days old at render). Streamlit builds its preview from the stored ledger in a temporary directory, shows a prominent stale/unknown warning, and recalculates the election metric in America/Denver with an as-of date. Static output gives a machine-readable 48-hour freshness deadline and explicitly says when the window ended; unknown timestamps have no invented deadline. Six deterministic tests (including the Nov. 1 Denver DST repeated hour), compilation, generated-page checks, and twin parity pass. `run.py selftest` is blocked by a pre-existing fixture path `/home/user/civic-engine/data/snapshots/c63daae848d0_gview` absent in this checkout; Streamlit is not installed in this sandbox, so no interactive runtime smoke was run. Commits `23c116e`, `a9308e0`, `8839784`, and `88427df` are pushed. PR #3 was closed because its head ref remained pinned at `23c116e`; replacement PR #4 includes the latest branch tip. No checks, deployment, or public-revision verification.
 
 ## Current repo state (updated 2026-09-10T11:05Z)
 
@@ -166,3 +166,4 @@ auto-redeploys from `main`).
 - 2026-10-21 15:06Z — arena-agent: committed as `23c116e`, pushed `arena/51771bde-therealwindycity`, and opened [PR #3](https://github.com/therealwindycity/therealwindycity/pull/3). No CI checks are reported; deployment and public-revision verification remain outstanding.
 - 2026-10-21 15:12Z — arena-agent: added a machine-readable 48-hour freshness deadline, visible expiration/unknown wording, and a regression test for the Denver Nov. 1 DST repeat (00:30 MDT, 01:30 MDT, 01:30 MST). Six unit tests, compilation, twin parity, and regenerated-page assertions pass. Updating PR #3; its head reference currently lags the pushed branch.
 - 2026-10-21 15:13Z — arena-agent: verified PR #3 still points to `23c116e` after commits `a9308e0` and `8839784` were pushed; its PR ref omits the freshness-expiry change. Will replace it with a new PR from the latest branch tip. No checks, deployment, or public-revision verification.
+- 2026-10-21 15:14Z — arena-agent: closed stale-head PR #3 and opened replacement PR #4 from the complete session branch, including the explicit freshness deadline and DST tests. No CI checks are reported; deployment and public-revision verification remain outstanding.
