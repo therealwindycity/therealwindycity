@@ -1,8 +1,9 @@
 """The Real Windy City — HOME.
 
 Multipage layout (2026-09-17 split): every feature lives on its own page under
-pages/, sharing one view library (rwc_views.py). This home page shows a preview card for each feature, drawn from the latest
-available local data (latest recorded alert, newest indexed edit, top search
+pages/, sharing one view library (rwc_views.py). This home page shows a
+preview card for each feature, drawn from the latest available local data
+(latest recorded alert, newest indexed edit, top search
 hit, a hero, a vault row, the newest tape…). These are not live source reads;
 check the timestamps and freshness notes before treating them as current.
 
@@ -51,9 +52,16 @@ def _prev_front_page():
             page_path = Path(publish.build(output_dir=Path(output_dir)))
             page_html = page_path.read_text()
         components.html(page_html, height=420, scrolling=True)
-        st.caption("Rendered at page load from the latest local ledger snapshot; this preview does not fetch or refresh source records. See its source-check timestamp before relying on it.")
+        st.caption(
+            "Rendered at page load from the latest local ledger snapshot; this preview "
+            "does not fetch or refresh source records. See its source-check timestamp "
+            "and freshness window before relying on it."
+        )
     except Exception as ex:  # never fall back to an unqualified stale static page
-        st.warning(f"Current ledger preview unavailable: {ex}. The cached public/index.html was withheld because its age may be misleading.")
+        st.warning(
+            f"Current ledger preview unavailable: {ex}. "
+            "The cached public/index.html was withheld because its age may be misleading."
+        )
 
 
 def _prev_mission_board():
@@ -187,7 +195,10 @@ EXTRA = [  # the two pre-existing standalone pages
 
 # --------------------------------------------------------------------- render
 V.render_ledger_header()
-st.markdown("### 📖 Chapters — latest available previews. Check source ages; click through for the full page.")
+st.markdown(
+    "### 📖 Chapters — latest available previews. Check source ages; "
+    "click through for the full page."
+)
 
 cards = [dict(f, prev=PREVIEW[f["key"]]) for f in FEATURES] + EXTRA
 cols = st.columns(2)

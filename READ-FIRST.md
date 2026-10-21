@@ -95,12 +95,12 @@ Coordination is not optional here.
 
 ### claim: streamlit-freshness-guard — prevent stale cached Ledger HQ previews from appearing current
 - worker: arena-agent
-- status: done
-- stage: PR #3 open from the session branch; GitHub reports no checks; deployment/public revision not verified
+- status: active
+- stage: explicit 48-hour freshness expiry and Denver DST fall-back checks added; six tests and regenerated HTML pass; updating PR #3
 - scope: `streamlit_app.py`, `Transparency_Index_App.py` (identical twins), `rwc_views.py`, `engine/publish.py`, generated `public/index.html`, `tests/test_publish_freshness.py`, and this claim/work-log entry in `READ-FIRST.md`. No edits to `data/`, `.github/`, `requirements.txt`, or `README.md` without expanding this claim first.
 - started: 2026-10-21T14:58Z
-- updated: 2026-10-21T15:06Z
-- notes: The committed ledger's latest per-document check is `2026-09-06T14:20:57Z` (45 days old at render). Streamlit now builds its preview from the stored ledger in a temporary directory, shows a prominent stale/unknown warning, and recalculates the election metric in America/Denver with an as-of date. Five deterministic tests, compilation, generated-page checks, and twin parity pass. `run.py selftest` is blocked by a pre-existing fixture path `/home/user/civic-engine/data/snapshots/c63daae848d0_gview` absent in this checkout; Streamlit is not installed in this sandbox, so no interactive runtime smoke was run. Commit `23c116e` was pushed and PR #3 is open; `gh pr checks` reports no checks. No deployment or public-revision verification.
+- updated: 2026-10-21T15:12Z
+- notes: The committed ledger's latest per-document check is `2026-09-06T14:20:57Z` (45 days old at render). Streamlit builds its preview from the stored ledger in a temporary directory, shows a prominent stale/unknown warning, and recalculates the election metric in America/Denver with an as-of date. Static output now gives a machine-readable 48-hour freshness deadline and explicitly says when the window ended; unknown timestamps have no invented deadline. Six deterministic tests (including the Nov. 1 Denver DST repeated hour), compilation, generated-page checks, and twin parity pass. `run.py selftest` is blocked by a pre-existing fixture path `/home/user/civic-engine/data/snapshots/c63daae848d0_gview` absent in this checkout; Streamlit is not installed in this sandbox, so no interactive runtime smoke was run. Commit `23c116e` and follow-up status commit `a9308e0` are pushed; PR #3 is open, but its API head has not yet reflected the follow-up commit. No checks, deployment, or public-revision verification.
 
 ## Current repo state (updated 2026-09-10T11:05Z)
 
@@ -164,3 +164,4 @@ auto-redeploys from `main`).
 - 2026-09-10 11:05Z — console-worker: media backfill shipped — resumable Colab cell (captions → pipeline/captions/, audio → Releases, optional video) + Recordings & captions view in the Video vault; release-asset upload path live-verified. Video-in-git rejected: 260 meetings ≈ 130 GB vs the 100 MB blob cap.
 - 2026-10-21 15:03Z — arena-agent: Streamlit Ledger HQ no longer embeds a frozen `public/index.html`; it renders the stored ledger to a temporary preview, surfaces source-check age/unknown status, and recalculates the Nov. 3 countdown in America/Denver with a visible as-of date. Regenerated `public/index.html` now shows the actual 2026-09-06 check (45 days old) and 13 days until election as of Oct. 21. Five deterministic `unittest` cases, Python compilation, HTML assertions, and twin identity pass. Full `run.py selftest` remains blocked by its stale absolute fixture path; Streamlit is absent from the local sandbox.
 - 2026-10-21 15:06Z — arena-agent: committed as `23c116e`, pushed `arena/51771bde-therealwindycity`, and opened [PR #3](https://github.com/therealwindycity/therealwindycity/pull/3). No CI checks are reported; deployment and public-revision verification remain outstanding.
+- 2026-10-21 15:12Z — arena-agent: added a machine-readable 48-hour freshness deadline, visible expiration/unknown wording, and a regression test for the Denver Nov. 1 DST repeat (00:30 MDT, 01:30 MDT, 01:30 MST). Six unit tests, compilation, twin parity, and regenerated-page assertions pass. Updating PR #3; its head reference currently lags the pushed branch.

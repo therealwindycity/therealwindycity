@@ -1689,13 +1689,25 @@ def render_ledger_header():
               delta="auto-rechecked every cycle", delta_color="off")
     c6.metric("PRA drafts waiting", eng_stats["drafts"])
     freshness = publish.source_check_freshness(last) if publish is not None else None
-    st.caption(f"⏱ latest recorded document check: **{_ago(last)}** · a cycle is scheduled every 6 h plus "
-               f"hourly on Mon/Tue meeting nights · this timestamp is not proof a full cycle completed · "
-               f"RSS: `public/feed.xml` in the repo")
+    st.caption(
+        f"⏱ latest recorded document check: **{_ago(last)}** · "
+        "a cycle is scheduled every 6 h plus hourly on Mon/Tue meeting nights · "
+        "this timestamp is not proof a full cycle completed · "
+        "RSS: `public/feed.xml` in the repo"
+    )
     if freshness is None or freshness["stale"] is None:
-        st.warning("Source-check freshness is unknown. The displayed records are a stored ledger snapshot; verify current conditions with the original publisher.")
+        st.warning(
+            "Source-check freshness and its 48-hour freshness window are unknown. "
+            "The displayed records are a stored ledger snapshot; verify current "
+            "conditions with the original publisher."
+        )
     elif freshness["stale"]:
-        st.warning(f"The latest recorded document check is {freshness['age_label']}. The ledger is a stale snapshot, not live monitoring; verify current conditions with the original publisher.")
+        st.warning(
+            f"The latest recorded document check is {freshness['age_label']}; its "
+            f"48-hour freshness window ended at {freshness['freshness_threshold_label']}. "
+            "The ledger is a stale snapshot, not live monitoring; verify current "
+            "conditions with the original publisher."
+        )
 
     if breaking:
         st.error("🚨 **ACTION ALERT (<48 h):** " + " · ".join(

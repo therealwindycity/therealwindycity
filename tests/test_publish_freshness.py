@@ -24,9 +24,14 @@ class PublishFreshnessTests(unittest.TestCase):
         old = publish.source_check_freshness("2026-09-06T14:20:57Z", now)
 
         self.assertFalse(fresh["stale"], "exactly 48 hours is inside the configured warning boundary")
+        self.assertIn(
+            "48-hour freshness window ends at 2026-10-21 14:20:57 UTC",
+            publish._freshness_html(fresh),
+        )
         self.assertTrue(stale["stale"])
         self.assertEqual(old["age_label"], "45 days ago")
         self.assertEqual(old["checked_label"], "2026-09-06 14:20:57 UTC")
+        self.assertEqual(old["freshness_threshold_label"], "2026-09-08 14:20:57 UTC")
 
     def test_election_countdown_uses_america_denver_day_and_does_not_freeze(self):
         before_local_midnight = datetime(2026, 11, 3, 6, 59, tzinfo=timezone.utc)
@@ -46,16 +51,47 @@ class PublishFreshnessTests(unittest.TestCase):
             ("1", "days since Nov. 3 election"),
         )
 
+    def test_denver_fall_back_repeats_one_am_not_midnight(self):
+        cases = (
+            (
+                datetime(2026, 11, 1, 6, 30, tzinfo=timezone.utc),
+                "2026-11-01 00:30 MDT",
+            ),
+            (
+                datetime(2026, 11, 1, 7, 30, tzinfo=timezone.utc),
+                "2026-11-01 01:30 MDT",
+            ),
+            (
+                datetime(2026, 11, 1, 8, 30, tzinfo=timezone.utc),
+                "2026-11-01 01:30 MST",
+            ),
+        )
+        for instant, expected in cases:
+            with self.subTest(instant=instant.isoformat()):
+                local_time = instant.astimezone(publish.DENVER)
+                self.assertEqual(local_time.strftime("%Y-%m-%d %H:%M %Z"), expected)
+
     @staticmethod
     def _ledger_connection(last_checked: str | None) -> sqlite3.Connection:
         conn = sqlite3.connect(":memory:")
         conn.row_factory = sqlite3.Row
         conn.executescript(
             """
-            CREATE TABLE documents (id INTEGER PRIMARY KEY, url TEXT, title TEXT, last_checked TEXT);
-            CREATE TABLE alerts (id INTEGER PRIMARY KEY, document_id INTEGER, term TEXT, snippet TEXT, created_at TEXT);
-            CREATE TABLE versions (id INTEGER PRIMARY KEY, document_id INTEGER, seq INTEGER, captured_at TEXT, change_summary TEXT);
-            CREATE TABLE requests (id INTEGER PRIMARY KEY, kind TEXT, subject TEXT, body TEXT, created_at TEXT, status TEXT);
+            CREATE TABLE documents (
+                id INTEGER PRIMARY KEY, url TEXT, title TEXT, last_checked TEXT
+            );
+            CREATE TABLE alerts (
+                id INTEGER PRIMARY KEY, document_id INTEGER, term TEXT,
+                snippet TEXT, created_at TEXT
+            );
+            CREATE TABLE versions (
+                id INTEGER PRIMARY KEY, document_id INTEGER, seq INTEGER,
+                captured_at TEXT, change_summary TEXT
+            );
+            CREATE TABLE requests (
+                id INTEGER PRIMARY KEY, kind TEXT, subject TEXT, body TEXT,
+                created_at TEXT, status TEXT
+            );
             """
         )
         if last_checked is not None:
@@ -82,9 +118,11 @@ class PublishFreshnessTests(unittest.TestCase):
 
             self.assertIn('data-generated-at="2026-10-21T14:20:57Z"', rendered)
             self.assertIn('data-last-checked="2026-09-06T14:20:57Z"', rendered)
+            self.assertIn('data-freshness-threshold-at="2026-09-08T14:20:57Z"', rendered)
             self.assertIn('data-source-stale="true"', rendered)
             self.assertIn("Source snapshot may be stale", rendered)
             self.assertIn("45 days ago", rendered)
+            self.assertIn("48-hour freshness window ended at 2026-09-08 14:20:57 UTC", rendered)
             self.assertIn("last available ledger snapshot, not a live crawl", rendered)
             self.assertIn("<b>13</b><span>days until Nov. 3 election · as of October 21, 2026 MDT</span>", rendered)
             self.assertNotIn("<b>53</b><span>days to the Nov. 3 election</span>", rendered)
@@ -102,8 +140,9 @@ class PublishFreshnessTests(unittest.TestCase):
                 with patch.object(publish.db, "connect", return_value=conn):
                     rendered_path = Path(publish.build(now=now, output_dir=Path(temp_dir)))
                 rendered = rendered_path.read_text()
+            self.assertIn('data-freshness-threshold-at=""', rendered)
             self.assertIn('data-source-stale="unknown"', rendered)
-            self.assertIn("No document-check timestamp is recorded; source freshness is unknown", rendered)
+            self.assertIn("source freshness and its 48-hour freshness window are unknown", rendered)
         finally:
             conn.close()
 
