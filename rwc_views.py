@@ -57,9 +57,9 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
 try:
-    from engine import db, corpus_search, verify_vault, entity_index
+    from engine import db, corpus_search, verify_vault, entity_index, publish
 except Exception:  # engine tree absent -> engine tabs degrade, rest still works
-    db = corpus_search = verify_vault = entity_index = None
+    db = corpus_search = verify_vault = entity_index = publish = None
 
 try:
     from miller_theater import render_theater as _render_miller_theater
@@ -1688,9 +1688,26 @@ def render_ledger_header():
     c5.metric("Vault rows verified vs corpus", found_n,
               delta="auto-rechecked every cycle", delta_color="off")
     c6.metric("PRA drafts waiting", eng_stats["drafts"])
-    st.caption(f"⏱ last crawl: **{_ago(last)}** · cycle runs every 6 h plus "
-               f"hourly on Mon/Tue meeting nights · "
-               f"RSS: `public/feed.xml` in the repo")
+    freshness = publish.source_check_freshness(last) if publish is not None else None
+    st.caption(
+        f"⏱ latest recorded document check: **{_ago(last)}** · "
+        "a cycle is scheduled every 6 h plus hourly on Mon/Tue meeting nights · "
+        "this timestamp is not proof a full cycle completed · "
+        "RSS: `public/feed.xml` in the repo"
+    )
+    if freshness is None or freshness["stale"] is None:
+        st.warning(
+            "Source-check freshness and its 48-hour freshness window are unknown. "
+            "The displayed records are a stored ledger snapshot; verify current "
+            "conditions with the original publisher."
+        )
+    elif freshness["stale"]:
+        st.warning(
+            f"The latest recorded document check is {freshness['age_label']}; its "
+            f"48-hour freshness window ended at {freshness['freshness_threshold_label']}. "
+            "The ledger is a stale snapshot, not live monitoring; verify current "
+            "conditions with the original publisher."
+        )
 
     if breaking:
         st.error("🚨 **ACTION ALERT (<48 h):** " + " · ".join(

@@ -12,11 +12,128 @@ import html
 import json
 import shutil
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from . import db
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
+DENVER = ZoneInfo("America/Denver")
+SOURCE_STALE_AFTER = _dt.timedelta(hours=48)
+
+
+def _as_utc(value: _dt.datetime | None = None) -> _dt.datetime:
+    """Return an aware UTC instant; naive test inputs are interpreted as UTC."""
+    current = value or _dt.datetime.now(_dt.timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=_dt.timezone.utc)
+    return current.astimezone(_dt.timezone.utc)
+
+
+def _parse_timestamp(value: str | None) -> _dt.datetime | None:
+    if not value:
+        return None
+    try:
+        parsed = _dt.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=_dt.timezone.utc)
+        return parsed.astimezone(_dt.timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+
+def _age_label(seconds: int) -> str:
+    if seconds < 60:
+        return "less than a minute ago"
+    minutes = seconds // 60
+    if minutes < 60:
+        return f"{minutes} minute{'s' if minutes != 1 else ''} ago"
+    hours = seconds // 3600
+    if hours < 48:
+        return f"{hours} hour{'s' if hours != 1 else ''} ago"
+    days = seconds // 86400
+    return f"{days} day{'s' if days != 1 else ''} ago"
+
+
+def source_check_freshness(
+    last_checked: str | None,
+    now: _dt.datetime | None = None,
+    stale_after: _dt.timedelta = SOURCE_STALE_AFTER,
+) -> dict:
+    """Describe the newest per-document check without claiming a full crawl.
+
+    `documents.last_checked` is a maximum across individual source records, not
+    a completed-cycle timestamp. A missing or invalid value is unknown, never
+    treated as fresh.
+    """
+    current = _as_utc(now)
+    checked = _parse_timestamp(last_checked)
+    if checked is None:
+        return {
+            "last_checked": None,
+            "age_seconds": None,
+            "age_label": "unknown",
+            "stale": None,
+            "checked_label": "not recorded",
+            "freshness_threshold_at": None,
+            "freshness_threshold_label": "unknown",
+        }
+    age = current - checked
+    seconds = max(0, int(age.total_seconds()))
+    threshold = checked + stale_after
+    return {
+        "last_checked": checked.isoformat().replace("+00:00", "Z"),
+        "age_seconds": seconds,
+        "age_label": _age_label(seconds),
+        "stale": age > stale_after,
+        "checked_label": checked.strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "freshness_threshold_at": threshold.isoformat().replace("+00:00", "Z"),
+        "freshness_threshold_label": threshold.strftime("%Y-%m-%d %H:%M:%S UTC"),
+    }
+
+
+def countdown_metric(
+    target: str,
+    now: _dt.datetime | None = None,
+    event_label: str = "event",
+) -> tuple[str, str]:
+    """Return a date-relative metric in Cheyenne time, including after the date."""
+    target_day = _dt.date.fromisoformat(target)
+    today = _as_utc(now).astimezone(DENVER).date()
+    delta = (target_day - today).days
+    if delta > 0:
+        return str(delta), f"days until {event_label}"
+    if delta == 0:
+        return "TODAY", f"{event_label} day"
+    elapsed = abs(delta)
+    return str(elapsed), f"days since {event_label}"
+
+
+def _freshness_html(freshness: dict) -> str:
+    if freshness["stale"] is None:
+        css_class = "freshness freshness--unknown"
+        text = (
+            "No document-check timestamp is recorded; source freshness and its "
+            "48-hour freshness window are unknown. Treat the records below as a "
+            "stored snapshot, not a live view."
+        )
+    elif freshness["stale"]:
+        css_class = "freshness freshness--stale"
+        text = (
+            f"Source snapshot may be stale: the latest recorded document check was "
+            f"{freshness['checked_label']} ({freshness['age_label']}); its 48-hour "
+            f"freshness window ended at {freshness['freshness_threshold_label']}. The "
+            "records below are the last available ledger snapshot, not a live crawl."
+        )
+    else:
+        css_class = "freshness"
+        text = (
+            f"Latest recorded document check: {freshness['checked_label']} "
+            f"({freshness['age_label']}); its 48-hour freshness window ends at "
+            f"{freshness['freshness_threshold_label']}. Individual documents may be "
+            "older; this is not a completed-crawl timestamp or guarantee of complete coverage."
+        )
+    return f"<p class='{css_class}' role='status'>{_esc(text)}</p>"
 
 _CSS = """
 :root{--ink:#141414;--paper:#f4ecd8;--rust:#b4432f;--gold:#ffd93b;--sage:#5c7a4f;
@@ -83,6 +200,9 @@ footer{margin:44px 0 26px;border-top:6px double var(--ink);padding-top:16px;
 font-size:12.5px;color:var(--faded)}
 .method li{margin:4px 0}
 .mono{font-family:'Courier New',monospace}
+.freshness{border:2px solid #5c7a4f;background:#f4f7ec;padding:10px 12px;
+font-family:'Courier New',monospace;font-size:12px;margin:16px 0}
+.freshness--stale,.freshness--unknown{border:3px solid #b4432f;background:#fff3eb;color:#702318}
 """
 
 _EMBLEM = """<svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -97,27 +217,40 @@ def _esc(s: str) -> str:
     return html.escape(s or "", quote=True)
 
 
-def build() -> str:
+def build(now: _dt.datetime | None = None, output_dir: Path | str | None = None) -> str:
+    """Build the static ledger from its stored database snapshot.
+
+    `now` is injectable for deterministic tests. `output_dir` is used by the
+    Streamlit preview to render a fresh date-relative page in a temporary
+    directory without overwriting the committed public export.
+    """
+    current = _as_utc(now)
+    out_root = Path(output_dir) if output_dir is not None else PUBLIC
     facts = json.loads((ROOT / "config" / "facts.json").read_text())
     site = facts["site"]
     conn = db.connect()
-    st = {
-        "docs": conn.execute("SELECT COUNT(*) c FROM documents").fetchone()["c"],
-        "alerts": conn.execute("SELECT COUNT(*) c FROM alerts").fetchone()["c"],
-        "edits": conn.execute("SELECT COUNT(*) c FROM versions WHERE seq>1").fetchone()["c"],
-        "drafts": conn.execute("SELECT COUNT(*) c FROM requests WHERE status='draft'").fetchone()["c"],
-    }
-    alerts = conn.execute(
-        "SELECT a.term, a.snippet, a.created_at, d.url, d.title FROM alerts a"
-        " JOIN documents d ON d.id=a.document_id ORDER BY a.id DESC LIMIT 60").fetchall()
-    edits = conn.execute(
-        "SELECT v.captured_at, v.seq, v.change_summary, d.url, d.title FROM versions v"
-        " JOIN documents d ON d.id=v.document_id WHERE v.seq>1 ORDER BY v.id DESC").fetchall()
-    reqs = conn.execute("SELECT * FROM requests ORDER BY id DESC LIMIT 10").fetchall()
-    conn.close()
+    try:
+        st = {
+            "docs": conn.execute("SELECT COUNT(*) c FROM documents").fetchone()["c"],
+            "alerts": conn.execute("SELECT COUNT(*) c FROM alerts").fetchone()["c"],
+            "edits": conn.execute("SELECT COUNT(*) c FROM versions WHERE seq>1").fetchone()["c"],
+            "drafts": conn.execute("SELECT COUNT(*) c FROM requests WHERE status='draft'").fetchone()["c"],
+        }
+        last_checked_row = conn.execute("SELECT MAX(last_checked) AS checked_at FROM documents").fetchone()
+        last_checked = last_checked_row["checked_at"] if last_checked_row else None
+        alerts = conn.execute(
+            "SELECT a.term, a.snippet, a.created_at, d.url, d.title FROM alerts a"
+            " JOIN documents d ON d.id=a.document_id ORDER BY a.id DESC LIMIT 60").fetchall()
+        edits = conn.execute(
+            "SELECT v.captured_at, v.seq, v.change_summary, d.url, d.title FROM versions v"
+            " JOIN documents d ON d.id=v.document_id WHERE v.seq>1 ORDER BY v.id DESC").fetchall()
+        reqs = conn.execute("SELECT * FROM requests ORDER BY id DESC LIMIT 10").fetchall()
+    finally:
+        conn.close()
 
-    drafts_dir = PUBLIC / "drafts"
-    PUBLIC.mkdir(exist_ok=True)
+    freshness = source_check_freshness(last_checked, current)
+    out_root.mkdir(parents=True, exist_ok=True)
+    drafts_dir = out_root / "drafts"
     drafts_dir.mkdir(exist_ok=True)
     draft_links = []
     for r in reqs:
@@ -128,10 +261,16 @@ def build() -> str:
             f"{_esc(r['subject'])} · <a href='drafts/{fn}'>read the letter</a><br>"
             f"<span class='t'>filed {_esc(r['created_at'])} · a human reads and sends it. the machine does not mail letters.</span></div>")
 
-    today = _dt.date.today()
-    elec = _dt.date.fromisoformat(site["election_day"])
+    local_now = current.astimezone(DENVER)
+    today = local_now.date()
     pet = _dt.date.fromisoformat(site["petition_file_date"])
-    days_to_elec = max(0, (elec - today).days)
+    election_value, election_label = countdown_metric(
+        site["election_day"], current, "Nov. 3 election"
+    )
+    election_label = (
+        f"{election_label} · as of {today.strftime('%B')} {today.day}, "
+        f"{today.year} {local_now.tzname()}"
+    )
     days_since_pet = max(0, (today - pet).days)
 
     stats_html = "".join([
@@ -139,7 +278,7 @@ def build() -> str:
         f"<div class='stat'><b>{st['alerts']}</b><span>watchlist hits, quoted</span></div>",
         f"<div class='stat'><b>{st['edits']}</b><span>silent edits caught</span></div>",
         f"<div class='stat'><b>{st['drafts']}</b><span>drafts awaiting a human</span></div>",
-        f"<div class='stat'><b>{days_to_elec}</b><span>days to the Nov. 3 election</span></div>",
+        f"<div class='stat'><b>{_esc(election_value)}</b><span>{_esc(election_label)}</span></div>",
     ])
 
     edits_html = "".join(
@@ -157,7 +296,7 @@ def build() -> str:
         f"<td class='qu'>{_esc(r['snippet'])}</td>"
         f"<td><a href='{_esc(r['url'])}'>source</a></td></tr>"
         for r in alerts) + "</table>") if alerts else \
-        "<div class='empty'>The traps are set. Nothing has tripped them today.</div>"
+        "<div class='empty'>No alerts are recorded in the available ledger snapshot.</div>"
 
     tl_html = "".join(
         f"<li><time>{_esc(e['date'])}</time><span>{_esc(e['label'])}"
@@ -166,24 +305,37 @@ def build() -> str:
         for e in facts["timeline"])
 
     q = facts["question_of_the_week"]
-    generated = db.utcnow()
+    generated = current.strftime("%Y-%m-%dT%H:%M:%SZ")
+    checked_attr = _esc(freshness["last_checked"] or "")
+    threshold_attr = _esc(freshness["freshness_threshold_at"] or "")
+    stale_attr = "unknown" if freshness["stale"] is None else str(freshness["stale"]).lower()
 
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{_esc(site['title'])}</title><style>{_CSS}</style></head><body><div class="wrap">
+<meta name="rwc-generated-at" content="{_esc(generated)}">
+<meta name="rwc-source-check" content="{checked_attr}">
+<meta name="rwc-freshness-threshold" content="{threshold_attr}">
+<title>{_esc(site['title'])}</title><style>{_CSS}</style></head><body>
+<div class="wrap" data-generated-at="{_esc(generated)}"
+     data-last-checked="{checked_attr}"
+     data-freshness-threshold-at="{threshold_attr}"
+     data-source-stale="{stale_attr}">
 <header class="mast">
   <h1>{_esc(site['title'])}</h1>
   <p class="kick">{_esc(site['kicker'])}</p>
   <span class="tag">{_esc(site['tagline'])}</span>
   <div class="issue">HEROES OF THE PUBLIC RECORD · ISSUE #001 · NEW HEROES WANTED</div>
-  <div class="wind">{_EMBLEM}<span>ledger generated {_esc(generated)} UTC · every entry links its record ·
-  day {days_since_pet} since the petition was filed · clerk certification: pending</span></div>
+  <div class="wind">{_EMBLEM}<span>page rendered {_esc(generated)} UTC from the local ledger ·
+  every entry links its record · day {days_since_pet} since the petition was filed ·
+  clerk certification: pending</span></div>
 </header>
 
+{_freshness_html(freshness)}
 <div class="strip">{stats_html}</div>
 
-<h2>This week's cover story</h2>
-<p class="rule">One page. One fight. Read it and you're ahead of half the room.</p>
+<h2>Cover story in this snapshot</h2>
+<p class="rule">A record-linked issue from the local ledger. Check the source-status
+ timestamp and freshness window above before treating items as current.</p>
 <div class="qotw"><h3>{_esc(q['headline'])}</h3><p>{_esc(q['body'])}</p>
 <p class="watch">WATCH FOR: {_esc(q['watch_for'])}</p></div>
 
@@ -191,8 +343,9 @@ def build() -> str:
 <p class="rule">SHA-256 fingerprints of every published page, re-checked on schedule. Same words, same hash. New words, new hash — and a public diff.</p>
 {edits_html}
 
-<h2>Fresh off the tripwires</h2>
-<p class="rule">Watchlist hits from the latest crawl. The quote is verbatim; the link is the record; the timestamp is the fetch.</p>
+<h2>Latest recorded tripwires</h2>
+<p class="rule">Watchlist hits in the available ledger snapshot. Quotes are verbatim;
+ links point to records; timestamps show individual fetches.</p>
 {alerts_html}
 
 <h2>The saga so far</h2>
@@ -221,6 +374,6 @@ Read the statute. Quote the record. Sign your name. —
 </footer>
 </div></body></html>"""
 
-    out = PUBLIC / "index.html"
+    out = out_root / "index.html"
     out.write_text(page)
     return str(out)
