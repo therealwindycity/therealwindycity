@@ -96,11 +96,11 @@ Coordination is not optional here.
 ### claim: streamlit-freshness-guard — prevent stale cached Ledger HQ previews from appearing current
 - worker: arena-agent
 - status: done
-- stage: source fix and generated page verified locally; PR will be opened from the session branch
+- stage: PR #3 open from the session branch; GitHub reports no checks; deployment/public revision not verified
 - scope: `streamlit_app.py`, `Transparency_Index_App.py` (identical twins), `rwc_views.py`, `engine/publish.py`, generated `public/index.html`, `tests/test_publish_freshness.py`, and this claim/work-log entry in `READ-FIRST.md`. No edits to `data/`, `.github/`, `requirements.txt`, or `README.md` without expanding this claim first.
 - started: 2026-10-21T14:58Z
-- updated: 2026-10-21T15:03Z
-- notes: The committed ledger's latest per-document check is `2026-09-06T14:20:57Z` (45 days old at render). Streamlit now builds its preview from the stored ledger in a temporary directory, shows a prominent stale/unknown warning, and recalculates the election metric in America/Denver with an as-of date. Five deterministic tests, compilation, generated-page checks, and twin parity pass. `run.py selftest` is blocked by a pre-existing fixture path `/home/user/civic-engine/data/snapshots/c63daae848d0_gview` absent in this checkout; Streamlit is not installed in this sandbox, so no interactive runtime smoke was run.
+- updated: 2026-10-21T15:06Z
+- notes: The committed ledger's latest per-document check is `2026-09-06T14:20:57Z` (45 days old at render). Streamlit now builds its preview from the stored ledger in a temporary directory, shows a prominent stale/unknown warning, and recalculates the election metric in America/Denver with an as-of date. Five deterministic tests, compilation, generated-page checks, and twin parity pass. `run.py selftest` is blocked by a pre-existing fixture path `/home/user/civic-engine/data/snapshots/c63daae848d0_gview` absent in this checkout; Streamlit is not installed in this sandbox, so no interactive runtime smoke was run. Commit `23c116e` was pushed and PR #3 is open; `gh pr checks` reports no checks. No deployment or public-revision verification.
 
 ## Current repo state (updated 2026-09-10T11:05Z)
 
@@ -163,3 +163,4 @@ auto-redeploys from `main`).
 - 2026-09-10 10:45Z — console-worker: context pane shipped under the reel — meeting cards (tape + transcript links), ordinance-history column with per-mention tape jumps, caption lines that link to the exact tape second, and a minute-jumping full-transcript viewer; ordinance index builder committed with its built JSON.
 - 2026-09-10 11:05Z — console-worker: media backfill shipped — resumable Colab cell (captions → pipeline/captions/, audio → Releases, optional video) + Recordings & captions view in the Video vault; release-asset upload path live-verified. Video-in-git rejected: 260 meetings ≈ 130 GB vs the 100 MB blob cap.
 - 2026-10-21 15:03Z — arena-agent: Streamlit Ledger HQ no longer embeds a frozen `public/index.html`; it renders the stored ledger to a temporary preview, surfaces source-check age/unknown status, and recalculates the Nov. 3 countdown in America/Denver with a visible as-of date. Regenerated `public/index.html` now shows the actual 2026-09-06 check (45 days old) and 13 days until election as of Oct. 21. Five deterministic `unittest` cases, Python compilation, HTML assertions, and twin identity pass. Full `run.py selftest` remains blocked by its stale absolute fixture path; Streamlit is absent from the local sandbox.
+- 2026-10-21 15:06Z — arena-agent: committed as `23c116e`, pushed `arena/51771bde-therealwindycity`, and opened [PR #3](https://github.com/therealwindycity/therealwindycity/pull/3). No CI checks are reported; deployment and public-revision verification remain outstanding.
