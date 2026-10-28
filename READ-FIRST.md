@@ -66,6 +66,15 @@ Coordination is not optional here.
 
 ## Active claims
 
+### claim: calendar-ci-repair-package — safe cross-repository test repair
+- worker: arena-calendar-audit
+- status: done
+- stage: calendar and SEO patches packaged; CI tests through SEO pass locally; browser tests, target branch, remote CI, and deployment not verified
+- scope: `cross-repo/TheReelWindyCity-calendar-ci/**` and this coordination entry/work log in `READ-FIRST.md`.
+- started: 2026-10-28T20:17Z
+- updated: 2026-10-28T20:17Z
+- notes: Reproduced calendar-test failures at target head 71981922. Existing test deletes tracked meeting inputs; patch isolates fixture data and preserves inputs. A later local SEO audit failed eight checks; a second candidate patch repairs the homepage summary and reconciles SEO assertions with five intentionally undated pages. Local lint, typecheck, nine CI test suites, build, and SEO passed; browser test, remote CI and deployment not verified.
+
 ### claim: workdesk — merged Field Nation + WorkMarket work-order board (owner-requested, separate app)
 - worker: arena-agent-workdesk
 - status: done
@@ -176,3 +185,15 @@ auto-redeploys from `main`).
 - 2026-10-21 15:12Z — arena-agent: added a machine-readable 48-hour freshness deadline, visible expiration/unknown wording, and a regression test for the Denver Nov. 1 DST repeat (00:30 MDT, 01:30 MDT, 01:30 MST). Six unit tests, compilation, twin parity, and regenerated-page assertions pass. Updating PR #3; its head reference currently lags the pushed branch.
 - 2026-10-21 15:13Z — arena-agent: verified PR #3 still points to `23c116e` after commits `a9308e0` and `8839784` were pushed; its PR ref omits the freshness-expiry change. Will replace it with a new PR from the latest branch tip. No checks, deployment, or public-revision verification.
 - 2026-10-21 15:14Z — arena-agent: closed stale-head PR #3 and opened replacement PR #4 from the complete session branch, including the explicit freshness deadline and DST tests. No CI checks are reported; deployment and public-revision verification remain outstanding.
+
+- 2026-10-28 20:17Z — arena-calendar-audit: packaged an isolated-fixture
+  candidate for TheReelWindyCity PR #26 under
+  `cross-repo/TheReelWindyCity-calendar-ci/`. Reproduced CI calendar failures;
+  calendar 10/10 and transcript 7/7 pass in a disposable source copy, and
+  meeting-input hashes remain unchanged. No target writes or deployment.
+
+- 2026-10-28 20:23Z — arena-calendar-audit: full local target build exposed
+  eight SEO audit failures; added `seo-ci.patch` to the repair package. Local
+  lint, typecheck, nine pre-build CI suites, static export and SEO audit pass;
+  negative SEO checks catch a missing summary and missing required lastmod.
+  Dependencies installed with scripts disabled; no Playwright or remote CI.
