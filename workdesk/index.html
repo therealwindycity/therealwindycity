@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WorkDesk — Field Nation + WorkMarket in one feed</title>
+<meta name="description" content="One combined board of every available work order from Field Nation and WorkMarket. Filter, rank by real $/hour, apply in one click, track the pipeline.">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="assets/workdesk.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230e1116'/%3E%3Cpath d='M22 62 L40 34 L54 54 L64 42 L80 62' stroke='%23ffb020' stroke-width='9' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="boot-splash">
+  <div class="boot-inner">
+    <div class="boot-mark">⚡</div>
+    <div class="boot-text">WorkDesk</div>
+    <div class="boot-sub">loading your board…</div>
+  </div>
+</div>
+
+<a class="skip" href="#feed">Skip to work orders</a>
+
+<header id="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">⚡</span>
+    <span class="brand-name">WorkDesk</span>
+    <span class="brand-sub" id="brand-sub">field nation + workmarket</span>
+  </div>
+
+  <div class="topstats" id="topstats" role="status" aria-live="polite">
+    <div class="tstat" data-k="new"      title="New since you last looked"><b>0</b><span>new</span></div>
+    <div class="tstat" data-k="available" title="Available right now"><b>0</b><span>open</span></div>
+    <div class="tstat" data-k="applied"   title="You applied"><b>0</b><span>applied</span></div>
+    <div class="tstat" data-k="pipeline"  title="Dollars in your applied pipeline"><b>$0</b><span>pipeline</span></div>
+  </div>
+
+  <div class="topactions">
+    <button class="btn ghost" id="btn-refresh"   title="Re-pull from the relay and re-rank (R)">↻ Refresh</button>
+    <button class="btn ghost" id="btn-notifications" title="Turn on new-work desktop alerts">🔔 Alerts</button>
+    <button class="btn"       id="btn-setup"     title="Guided setup — pick up where you left off">🧭 Setup <span class="pill" id="setup-pill">0%</span></button>
+    <button class="btn ghost icon" id="btn-menu" title="More">⋯</button>
+  </div>
+</header>
+
+<nav id="menu-pop" class="pop" hidden>
+  <button data-act="wizard">🧭 Guided setup wizard</button>
+  <button data-act="import">📥 Import file / paste listing</button>
+  <button data-act="sync">🔗 Sync &amp; bridge settings</button>
+  <button data-act="profile">👤 My profile &amp; pay floor</button>
+  <button data-act="weights">⚖️ Ranking weights</button>
+  <button data-act="templates">✍️ Pitch templates</button>
+  <button data-act="relay">📡 Relay (auto-sync) settings</button>
+  <button data-act="export">💾 Export / backup my data</button>
+  <button data-act="diagnostics">🩺 Diagnostics &amp; self-test</button>
+  <hr>
+  <button data-act="advance">🚀 Ask to advance the program</button>
+  <button data-act="docs">📖 Setup guide</button>
+  <button data-act="about">ℹ️ About &amp; honest limits</button>
+</nav>
+
+<main>
+  <section id="coach" class="coach" hidden>
+    <div class="coach-body">
+      <div class="coach-step" id="coach-step">Step 1</div>
+      <div class="coach-text" id="coach-text"></div>
+    </div>
+    <div class="coach-actions">
+      <button class="btn sm" id="coach-do">Do it now</button>
+      <button class="btn sm ghost" id="coach-later">Later</button>
+      <button class="btn sm ghost" id="coach-close" title="Stop the nudges">✕</button>
+    </div>
+  </section>
+
+  <section id="banner-strip"></section>
+
+  <section id="controls">
+    <div class="row1">
+      <div class="search">
+        <span aria-hidden="true">🔎</span>
+        <input id="q" type="search" placeholder="Search title, company, city, skills, description…  ( / )" autocomplete="off" aria-label="Search work orders">
+        <button class="clear" id="q-clear" hidden title="Clear search">✕</button>
+      </div>
+      <div class="segmented" id="platform-seg" role="group" aria-label="Platform filter">
+        <button data-p="all"        class="on">Both</button>
+        <button data-p="fieldnation">Field Nation</button>
+        <button data-p="workmarket">WorkMarket</button>
+      </div>
+      <div class="segmented" id="sort-seg" role="group" aria-label="Sort">
+        <button data-s="score" class="on" title="WorkScore — my ranking of what's worth your time">★ Best</button>
+        <button data-s="hourly" title="Real dollars per hour">$ /hr</button>
+        <button data-s="pay"    title="Gross pay">Pay</button>
+        <button data-s="dist"   title="Closest to my base">Near</button>
+        <button data-s="fresh"  title="Newest posted first">New</button>
+        <button data-s="start"  title="Soonest work date">Date</button>
+      </div>
+    </div>
+
+    <div class="row2" id="filter-row">
+      <label class="fld"><span>Min pay</span>
+        <input id="f-minpay" type="number" min="0" step="25" placeholder="0">
+      </label>
+      <label class="fld"><span>Max miles</span>
+        <input id="f-maxdist" type="number" min="0" step="10" placeholder="any">
+      </label>
+      <label class="fld"><span>Work window</span>
+        <select id="f-when">
+          <option value="any">Any time</option>
+          <option value="today">Starts today</option>
+          <option value="3d">Within 3 days</option>
+          <option value="7d">Within 7 days</option>
+          <option value="14d">Within 14 days</option>
+          <option value="30d">Within 30 days</option>
+          <option value="weekend">Weekend only</option>
+        </select>
+      </label>
+      <label class="fld"><span>Must include</span>
+        <input id="f-must" type="text" placeholder="cabling, POS, fiber…">
+      </label>
+      <label class="fld"><span>Must NOT include</span>
+        <input id="f-not" type="text" placeholder="roof, travel, overnight…">
+      </label>
+      <label class="fld check"><input id="f-fresh" type="checkbox"><span>Only new since last visit</span></label>
+      <label class="fld check"><input id="f-open" type="checkbox" checked><span>Hide applied / ignored</span></label>
+      <button class="btn ghost sm" id="btn-reset-filters">Reset</button>
+    </div>
+
+    <div class="tabs" id="tabs" role="tablist">
+      <button role="tab" data-tab="available" class="on">Open board <em id="c-available">0</em></button>
+      <button role="tab" data-tab="new">New <em id="c-new">0</em></button>
+      <button role="tab" data-tab="saved">Saved <em id="c-saved">0</em></button>
+      <button role="tab" data-tab="applied">Applied <em id="c-applied">0</em></button>
+      <button role="tab" data-tab="outcomes">Won / lost <em id="c-outcomes">0</em></button>
+      <button role="tab" data-tab="ignored">Ignored <em id="c-ignored">0</em></button>
+    </div>
+  </section>
+
+  <section id="feed" aria-live="polite"></section>
+
+  <footer id="foot">
+    <div class="foot-l">
+      <span id="foot-status">—</span>
+    </div>
+    <div class="foot-r">
+      <button class="linkish" data-act="docs">Setup guide</button>
+      <button class="linkish" data-act="about">About &amp; limits</button>
+      <button class="linkish" data-act="advance">Advance the program</button>
+      <span class="dim" id="foot-version"></span>
+    </div>
+  </footer>
+</main>
+
+<!-- detail drawer -->
+<aside id="drawer" hidden aria-label="Work order detail">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-kicker" id="d-kicker"></div>
+      <h2 id="d-title"></h2>
+    </div>
+    <button class="btn ghost icon" id="d-close" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-body" id="d-body"></div>
+  <div class="drawer-foot" id="d-foot"></div>
+</aside>
+<div id="scrim" hidden></div>
+
+<!-- modal host: every pop-up in the app is rendered here -->
+<div id="modal-root" hidden>
+  <div class="modal-scrim" data-close></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <div class="modal-head">
+      <div class="modal-kicker" id="m-kicker"></div>
+      <h3 id="m-title"></h3>
+      <button class="btn ghost icon modal-x" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+    <div class="modal-foot" id="m-foot"></div>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script src="assets/util.js"></script>
+<script src="assets/geo.js"></script>
+<script src="assets/normalize.js"></script>
+<script src="assets/score.js"></script>
+<script src="assets/store.js"></script>
+<script src="assets/bridge.js"></script>
+<script src="assets/wizard.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
