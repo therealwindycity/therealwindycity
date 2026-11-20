@@ -14,14 +14,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from engine import db, digest, ingest  # noqa: E402
+from engine import db, digest, ingest, publish  # noqa: E402
 from engine.extract import process_jobs  # noqa: E402
 
 
-def cycle(conn) -> None:
+def cycle(conn, raise_on_error: bool = False) -> bool:
     print(f"[scheduler] cycle start {db.utcnow()}", flush=True)
     try:
-        from . import publish  # noqa: PLC0415
         n = ingest.crawl_all(conn)
         j = process_jobs(conn, kinds=("extract", "diff"))
         digest.build_digest(conn, days=1)
@@ -30,8 +29,12 @@ def cycle(conn) -> None:
         print(f"[scheduler] done: {n} links, {j} jobs, "
               f"{s['documents']} docs, {s['silent_edits']} silent edits, "
               f"{s['alerts']} alerts; republished {site}", flush=True)
+        return True
     except Exception:
         traceback.print_exc()
+        if raise_on_error:
+            raise
+        return False
 
 
 def main() -> None:
@@ -42,11 +45,14 @@ def main() -> None:
     args = ap.parse_args()
     db.init_db()
     conn = db.connect()
-    while True:
-        cycle(conn)
-        if args.once:
-            break
-        time.sleep(args.hours * 3600)
+    try:
+        while True:
+            cycle(conn, raise_on_error=args.once)
+            if args.once:
+                break
+            time.sleep(args.hours * 3600)
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":

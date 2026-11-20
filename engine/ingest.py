@@ -176,8 +176,13 @@ def _ingest_one(conn, source: str, url: str, title: str, raw: bytes,
     sha = hashlib.sha256(_hashable_bytes(url, raw)).hexdigest()
     name = re.sub(r"[^A-Za-z0-9._-]", "_",
                   Path(urllib.parse.urlsplit(url).path).name or "index.html")
-    local = str(db.SNAP_DIR / f"{sha[:12]}_{name[-80:]}")
-    Path(local).write_bytes(raw)
+    local_file = db.SNAP_DIR / f"{sha[:12]}_{name[-80:]}"
+    local_file.parent.mkdir(parents=True, exist_ok=True)
+    local_file.write_bytes(raw)
+    try:
+        local = local_file.resolve().relative_to(db.ROOT.resolve()).as_posix()
+    except ValueError:
+        local = str(local_file)
     doc = db.get_document_by_url(conn, url)
     if doc is None:
         doc_id = db.insert_document(conn, source, url, title or url, local,

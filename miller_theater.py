@@ -224,8 +224,9 @@ margin:0;color:#fff;letter-spacing:.5px}
             lab = f"Turn {r['n']}" if r["block"] == "turn" else f"Incident {r['n']}"
             url = f"https://www.youtube.com/watch?v={r['video']}&t={int(r['t0'])}s"
             fl = ",".join(f for f in FLAG_LABEL if r["flags"][f])
+            fl_suffix = f" \u00b7 {fl}" if fl else ""
             rows.append(f"#{i+1} [{lab} \u2014 {r['date']} \u00b7 {_fmt(r['t0'])}\u2192{_fmt(r['t1'])}"
-                        f"{(' \u00b7 ' + fl) if fl else ''}]({url})")
+                        f"{fl_suffix}]({url})")
         if len(pool) > 400:
             rows.append(f"*\u2026and {len(pool) - 400} more in the player above.*")
         st.markdown("\n\n".join(rows))

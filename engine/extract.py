@@ -18,7 +18,12 @@ def extract_document(conn, doc_id: int) -> str:
     doc = conn.execute("SELECT * FROM documents WHERE id = ?", (doc_id,)).fetchone()
     if doc is None:
         return f"doc {doc_id} missing"
-    path = Path(doc["local_path"])
+    path = db.resolve_snapshot_path(doc["local_path"])
+    if path is None:
+        with conn:
+            conn.execute("UPDATE documents SET status = ? WHERE id = ?",
+                         ("snapshot-missing", doc_id))
+        return f"doc {doc_id}: [snapshot-missing: {doc['local_path']}]"
     raw = path.read_bytes()
     name = path.name.lower()
 
