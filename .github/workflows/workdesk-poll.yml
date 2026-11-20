@@ -93,6 +93,10 @@ jobs:
 
       - name: Commit the feed if it changed
         run: |
+          if [ ! -f workdesk/data/feed.json ]; then
+            echo "workdesk/data/feed.json not present (dormant — no API credentials configured)"
+            exit 0
+          fi
           git config user.name "workdesk-bot"
           git config user.email "workdesk@localhost"
           git add workdesk/data/feed.json
@@ -101,6 +105,7 @@ jobs:
           else
             COUNT=$(python3 -c "import json;print(json.load(open('workdesk/data/feed.json'))['count'])" 2>/dev/null || echo "?")
             git commit -m "workdesk feed: ${COUNT} orders from official APIs"
+            git pull --rebase
             git push
           fi
 

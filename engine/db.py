@@ -82,6 +82,32 @@ def utcnow() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
+def resolve_snapshot_path(local_path: str | Path | None) -> Path | None:
+    """Resolve a stored snapshot path across checkouts and machines.
+
+    Older rows in data/engine.db recorded absolute paths from another machine
+    (e.g. /home/user/civic-engine/data/snapshots/...). Check the stored path
+    first, then ROOT-relative paths, then SNAP_DIR / filename.
+    """
+    if not local_path:
+        return None
+    p = Path(local_path)
+    if p.is_absolute():
+        if p.is_file():
+            return p
+    else:
+        rel = ROOT / p
+        if rel.is_file():
+            return rel
+        if p.is_file():
+            return p.resolve()
+    if p.name:
+        candidate = SNAP_DIR / p.name
+        if candidate.is_file():
+            return candidate
+    return None
+
+
 def connect() -> sqlite3.Connection:
     DATA.mkdir(exist_ok=True)
     conn = sqlite3.connect(DB_PATH)

@@ -14,9 +14,15 @@ from . import db
 from .ingest import html_to_text
 
 
-def _text_of(local_path: str) -> str:
-    raw = Path(local_path).read_bytes()
-    if local_path.lower().endswith((".html", ".htm")):
+def _text_of(local_path: str | Path) -> str:
+    path = Path(local_path)
+    raw = path.read_bytes()
+    head = raw[:1024].lstrip().lower()
+    if (
+        path.name.lower().endswith((".html", ".htm"))
+        or head.startswith(b"<!doctype")
+        or head.startswith(b"<html")
+    ):
         return html_to_text(raw.decode("utf-8", errors="replace"))
     try:
         return raw.decode("utf-8", errors="replace")
@@ -32,8 +38,8 @@ def diff_document(conn, doc_id: int, new_seq: int) -> str:
     if len(vers) < 2:
         return f"doc {doc_id}: only one version"
     prev, cur = vers[-2], vers[-1]
-    old = _find_capture(doc_id, prev["sha256"])
-    new = _find_capture(doc_id, cur["sha256"])
+    old = _find_capture(doc_id, prev["sha256"], conn=conn)
+    new = _find_capture(doc_id, cur["sha256"], conn=conn)
     if old is None or new is None:
         return f"doc {doc_id}: snapshot missing for diff"
     old_lines = _text_of(str(old)).splitlines()
@@ -60,12 +66,20 @@ def diff_document(conn, doc_id: int, new_seq: int) -> str:
     return f"doc {doc_id}: SILENT EDIT -> {summary} (diff: {out.name})"
 
 
-def _find_capture(doc_id: int, sha256: str) -> Path | None:
-    doc = conn_less_doc(doc_id)
-    for fp in db.SNAP_DIR.iterdir():
-        if fp.name.startswith(sha256[:12] + "_"):
-            return fp
-    return Path(doc["local_path"]) if doc and doc["sha256"] == sha256 else None
+def _find_capture(doc_id: int, sha256: str, conn=None) -> Path | None:
+    if db.SNAP_DIR.exists():
+        for fp in db.SNAP_DIR.iterdir():
+            if fp.name.startswith(sha256[:12] + "_"):
+                return fp
+    if conn is not None:
+        doc = conn.execute(
+            "SELECT * FROM documents WHERE id = ?", (doc_id,)
+        ).fetchone()
+    else:
+        doc = conn_less_doc(doc_id)
+    if doc and doc["sha256"] == sha256:
+        return db.resolve_snapshot_path(doc["local_path"])
+    return None
 
 
 def conn_less_doc(doc_id: int):

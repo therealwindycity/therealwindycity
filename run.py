@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 from engine import analyze, db, digest, ingest, records
@@ -28,72 +29,85 @@ def _fail(msg: str):
 
 def cmd_selftest(_args):
     print("== Civic Transparency Engine selftest (offline, zero deps) ==\n")
-    report = db.init_db()
-    print(f"[1] storage initialized -> {report['db']} (FTS5: {report['fts_enabled']})")
+    orig_paths = (db.DATA, db.SNAP_DIR, db.TEXT_DIR, db.OUT_DIR, db.DB_PATH)
+    with tempfile.TemporaryDirectory(prefix="civic-selftest-") as tmp:
+        tmp_data = Path(tmp) / "data"
+        db.DATA = tmp_data
+        db.SNAP_DIR = tmp_data / "snapshots"
+        db.TEXT_DIR = tmp_data / "text"
+        db.OUT_DIR = tmp_data / "out"
+        db.DB_PATH = tmp_data / "engine.db"
+        conn = None
+        try:
+            report = db.init_db()
+            print(f"[1] storage initialized -> {report['db']} (FTS5: {report['fts_enabled']})")
 
-    fix = db.DATA / "selftest"
-    if fix.exists():
-        shutil.rmtree(fix)
-    fix.mkdir(parents=True)
-    (fix / "minutes-2026-08-18.txt").write_text(
-        "Finance Committee minutes. The committee considered a $186,500 contract "
-        "with a consultant to study the roundabout at Pershing and Converse. "
-        "Discussion also touched on the administrative warrant ordinance in "
-        "Chapter 1.28 of the municipal code.")
-    page = ('<html><body><h1>Agenda preview</h1>'
-            '<p>The council will consider the proposed data center annexation '
-            'and a resolution on reclaimed water fill-and-flush discharges.</p>'
-            '</body></html>')
-    (fix / "agenda-preview.html").write_text(page)
+            fix = db.DATA / "selftest"
+            if fix.exists():
+                shutil.rmtree(fix)
+            fix.mkdir(parents=True)
+            (fix / "minutes-2026-08-18.txt").write_text(
+                "Finance Committee minutes. The committee considered a $186,500 contract "
+                "with a consultant to study the roundabout at Pershing and Converse. "
+                "Discussion also touched on the administrative warrant ordinance in "
+                "Chapter 1.28 of the municipal code.")
+            page = ('<html><body><h1>Agenda preview</h1>'
+                    '<p>The council will consider the proposed data center annexation '
+                    'and a resolution on reclaimed water fill-and-flush discharges.</p>'
+                    '</body></html>')
+            (fix / "agenda-preview.html").write_text(page)
 
-    conn = db.connect()
-    ingest.crawl_fixture(conn, "fixture_city_hall", str(fix))
-    process_jobs(conn, kinds=("extract", "diff"))
+            conn = db.connect()
+            ingest.crawl_fixture(conn, "fixture_city_hall", str(fix))
+            process_jobs(conn, kinds=("extract", "diff"))
 
-    assert digest.stats(conn)["documents"] >= 2, _fail("documents not tracked")
-    hits = db.search(conn, '"data center"') or db.search(conn, "data")
-    assert hits, _fail("full-text search returned nothing")
-    alerts = digest.stats(conn)["alerts"]
-    assert alerts > 0, _fail("watchlist produced no alerts")
-    print(f"[2] ingestion + extraction OK: 2 docs indexed, search hits "
-          f"{len(hits)}, watchlist alerts {alerts}")
+            assert digest.stats(conn)["documents"] >= 2, _fail("documents not tracked")
+            hits = db.search(conn, '"data center"') or db.search(conn, "data")
+            assert hits, _fail("full-text search returned nothing")
+            alerts = digest.stats(conn)["alerts"]
+            assert alerts > 0, _fail("watchlist produced no alerts")
+            print(f"[2] ingestion + extraction OK: 2 docs indexed, search hits "
+                  f"{len(hits)}, watchlist alerts {alerts}")
 
-    (fix / "minutes-2026-08-18.txt").write_text(
-        "Finance Committee minutes. The committee considered a $286,500 contract "
-        "with a consultant to study the roundabout at Pershing and Converse. "
-        "The vote was taken after an executive session not listed on the agenda.")
-    ingest.crawl_fixture(conn, "fixture_city_hall", str(fix))
-    process_jobs(conn, kinds=("extract", "diff"))
+            (fix / "minutes-2026-08-18.txt").write_text(
+                "Finance Committee minutes. The committee considered a $286,500 contract "
+                "with a consultant to study the roundabout at Pershing and Converse. "
+                "The vote was taken after an executive session not listed on the agenda.")
+            ingest.crawl_fixture(conn, "fixture_city_hall", str(fix))
+            process_jobs(conn, kinds=("extract", "diff"))
 
-    st = digest.stats(conn)
-    assert st["silent_edits"] >= 1, _fail("silent edit not detected")
-    v = conn.execute(
-        "SELECT change_summary FROM versions WHERE seq = 2").fetchone()
-    print(f"[3] silent-edit detector OK: version 2 -> '{v['change_summary']}'")
+            st = digest.stats(conn)
+            assert st["silent_edits"] >= 1, _fail("silent edit not detected")
+            v = conn.execute(
+                "SELECT change_summary FROM versions WHERE seq = 2").fetchone()
+            print(f"[3] silent-edit detector OK: version 2 -> '{v['change_summary']}'")
 
-    result = analyze.Summarizer().summarize(
-        "The council approved the annexation. The vote was six to three. "
-        "Residents filed a referendum petition the following week. The clerk "
-        "began verifying signatures. The mayor asked the city attorney to seek "
-        "a court ruling. The ordinance remains suspended during verification.")
-    assert result["method"] == "extractive-offline"
-    print(f"[4] analysis OK (method={result['method']}): "
-          + result["summary"].splitlines()[0][:78] + "…")
+            result = analyze.Summarizer().summarize(
+                "The council approved the annexation. The vote was six to three. "
+                "Residents filed a referendum petition the following week. The clerk "
+                "began verifying signatures. The mayor asked the city attorney to seek "
+                "a court ruling. The ordinance remains suspended during verification.")
+            assert result["method"] == "extractive-offline"
+            print(f"[4] analysis OK (method={result['method']}): "
+                  + result["summary"].splitlines()[0][:78] + "…")
 
-    body = records.generate_pra(
-        conn,
-        records_description=("All engineering studies, draft scopes of work, and "
-                             "correspondence regarding the Pershing/Converse/19th "
-                             "roundabout operational analysis"),
-        date_range="2026-01-01 to present")
-    assert "16-4-201" in body
-    print("[5] Wyoming PRA draft generated and stored as DRAFT (human sends it)")
+            body = records.generate_pra(
+                conn,
+                records_description=("All engineering studies, draft scopes of work, and "
+                                     "correspondence regarding the Pershing/Converse/19th "
+                                     "roundabout operational analysis"),
+                date_range="2026-01-01 to present")
+            assert "16-4-201" in body
+            print("[5] Wyoming PRA draft generated and stored as DRAFT (human sends it)")
 
-    body = digest.build_digest(conn, days=2)
-    assert "SILENT EDIT" in body or "SILENT-EDIT" in body
-    print(f"[6] digest written -> {db.OUT_DIR}")
-    print("\nSELFTEST PASS — all modules operational. Remove data/selftest* and run"
-          " `python3 run.py init && python3 run.py crawl` to go live.")
+            body = digest.build_digest(conn, days=2)
+            assert "SILENT EDIT" in body or "SILENT-EDIT" in body
+            print(f"[6] digest written -> {db.OUT_DIR} (isolated temp dir; production data/ untouched)")
+            print("\nSELFTEST PASS — all modules operational (ran in isolated temporary directory).")
+        finally:
+            if conn is not None:
+                conn.close()
+            db.DATA, db.SNAP_DIR, db.TEXT_DIR, db.OUT_DIR, db.DB_PATH = orig_paths
 
 
 def cmd_init(_args):
@@ -165,6 +179,8 @@ def main():
     p.add_argument("kind", choices=["pra", "comment"])
     p.add_argument("description", help="records sought (pra) or agenda item (comment)")
     p.add_argument("date_range", help="e.g. '2026-01-01 to present' or meeting date")
+    p.add_argument("--body-name", default="Cheyenne City Council",
+                   help="governing body name (comment only)")
     p.add_argument("--position"); p.add_argument("--ask"); p.add_argument("--facts")
     args = ap.parse_args()
     {"selftest": cmd_selftest, "init": cmd_init, "crawl": cmd_crawl,

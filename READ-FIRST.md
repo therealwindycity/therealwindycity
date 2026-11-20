@@ -66,6 +66,15 @@ Coordination is not optional here.
 
 ## Active claims
 
+### claim: civic-pipeline-and-ci-repair — unblock civic scheduler, snapshot resolution, selftest isolation, Python 3.11 syntax, and failing CI workflows
+- worker: arena-agent-pipeline-repair
+- status: done
+- stage: all fixes verified locally (15/15 unittest, run.py selftest, poll.py selftest, 82/82 workdesk core tests, all active .py compile on Python 3.11, twin parity); ready for push and PR to main (remote CI run and GitHub Pages enablement not verified)
+- scope: `engine/db.py`, `engine/extract.py`, `engine/detect.py`, `engine/ingest.py`, `engine/scheduler.py`, `engine/records.py`, `run.py`, `miller_theater.py`, `.github/workflows/workdesk-poll.yml`, `.github/workflows/civic-cycle.yml`, `public/index.html`, `tests/test_engine_pipeline.py`, and this claim/work-log entry in `READ-FIRST.md`. Explicitly NOT touching: `streamlit_app.py`, `Transparency_Index_App.py` (twins), `data/`, `requirements.txt`, `README.md`.
+- started: 2026-11-20T21:50Z
+- updated: 2026-11-20T21:53Z
+- notes: Found five concrete repo defects: (1) `engine/scheduler.py` crashed on every `civic-cycle` / `meeting-watch` run due to `from . import publish` relative import when run as a script, while swallowing the exception and exiting 0; (2) `engine/extract.py` and `engine/detect.py` failed on legacy `/home/user/civic-engine/data/snapshots/...` paths stored in `data/engine.db` even though the snapshot files exist in `data/snapshots/`; (3) `run.py selftest` mutated production `data/engine.db` and `run.py request comment` missed `--body-name`; (4) `.github/workflows/workdesk-poll.yml` failed every 4 hours with exit 128 on `git add workdesk/data/feed.json` when dormant, and `civic-cycle.yml` checked step-level `env.NTFY_TOPIC` in `if:`; (5) `miller_theater.py` line 228 had a Python 3.11 f-string backslash `SyntaxError`. All fixed with regression tests in `tests/test_engine_pipeline.py`; `public/index.html` regenerated. Note: `workdesk-pages` still requires the owner to enable GitHub Pages (Settings -> Pages -> Source: GitHub Actions) in the web UI.
+
 ### claim: calendar-ci-repair-package — safe cross-repository test repair
 - worker: arena-calendar-audit
 - status: done
@@ -197,3 +206,20 @@ auto-redeploys from `main`).
   lint, typecheck, nine pre-build CI suites, static export and SEO audit pass;
   negative SEO checks catch a missing summary and missing required lastmod.
   Dependencies installed with scripts disabled; no Playwright or remote CI.
+
+- 2026-11-20 21:53Z — arena-agent-pipeline-repair: unblocked `engine/scheduler.py`
+  (`from . import publish` -> `from engine import publish`, and raise errors in
+  `--once` mode so CI cannot silently pass on crash); added portable snapshot
+  resolution (`db.resolve_snapshot_path`) used by `engine/extract.py`,
+  `engine/detect.py`, and relative storage in `engine/ingest.py` so legacy
+  `/home/user/civic-engine/data/snapshots/...` DB rows drain cleanly; isolated
+  `run.py selftest` in a temporary directory and added `--body-name` to
+  `run.py request comment` (+ fixed `DRAFT` typo in `engine/records.py`); fixed
+  Python 3.11 f-string backslash `SyntaxError` in `miller_theater.py`; guarded
+  dormant `git add workdesk/data/feed.json` in `.github/workflows/workdesk-poll.yml`
+  (exit 128 fix) and fixed step-level `NTFY_TOPIC` check in `civic-cycle.yml`;
+  regenerated `public/index.html` and added `tests/test_engine_pipeline.py`.
+  Verified locally: 15/15 unittest, `run.py selftest`, `poll.py selftest`,
+  82/82 WorkDesk core tests, all active `.py` files compile on Python 3.11,
+  twins identical. Remote Actions runs, Streamlit runtime, and GitHub Pages
+  enablement (still needed in repo Settings for `workdesk-pages`) not verified.
