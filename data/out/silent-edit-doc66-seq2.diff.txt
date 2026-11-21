@@ -1,0 +1,67 @@
+--- seq1 (2026-11-21T07:16:34Z)
++++ seq2 (2026-11-21T19:22:29Z)
+@@ -114,7 +114,7 @@
+ Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
+ by
+ Garrett Grochowski
+-21 hours ago
++November 19, 2026
+ November 19, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -148,35 +148,33 @@
+ Search
+ Popular
+ Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
+-Man arrested for reportedly destroying Cheyenne hotel room, shattering window
+-Former Cheyenne nonprofit director charged with embezzling $10K in organization funds
+-Cheyenne man, claiming man he reportedly attacked was sex offender, charged with aggravated assault
++Laramie County Recent Arrests (11/19/26–11/20/26)
+ Cheyenne man charged with homicide of 10-month-old girl
+-Latest News
+-(OPINION) The Mayor’s Minute with Patrick Collins (11/20/26)
++North Cheyenne neighborhood to fill in with more houses, apartments upon plat approvals next week
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
++Latest News
++Former Wyoming Boys’ School resident suing for alleged abuse told staff they were ‘like family,’ witness testifies
++by
++Wyofile
++4 hours ago
++Obituaries: Kylander; Sharp; Thiel
+ by
+ Cap City Staff
+-13 minutes ago
++20 hours ago
+ November 20, 2026
+-East High junior James Shafer-Barrera is LCSD1 student of the week for Nov. 23
++Feds back $4B project to connect eastern and western electricity grids
++by
++Wyofile
++21 hours ago
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
+ by
+ Garrett Grochowski
+-1 hour ago
++22 hours ago
+ November 20, 2026
+-Laramie County Recent Arrests (11/19/26–11/20/26)
+-by
+-Klark Byrd
+-3 hours ago
+-November 20, 2026
+-LCCC gets TIME Magazine nod as one of America’s best community colleges
+-by
+-Garrett Grochowski
+-3 hours ago
+-November 20, 2026
+-Wyoming voters soundly rejected a major property tax cut. Here’s why.
+-by
+-Wyofile
+-5 hours ago
++(LETTER) Republican voters deserve honesty, transparency, accountability
++by
++Cap City Staff
++22 hours ago
+ November 20, 2026
+ Facebook Page
+ Instagram Page

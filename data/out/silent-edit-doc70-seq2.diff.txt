@@ -1,0 +1,70 @@
+--- seq1 (2026-11-21T07:16:46Z)
++++ seq2 (2026-11-21T19:22:41Z)
+@@ -114,7 +114,7 @@
+ Man arrested for reportedly destroying Cheyenne hotel room, shattering window
+ by
+ Garrett Grochowski
+-19 hours ago
++November 19, 2026
+ November 19, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -144,35 +144,34 @@
+ Search
+ Popular
+ Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
+-Man arrested for reportedly destroying Cheyenne hotel room, shattering window
+-Former Cheyenne nonprofit director charged with embezzling $10K in organization funds
+-Cheyenne man, claiming man he reportedly attacked was sex offender, charged with aggravated assault
+-Laramie County Recent Arrests (11/18/26–11/19/26)
+-Latest News
+-Cheyenne’s first snow record falls today as forecast calls for warm, windy Friday
+-by
+-Klark Byrd
+-27 minutes ago
++Laramie County Recent Arrests (11/19/26–11/20/26)
++Cheyenne man charged with homicide of 10-month-old girl
++North Cheyenne neighborhood to fill in with more houses, apartments upon plat approvals next week
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
++Latest News
++Former Wyoming Boys’ School resident suing for alleged abuse told staff they were ‘like family,’ witness testifies
++by
++Wyofile
++4 hours ago
++Obituaries: Kylander; Sharp; Thiel
++by
++Cap City Staff
++20 hours ago
+ November 20, 2026
+-Cheyenne Happenings (11/20, 11/21): Christmas Craft Show, Holiday Night Market, more
+-by
+-Nick Perkins
+-15 hours ago
+-November 19, 2026
+-Laramie man gets 30 years for targeting 13-year-old for sexual abuse, CSAM possession
+-by
+-Greg Hirst
+-16 hours ago
+-November 19, 2026
+-Gordon stalls $13M grant to trona company that’s cutting 350 jobs in southwest Wyoming
++Feds back $4B project to connect eastern and western electricity grids
+ by
+ Wyofile
+-16 hours ago
+-Obituaries: Prevedel; Boyd; Gross
++21 hours ago
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
++by
++Garrett Grochowski
++22 hours ago
++November 20, 2026
++(LETTER) Republican voters deserve honesty, transparency, accountability
+ by
+ Cap City Staff
+-16 hours ago
+-November 19, 2026
++22 hours ago
++November 20, 2026
+ Facebook Page
+ Instagram Page
+ Obituaries
