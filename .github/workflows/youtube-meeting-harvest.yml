@@ -9,7 +9,7 @@ on:
       - 'tools/wyoming_youtube_channels.json'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: youtube-meeting-harvest
@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -28,6 +30,18 @@ jobs:
         run: python3 -m pip install --disable-pip-version-check yt-dlp
       - name: Enumerate public YouTube uploads
         run: python3 -u tools/youtube_meeting_harvest.py
+      - name: Commit harvested CSVs to the working branch
+        run: |
+          git config user.name "youtube-harvest-bot"
+          git config user.email "youtube-harvest@localhost"
+          git add youtube_harvest/*.csv
+          if git diff --cached --quiet; then
+            echo "harvest outputs unchanged"
+          else
+            git commit -m "YouTube harvest outputs"
+            git pull --rebase origin "${GITHUB_HEAD_REF}"
+            git push origin "HEAD:${GITHUB_HEAD_REF}"
+          fi
       - name: Upload CSV artifacts
         uses: actions/upload-artifact@v4
         with:
