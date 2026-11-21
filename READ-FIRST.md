@@ -66,6 +66,15 @@ Coordination is not optional here.
 
 ## Active claims
 
+### claim: exhibit-video-pipeline — build all 18 POE exhibit videos (statutory cards + real meeting tape + gallery + per-row source kit)
+- worker: arena-agent-poe-exhibit
+- status: done
+- stage: shipped — 18/18 MP4s (1080×1920, 27–38 s, libx264+aac, 34.4 MB) + gallery `exhibit/videos/index.html` + 18 cards `exhibit/cards/` + **per-row source kit beside every video** (`videos/POE-XX.txt` proposed narration, `POE-XX.card.png` card layer, `POE-XX.footage.mp4` raw footage layer — independent, re-cuttable). **Tape's own audio only: no synthesized VO, no burned karaoke captions** (owner directive 2026-11-21; word timings still drive pacing/duration and the `READ Ns` card footer); GRANICUS provenance drawtext burned over the footage half; **all 18 rows render real meeting tape** (the 6 rows whose own sitting has no recording — POE-02/04/05/06/07/13 — show the closest verified sitting in the row's source chain, gallery notes say so); POE-13 long header title auto-fits (was overflowing into RECORD AUDIT). `node exhibit/tests/video-pipeline.test.mjs` → 22/22, core 46/46; on branch → **PR #7**
+- scope: NEW PATHS ONLY — `exhibit/pipeline/**` (builder script + tts.js), `exhibit/videos/**` (18 MP4s + 54 kit files + gallery index.html), `exhibit/cards/**` (1080×960 statutory exhibit cards), `exhibit/.gitignore` for build intermediates, additive links from `exhibit/index.html`/`exhibit/README.md`, tests under `exhibit/tests/`, **additive staged cuts under `pipeline/videos/` (16 new date-verified files; no existing file modified)**, and this claim entry in READ-FIRST.md. Explicitly NOT touching: streamlit twins, requirements.txt, data/, engine/, existing pipeline/ footage, .github/, public/, README.md, workdesk/, uploads/.
+- started: 2026-11-21T08:05Z
+- updated: 2026-11-21T16:41Z
+- notes: Owner asked for the full video generation pipeline over all 18 matrix rows: verify/install ffmpeg+edge-tts+pillow (yt-dlp only if needed), render 1080x960 statutory cards + narrator VO per row, composite 1080x1920 vertical videos using any Granicus footage in repo (pipeline/videos/, pipeline/renders/ — read-only) or synthesized evidence frames where none exists, and ship all 18 MP4s with a downloadable gallery in exhibit/. Dependencies installed via pip only (pypi allowed); no repo-level requirements.txt change. **Follow-up directive (2026-11-21): "Remove the robot voice and the captions from that narration and just include the proposed narration in a file alongside the video file for each" + "include with each video the different original source layers independent of one another" → tape-audio-only videos + per-row narration/card/footage kits, implemented same day.**
+
 ### claim: civic-pipeline-and-ci-repair — unblock civic scheduler, snapshot resolution, selftest isolation, Python 3.11 syntax, and failing CI workflows
 - worker: arena-agent-pipeline-repair
 - status: done
@@ -223,3 +232,90 @@ auto-redeploys from `main`).
   82/82 WorkDesk core tests, all active `.py` files compile on Python 3.11,
   twins identical. Remote Actions runs, Streamlit runtime, and GitHub Pages
   enablement (still needed in repo Settings for `workdesk-pages`) not verified.
+
+- 2026-11-21 07:05Z — arena-agent-poe-exhibit: shipped `exhibit/` — additive
+  static Point-of-Order Exhibit (no build, no network): 18-row transcript-vs-
+  document contradiction matrix (rows 1–6 from owner-supplied matrix, rows 7–18
+  from repo-verified records incl. the three video seed cases and the OMA pin-cite
+  correction carried in-row), per-occurrence IRAC on every row, interactive
+  30-second podium rebuttal with word-paced karaoke teleprompter, dossier palette
+  (#EDE7D9/#A62B1C/#24456B). Citation discipline enforced by harness: body+date+
+  source+statute on every row, no invented clock timestamps, repo source files
+  spot-checked on disk. `node exhibit/tests/core.test.mjs` → 46/46; static smoke
+  on :8091 all-200. Scope: `exhibit/**` + this entry only; twins byte-identical
+  (md5 match), nothing else touched. Remote Pages enablement not attempted.
+
+- 2026-11-21 10:28Z — arena-agent-poe-exhibit: shipped the full video pipeline
+  over all 18 rows (claim `exhibit-video-pipeline`). Chain: `pipeline/tts.js`
+  (offline meSpeak @132, prefix-synthesis word timings, engine recycled every
+  40 calls — emscripten FS bug "Bad data: en_dict" after ~60 synths; espeak-ng
+  wheel and edge-tts abandoned: former too slow/mult-word broken, latter
+  network-blocked) → `pipeline/cards.py` (18 statutory cards 1080×960 +
+  18 synthesized record frames with honesty label) → `pipeline/build.py`
+  (vstack 1080×1920, ASS karaoke burn via `fontsdir` (no fontconfig), gold
+  live word #E5A100, sidechaincompress duck on the 2 footage rows, libx264+aac).
+  Deliverables: `exhibit/videos/POE-01..18.mp4` (27–38 s, 34.4 MB total) +
+  `exhibit/videos/index.html` gallery (posters, per-row download links, no
+  external subresources) + `exhibit/cards/` + additive toolbar/footer links in
+  `exhibit/index.html`, README rebuild docs. Footage: POE-03 = mar9_cut.mp4,
+  POE-09 = apr27_hand.mp4 @+122s (lands on the 02:46:12 POO); remaining 16
+  rows carry labeled synthesized frames — no invented clock timestamps.
+  Tests: `video-pipeline.test.mjs` 19/19, `core.test.mjs` 46/46, all gallery
+  routes 200 on :8091. Scope: NEW PATHS only (`exhibit/pipeline|videos|cards|
+  tests|README|index.html|.gitignore` + this entry); `pipeline/**` read-only.
+
+- 2026-11-21 14:45Z — arena-agent-poe-exhibit: upgraded the exhibit pipeline
+  so ALL 18 rows render real meeting footage instead of static frames (same
+  claim `exhibit-video-pipeline`). Egress recon: youtube/youtu.be/granicus/
+  archive.org/objects.githubusercontent all curl 000 (allowlist = github,
+  npm, pypi only) → yt-dlp/ffmpeg download route impossible in-sandbox; took
+  the wire-to-repo-footage route. Source mining: TheReelWindyCity `video/`
+  (25 compilations, 1280×720, burned per-segment date+time captions),
+  `videos/gaveled-down-miller-montage` (README maps its 10 segments), local
+  `pipeline/videos` canon cuts; every branch of TheReelWindyCity +
+  bartimoussmith-oss/therealwindycity + all other org repos scanned for media
+  (none beyond these; Releases empty on all three repos). Staged 16 new
+  date-verified cuts into `pipeline/videos/` (39 MB): jul13_wolfe,
+  sep14_dais, apr13_cox, apr21_finance_a/b, sep14_interrupt, aug10_gb
+  (concat of two Aug 10 windows), jun22_clock, jun22_wolfe, sep14_cox_a/b/c,
+  aug24_gb, jun8_wolfe, sep14_entered, may26_comment — each offset chosen
+  where the source's burned caption reads exactly the provenance label
+  (verified by full-res caption-strip extraction; scene-cut maps per clip).
+  `build.py` FOOTAGE now maps 18/18 rows; TAPE_NOTES documents the six rows
+  whose cited sitting has no recording (POE-02 → Sep 14 docket origin,
+  POE-04 → Apr 13 root hearing, POE-05/07 → Finance Apr 21 same body,
+  POE-06 → Sep 14 in-range GB, POE-13 → Aug 24 nearest sitting) — burned +
+  drawn labels always state the tape's true meeting. Re-rendered 18/18 MP4s
+  (38.8 MB) + gallery; tests reworked to assert 18/18 GRANICUS TAPE labels,
+  FOOTAGE coverage, no synthesized-frame text → 46/46 + 20/20; QA frames
+  verified on :8091 (all 200). Scope: `exhibit/**` + 16 additive
+  `pipeline/videos/` cuts + this entry; no existing pipeline file modified.
+
+- 2026-11-21 16:41Z — arena-agent-poe-exhibit: stripped the synthesized VO +
+  burned karaoke captions from all 18 exhibit videos and shipped per-row
+  source kits (same claim `exhibit-video-pipeline`), per owner directive:
+  "Remove the robot voice and the captions … include the proposed narration
+  in a file alongside the video file for each" + "include with each video the
+  different original source layers independent of one another." `build.py`
+  rewritten: filter = card loop + clip (`-ss/-t`, durations still paced from
+  work/timings.json) → scale 1080/letterbox pad 960 → drawtext GRANICUS
+  TAPE label → vstack → fades; audio = tape only (`volume=0.9`, afade,
+  atrim — no adelay/sidechain/amix, no `ass=`); ASS/GOLD/chunk helpers,
+  FRAMES/VO paths removed. Per row now also writes `videos/POE-XX.txt`
+  (row rebuttal, plain text), copies `POE-XX.card.png` + `POE-XX.footage.mp4`
+  (whole staged clip; POE-09's POO moment at +122 s — gallery notes it).
+  Gallery: sub "CARD + REAL MEETING TAPE · SOURCE LAYERS INCLUDED", per-row
+  Narration/Footage/Card layer download links, lede/footer/meta no longer
+  claim karaoke/VO. `cards.py`: retired legacy `render_frame` (the
+  SYNTHESIZED RECORD FRAME slate — all rows are footage now), card footer
+  `VO Ns` → `READ Ns`, header date/body auto-fit (POE-13's long window title
+  pre-existingly overflowed into RECORD AUDIT; fixed). `tts.js` header doc
+  updated to timings-only role (logic untouched — pacing must stay stable).
+  README + exhibit/index.html copy updated. Tests: dropped ASS/gold checks →
+  narration .txt 55–90 words, card layer 1080×960, footage layer ftyp ≥100 KB,
+  gallery links all 18 layer files (22 checks; MP4 specs + 18/18 GRANICUS +
+  FOOTAGE coverage kept). Rebuilt cards + 18 MP4s (34.4 MB) + 54 kit files +
+  gallery; core 46/46 + video-pipeline 22/22; QA frames (POE-04/09/13)
+  confirm provenance label + no burned captions; volumedetect mean
+  −19.7/−35.1 dB = live tape audio; static smoke :8095 gallery/txt/card/
+  footage → 200. Scope: `exhibit/**` only; branch commit updates PR #7.

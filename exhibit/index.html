@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Point-of-Order Exhibit — 2026 Cheyenne Contradiction Matrix</title>
+<meta name="description" content="18-row transcript-vs-document contradiction matrix with per-occurrence IRAC analysis and an interactive 30-second podium rebuttal. Dossier exhibit, Cheyenne municipal records 2026.">
+<link rel="stylesheet" href="assets/exhibit.css">
+</head>
+<body>
+
+<div class="topbar">
+  <span>The Real Windy City // Public Record Audit</span>
+  <span>Vol. X — Point-of-Order Exhibit</span>
+</div>
+
+<header class="masthead">
+  <div class="stamp">Exhibit<br>POE-18</div>
+  <h1>Point-of-Order Exhibit</h1>
+  <div class="sub">2026 Cheyenne Transcript-vs-Document Contradiction Matrix · 18 Rows · Per-Occurrence IRAC</div>
+  <p class="lede">
+    Every row cites a verified meeting body, date, speaker or packet document, and the
+    statutory or packet discrepancy it collides with. Spoken representation on the left of the
+    record column; the written record that contradicts it in oxblood beneath. No invented
+    verbatim timestamps — where the tape is unavailable, the citation stands in its place.
+  </p>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<div class="controls">
+  <label class="sr" for="search">Search the matrix</label>
+  <input id="search" type="search" placeholder="Search date, body, statute, speaker, dollar figure…" autocomplete="off">
+  <div id="chips"></div>
+  <div class="view-toggle">
+    <button type="button" class="chip" id="view-matrix" aria-pressed="true">Matrix</button>
+    <button type="button" class="chip" id="view-cards" aria-pressed="false">Cards</button>
+    <a class="chip" href="videos/index.html" style="text-decoration:none">18 videos ▸</a>
+  </div>
+</div>
+
+<main class="wrap">
+  <div id="count" style="font-family:var(--mono);font-size:12.5px;color:var(--pencil);margin-bottom:10px;"></div>
+  <div id="body"></div>
+</main>
+
+<!-- 30-second podium rebuttal stage -->
+<div class="stage" id="stage" role="dialog" aria-modal="true" aria-labelledby="stage-title" tabindex="-1">
+  <div class="stage-panel">
+    <button type="button" class="close" id="stage-close" aria-label="Close rebuttal stage">×</button>
+    <h2 id="stage-title">30-Second Podium Rebuttal</h2>
+    <div class="where" id="stage-where"></div>
+
+    <div class="rebuttal-claim" id="stage-claim"></div>
+
+    <div class="clock">
+      <div class="dial" id="dial">30</div>
+      <div class="meta">
+        <b id="word-pos">0 / 0 words</b><br>
+        Space = start/pause · Esc = close<br>
+        Gold = current word · red = statute / dollar figure
+      </div>
+    </div>
+
+    <div class="teleprompter" id="teleprompter"></div>
+    <div class="progress"><i id="progress"></i></div>
+
+    <div class="actions">
+      <button type="button" class="btn red" id="play">▶ Start</button>
+      <button type="button" class="btn ghost" id="reset">↺ Reset</button>
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <strong>Sourcing discipline.</strong> Rows 1–6 from the owner-supplied contradiction matrix;
+  rows 7–18 reconstructed from this repository’s verified records — Granicus dockets and minutes,
+  planning memos, committee debriefs, the violations register, and the legal dissertation’s
+  pin-cite audit (which corrects the OMA mapping carried in row 8). Where exact video timestamps
+  are unavailable in public indexes, entries cite meeting body, date, speaker/document, and
+  statute instead.<br>
+  <strong>Palette.</strong> Bone paper #EDE7D9 · oxblood #A62B1C · pencil blue #24456B —
+  same dossier skin as the viral exhibit pipeline.<br>
+  <strong>Rebuttal timing.</strong> 30-second teleprompter paced by word count; scripts written
+  in the 55–90 word band (≈110–180 wpm podium range) and machine-validated by the test harness.<br>
+  <strong>Video gallery.</strong> All 18 rows also exist as 1080×1920 MP4s — statutory card,
+  18 statutory cards over verified meeting footage (all 18 rows, tape's own
+  audio — no synthesized voice, no burned captions), with each row's narration
+  + card + footage source layers downloadable beside every MP4 —
+  in <a href="videos/index.html">videos/index.html</a> (watch + download).
+</footer>
+
+<script src="data/matrix.js"></script>
+<script src="assets/exhibit.js"></script>
+</body>
+</html>

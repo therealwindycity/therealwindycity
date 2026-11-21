@@ -1,0 +1,6 @@
+# Video-pipeline intermediates (claim exhibit-video-pipeline).
+# Final deliverables (videos/*.mp4, cards/*.png, gallery) ARE committed.
+pipeline/node_modules/
+pipeline/work/
+__pycache__/
+*.pyc
