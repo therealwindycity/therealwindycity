@@ -22,3 +22,7 @@ __pycache__/
 # raw PDFs are on branch archive/raw-pdfs (Streamlit Cloud 1 GB clone limit)
 2026-09-14-council/civicwatch/data/raw/**
 !2026-09-14-council/civicwatch/data/raw/README.md
+
+# temporary Drive-workbook YouTube enrichment artifacts (kept locally, not in Git)
+google_drive/
+youtube_harvest/
