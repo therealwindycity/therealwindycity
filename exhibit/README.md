@@ -28,6 +28,10 @@ python3 -m http.server 8080 --directory exhibit
 | `assets/exhibit.css` | Dossier aesthetic (palette locked to the video pipeline) |
 | `assets/exhibit.js` | UI controller: search, tag chips, matrix ⇄ cards, IRAC expand, 30 s karaoke teleprompter |
 | `tests/core.test.mjs` | Dependency-free Node harness (46 checks) |
+| `videos/` | **18 vertical MP4s (1080×1920) + `index.html` gallery** — watch & download |
+| `cards/` | The 18 statutory exhibit cards (1080×960 PNG) composited into every video |
+| `pipeline/` | Rebuild chain: offline TTS (`tts.js`), card/frame renderer (`cards.py`), ffmpeg compositor (`build.py`) |
+| `tests/video-pipeline.test.mjs` | Dependency-free Node harness for the video deliverables (19 checks) |
 
 ## The matrix
 
@@ -58,15 +62,55 @@ Click **▶ Run 30s rebuttal** on any row (or `#POE-08` deep-link → open row �
 - Space = start/pause, Esc = close, Restart/Reset controls;
 - scripts live in a machine-validated **55–90 word** band (deliberate podium pace).
 
+## Video gallery (`videos/`)
+
+All 18 rows also ship as **1080×1920 MP4s** with a downloadable gallery at
+`videos/index.html` (also linked from the app's toolbar and footer):
+
+- **top half** = the 1080×960 statutory exhibit card (dollar figures oxblood,
+  statutes pencil blue);
+- **bottom half** = verified Granicus footage from the cited meeting where a
+  local tape exists (`POE-03` Mar 9 GB, `POE-09` Apr 27 — provenance-labeled on
+  screen), otherwise an honestly-labeled **synthesized record frame**
+  ("no local tape — citation stands in its place");
+- **narrator VO** = the row's 55–90 word podium rebuttal (offline TTS, meSpeak
+  @ 132 wpm), word-level timing by prefix synthesis;
+- **karaoke captions** burned in with the live word gold `#E5A100`; footage
+  audio ducks under the VO via `sidechaincompress`;
+- no invented verbatim clock timestamps anywhere — same citation discipline
+  as the matrix.
+
+### Rebuilding the videos
+
+```bash
+# 0. one-time: node deps for the offline TTS (mespeak, declared in package.json)
+cd exhibit/pipeline && npm install && cd ../..
+
+# 1. word timings + VO wavs          (work/timings.json, work/vo/*.wav)
+node exhibit/pipeline/tts.js
+
+# 2. cards + synthesized frames      (cards/*.png, work/frames/*.png)
+.venv/bin/python exhibit/pipeline/cards.py
+
+# 3. composite 18 MP4s + gallery     (videos/*.mp4, videos/index.html)
+.venv/bin/python exhibit/pipeline/build.py
+```
+
+ffmpeg comes from `imageio-ffmpeg` (bundled binary); fonts are system DejaVu
+via `fontsdir` (no fontconfig needed). `pipeline/work/` is git-ignored.
+
 ## Tests
 
 ```bash
 node exhibit/tests/core.test.mjs
+node exhibit/tests/video-pipeline.test.mjs
 ```
 
-46 checks: matrix shape, citation discipline, IRAC coverage, rebuttal timing,
-filtering, provenance, offline-safety (no external subresources), palette lock,
-and controller boot in a vm + DOM stub.
+46 + 19 checks: matrix shape, citation discipline, IRAC coverage, rebuttal
+timing, filtering, provenance, offline-safety (no external subresources),
+palette lock, controller boot in a vm + DOM stub — plus MP4 specs
+(1080×1920 / 15–60 s / audio), card sizes, caption gold, gallery completeness
+and download links, and the honesty/provenance labels.
 
 ## Notes
 

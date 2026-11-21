@@ -66,6 +66,15 @@ Coordination is not optional here.
 
 ## Active claims
 
+### claim: exhibit-video-pipeline — build all 18 POE exhibit videos (cards + voiceovers + 1080x1920 MP4s + gallery)
+- worker: arena-agent-poe-exhibit
+- status: done
+- stage: shipped — 18/18 MP4s (1080×1920, 27–38 s, libx264+aac, 34.4 MB) + gallery `exhibit/videos/index.html` + 18 cards `exhibit/cards/`; VO via offline meSpeak @132 (prefix-synthesis word timings, engine recycled every 40 calls to dodge the emscripten FS bug); karaoke ASS burned with `fontsdir` (gold live word #E5A100); footage rows POE-03/POE-09 sidechain-ducked, other16 rows labeled synthesized frames; `node exhibit/tests/video-pipeline.test.mjs` → 19/19, core 46/46
+- scope: NEW PATHS ONLY — `exhibit/pipeline/**` (builder script + tts.js), `exhibit/videos/**` (18 MP4s + gallery index.html), `exhibit/cards/**` (1080×960 statutory exhibit cards), `exhibit/.gitignore` for build intermediates, additive links from `exhibit/index.html`/`exhibit/README.md`, tests under `exhibit/tests/`, and this claim entry in READ-FIRST.md. Explicitly NOT touching: streamlit twins, requirements.txt, data/, engine/, pipeline/ (read-only source footage), .github/, public/, README.md, workdesk/, uploads/.
+- started: 2026-11-21T08:05Z
+- updated: 2026-11-21T10:20Z
+- notes: Owner asked for the full video generation pipeline over all 18 matrix rows: verify/install ffmpeg+edge-tts+pillow (yt-dlp only if needed), render 1080x960 statutory cards + narrator VO per row, composite 1080x1920 vertical videos using any Granicus footage in repo (pipeline/videos/, pipeline/renders/ — read-only) or synthesized evidence frames where none exists, and ship all 18 MP4s with a downloadable gallery in exhibit/. Dependencies installed via pip only (pypi allowed); no repo-level requirements.txt change.
+
 ### claim: civic-pipeline-and-ci-repair — unblock civic scheduler, snapshot resolution, selftest isolation, Python 3.11 syntax, and failing CI workflows
 - worker: arena-agent-pipeline-repair
 - status: done
@@ -235,3 +244,22 @@ auto-redeploys from `main`).
   spot-checked on disk. `node exhibit/tests/core.test.mjs` → 46/46; static smoke
   on :8091 all-200. Scope: `exhibit/**` + this entry only; twins byte-identical
   (md5 match), nothing else touched. Remote Pages enablement not attempted.
+
+- 2026-11-21 10:28Z — arena-agent-poe-exhibit: shipped the full video pipeline
+  over all 18 rows (claim `exhibit-video-pipeline`). Chain: `pipeline/tts.js`
+  (offline meSpeak @132, prefix-synthesis word timings, engine recycled every
+  40 calls — emscripten FS bug "Bad data: en_dict" after ~60 synths; espeak-ng
+  wheel and edge-tts abandoned: former too slow/mult-word broken, latter
+  network-blocked) → `pipeline/cards.py` (18 statutory cards 1080×960 +
+  18 synthesized record frames with honesty label) → `pipeline/build.py`
+  (vstack 1080×1920, ASS karaoke burn via `fontsdir` (no fontconfig), gold
+  live word #E5A100, sidechaincompress duck on the 2 footage rows, libx264+aac).
+  Deliverables: `exhibit/videos/POE-01..18.mp4` (27–38 s, 34.4 MB total) +
+  `exhibit/videos/index.html` gallery (posters, per-row download links, no
+  external subresources) + `exhibit/cards/` + additive toolbar/footer links in
+  `exhibit/index.html`, README rebuild docs. Footage: POE-03 = mar9_cut.mp4,
+  POE-09 = apr27_hand.mp4 @+122s (lands on the 02:46:12 POO); remaining 16
+  rows carry labeled synthesized frames — no invented clock timestamps.
+  Tests: `video-pipeline.test.mjs` 19/19, `core.test.mjs` 46/46, all gallery
+  routes 200 on :8091. Scope: NEW PATHS only (`exhibit/pipeline|videos|cards|
+  tests|README|index.html|.gitignore` + this entry); `pipeline/**` read-only.
