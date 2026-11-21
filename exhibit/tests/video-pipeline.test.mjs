@@ -2,8 +2,9 @@
 // Verifies: 18 MP4s exist at 1080x1920 inside the 15–60 s band with audio;
 // 18 statutory cards (1080x960 PNG) and 18 word-timing files; gallery index
 // links every row, carries no external subresources, and every video is
-// downloadable; caption files keep the gold live-word color and the frame
-// honesty label stays in place.
+// downloadable; caption files keep the gold live-word color and every one of
+// the 18 rows carries a GRANICUS TAPE provenance label (all rows render real
+// meeting footage — no synthesized frames).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -103,15 +104,13 @@ const badAss = ids.filter((id) => {
 ok('every ASS caption: gold live word, dialog events, 1920 playfield',
   badAss.length === 0, badAss.join(',') || `${ids.length}/${ids.length}`);
 
-const frameDir = path.join(PIPE, 'work', 'frames');
-const badFrame = ids.filter((id) => {
-  const f = path.join(frameDir, `${id}.png`);
-  if (!fs.existsSync(f)) return true;
-  const txt = fs.readFileSync(f);
-  return pngSize(f)?.w !== 1080 || pngSize(f)?.h !== 960 || txt.length < 20_000;
+const provDir = path.join(PIPE, 'work', 'prov');
+const badProv = ids.filter((id) => {
+  const f = path.join(provDir, `${id}.txt`);
+  return !fs.existsSync(f) || !/GRANICUS TAPE · /.test(fs.readFileSync(f, 'utf8'));
 });
-ok('every synthesized record frame: 1080×960 PNG (rebuild intermediate)',
-  badFrame.length === 0, badFrame.join(',') || `${ids.length}/${ids.length}`);
+ok('every row carries a GRANICUS TAPE provenance label (18/18 footage)',
+  badProv.length === 0, badProv.join(',') || `${ids.length}/${ids.length}`);
 
 const galleryPath = path.join(EXHIBIT, 'videos', 'index.html');
 ok('gallery index exists', fs.existsSync(galleryPath));
@@ -127,6 +126,10 @@ if (fs.existsSync(galleryPath)) {
     ['#EDE7D9', '#A62B1C', '#24456B', '#E5A100'].every((c) => g.includes(c)));
   const posterOk = ids.every((id) => g.includes(`poster="../cards/${id}.png"`));
   ok('every gallery item posters its card', posterOk);
+  ok('gallery lists Granicus-tape footage for all 18 rows',
+    (g.match(/Granicus tape/g) || []).length === 18);
+  ok('gallery carries no synthesized-frame fallback text',
+    !g.includes('Synthesized record frame'));
 }
 
 section('app integration + honesty labels');
@@ -136,19 +139,14 @@ ok('index.html links the video gallery (relative)',
 ok('index.html still offline-safe',
   !/(src|href)\s*=\s*["']https?:\/\//i.test(idx));
 
-const provDir = path.join(PIPE, 'work', 'prov');
-const badProv = ['POE-03', 'POE-09'].filter((id) => {
-  const f = path.join(provDir, `${id}.txt`);
-  return !fs.existsSync(f) || !/GRANICUS TAPE · /.test(fs.readFileSync(f, 'utf8'));
-});
-ok('footage rows carry a GRANICUS TAPE provenance label',
-  badProv.length === 0, badProv.join(',') || 'POE-03, POE-09');
-
-const cardsSrc = fs.readFileSync(path.join(PIPE, 'cards.py'), 'utf8');
-ok('record frames keep the synthesized-frame honesty label',
-  cardsSrc.includes('SYNTHESIZED RECORD FRAME'));
+const buildSrc = fs.readFileSync(path.join(PIPE, 'build.py'), 'utf8');
+const footageIds = new Set(
+  [...buildSrc.matchAll(/"(POE-\d\d)":\s*\("/g)].map((m) => m[1]));
+ok('build.py FOOTAGE wires all 18 rows to a staged clip',
+  ids.every((id) => footageIds.has(id)),
+  `${ids.filter((id) => footageIds.has(id)).length}/18`);
 ok('caption gold matches gallery gold (single source of truth)',
-  fs.readFileSync(path.join(PIPE, 'build.py'), 'utf8').includes('#E5A100'));
+  buildSrc.includes('#E5A100'));
 
 console.log(`\n${'─'.repeat(60)}`);
 console.log(`POE video pipeline harness: ${pass} pass, ${fail} fail`);

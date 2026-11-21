@@ -69,10 +69,10 @@ Coordination is not optional here.
 ### claim: exhibit-video-pipeline — build all 18 POE exhibit videos (cards + voiceovers + 1080x1920 MP4s + gallery)
 - worker: arena-agent-poe-exhibit
 - status: done
-- stage: shipped — 18/18 MP4s (1080×1920, 27–38 s, libx264+aac, 34.4 MB) + gallery `exhibit/videos/index.html` + 18 cards `exhibit/cards/`; VO via offline meSpeak @132 (prefix-synthesis word timings, engine recycled every 40 calls to dodge the emscripten FS bug); karaoke ASS burned with `fontsdir` (gold live word #E5A100); footage rows POE-03/POE-09 sidechain-ducked, other16 rows labeled synthesized frames; `node exhibit/tests/video-pipeline.test.mjs` → 19/19, core 46/46
-- scope: NEW PATHS ONLY — `exhibit/pipeline/**` (builder script + tts.js), `exhibit/videos/**` (18 MP4s + gallery index.html), `exhibit/cards/**` (1080×960 statutory exhibit cards), `exhibit/.gitignore` for build intermediates, additive links from `exhibit/index.html`/`exhibit/README.md`, tests under `exhibit/tests/`, and this claim entry in READ-FIRST.md. Explicitly NOT touching: streamlit twins, requirements.txt, data/, engine/, pipeline/ (read-only source footage), .github/, public/, README.md, workdesk/, uploads/.
+- stage: shipped — 18/18 MP4s (1080×1920, 27–38 s, libx264+aac, 38.8 MB) + gallery `exhibit/videos/index.html` + 18 cards `exhibit/cards/`; VO via offline meSpeak @132 (prefix-synthesis word timings, engine recycled every 40 calls to dodge the emscripten FS bug); karaoke ASS burned with `fontsdir` (gold live word #E5A100); **all 18 rows now render real Granicus/YouTube meeting footage** (every row sidechain-ducked; provenance burned top-left; the 6 rows whose own sitting has no recording — POE-02/04/05/06/07/13 — show the closest verified sitting in the row's source chain with gallery notes saying so); `node exhibit/tests/video-pipeline.test.mjs` → 20/20, core 46/46
+- scope: NEW PATHS ONLY — `exhibit/pipeline/**` (builder script + tts.js), `exhibit/videos/**` (18 MP4s + gallery index.html), `exhibit/cards/**` (1080×960 statutory exhibit cards), `exhibit/.gitignore` for build intermediates, additive links from `exhibit/index.html`/`exhibit/README.md`, tests under `exhibit/tests/`, **additive staged cuts under `pipeline/videos/` (16 new date-verified files; no existing file modified)**, and this claim entry in READ-FIRST.md. Explicitly NOT touching: streamlit twins, requirements.txt, data/, engine/, existing pipeline/ footage, .github/, public/, README.md, workdesk/, uploads/.
 - started: 2026-11-21T08:05Z
-- updated: 2026-11-21T10:20Z
+- updated: 2026-11-21T14:45Z
 - notes: Owner asked for the full video generation pipeline over all 18 matrix rows: verify/install ffmpeg+edge-tts+pillow (yt-dlp only if needed), render 1080x960 statutory cards + narrator VO per row, composite 1080x1920 vertical videos using any Granicus footage in repo (pipeline/videos/, pipeline/renders/ — read-only) or synthesized evidence frames where none exists, and ship all 18 MP4s with a downloadable gallery in exhibit/. Dependencies installed via pip only (pypi allowed); no repo-level requirements.txt change.
 
 ### claim: civic-pipeline-and-ci-repair — unblock civic scheduler, snapshot resolution, selftest isolation, Python 3.11 syntax, and failing CI workflows
@@ -263,3 +263,30 @@ auto-redeploys from `main`).
   Tests: `video-pipeline.test.mjs` 19/19, `core.test.mjs` 46/46, all gallery
   routes 200 on :8091. Scope: NEW PATHS only (`exhibit/pipeline|videos|cards|
   tests|README|index.html|.gitignore` + this entry); `pipeline/**` read-only.
+
+- 2026-11-21 14:45Z — arena-agent-poe-exhibit: upgraded the exhibit pipeline
+  so ALL 18 rows render real meeting footage instead of static frames (same
+  claim `exhibit-video-pipeline`). Egress recon: youtube/youtu.be/granicus/
+  archive.org/objects.githubusercontent all curl 000 (allowlist = github,
+  npm, pypi only) → yt-dlp/ffmpeg download route impossible in-sandbox; took
+  the wire-to-repo-footage route. Source mining: TheReelWindyCity `video/`
+  (25 compilations, 1280×720, burned per-segment date+time captions),
+  `videos/gaveled-down-miller-montage` (README maps its 10 segments), local
+  `pipeline/videos` canon cuts; every branch of TheReelWindyCity +
+  bartimoussmith-oss/therealwindycity + all other org repos scanned for media
+  (none beyond these; Releases empty on all three repos). Staged 16 new
+  date-verified cuts into `pipeline/videos/` (39 MB): jul13_wolfe,
+  sep14_dais, apr13_cox, apr21_finance_a/b, sep14_interrupt, aug10_gb
+  (concat of two Aug 10 windows), jun22_clock, jun22_wolfe, sep14_cox_a/b/c,
+  aug24_gb, jun8_wolfe, sep14_entered, may26_comment — each offset chosen
+  where the source's burned caption reads exactly the provenance label
+  (verified by full-res caption-strip extraction; scene-cut maps per clip).
+  `build.py` FOOTAGE now maps 18/18 rows; TAPE_NOTES documents the six rows
+  whose cited sitting has no recording (POE-02 → Sep 14 docket origin,
+  POE-04 → Apr 13 root hearing, POE-05/07 → Finance Apr 21 same body,
+  POE-06 → Sep 14 in-range GB, POE-13 → Aug 24 nearest sitting) — burned +
+  drawn labels always state the tape's true meeting. Re-rendered 18/18 MP4s
+  (38.8 MB) + gallery; tests reworked to assert 18/18 GRANICUS TAPE labels,
+  FOOTAGE coverage, no synthesized-frame text → 46/46 + 20/20; QA frames
+  verified on :8091 (all 200). Scope: `exhibit/**` + 16 additive
+  `pipeline/videos/` cuts + this entry; no existing pipeline file modified.

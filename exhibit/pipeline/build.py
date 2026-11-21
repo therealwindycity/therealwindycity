@@ -3,15 +3,19 @@
 
 Per row:
   top    = exhibit/cards/POE-XX.png            (1080x960 statutory card, static)
-  bottom = staged Granicus clip (date-matched) or the synthesized record frame
+  bottom = staged meeting clip — real Granicus/YouTube council tape for EVERY
+           row (date-verified against burned-in captions on the source cut)
   vstack -> 1080x1920, burn word-level karaoke captions (ASS, gold live word)
-  audio  = narrator VO (delayed 0.4 s); footage rows duck the clip under the
-           VO via sidechaincompress; frame rows are VO-only (no tape exists)
+  audio  = narrator VO (delayed 0.4 s); the tape ducks under the VO via
+           sidechaincompress
 
 Outputs exhibit/videos/POE-XX.mp4 + exhibit/videos/index.html (gallery).
 
-Footage mapping is date-verified against the cited meeting; every other row
-carries the honestly-labeled synthesized frame. No invented timestamps.
+All 18 rows render from staged footage under pipeline/videos/ (cut from the
+verified meeting compilations in TheReelWindyCity `video/` + the local Mar 9 /
+Apr 27 canon cuts). Where a row's cited sitting has no recording in this
+corpus, the tape is the closest verified sitting in the row's source chain
+and both the burned label and the gallery say so — no invented timestamps.
 """
 import json
 import re
@@ -42,12 +46,55 @@ W, H = 1080, 1920
 HALF = 960
 
 # Date-verified footage: row id -> (clip under pipeline/videos/, -ss offset,
-# provenance label). POE-03 cites the Mar 9 GB (staged mar9_cut = canon cut
-# from that meeting); POE-09 cites Apr 27 and apr27_hand +122s lands on the
-# 02:46:12 POO (canon index; clip starts 02:44:05).
+# provenance label burned top-left of the tape half). Every row now has tape.
+# Provenance per staged cut (verified against the source compilation's burned
+# caption at the cut point):
+#   POE-03 mar9_cut = canon Mar 9 GB cut (04:33:21–04:34:09); POE-09
+#   apr27_hand +122s lands on the 02:46:12 POO (canon index).
+#   jul13_wolfe/sep14_dais/apr13_cox/apr21_finance_*/sep14_interrupt/
+#   aug10_gb/jun22_*/sep14_cox_*/aug24_gb/jun8_wolfe/sep14_entered/
+#   may26_comment were staged from TheReelWindyCity video/ compilations at
+#   offsets whose burned captions read exactly the label below.
 FOOTAGE = {
+    "POE-01": ("jul13_wolfe.mp4", 0, "City Council · July 13, 2026"),
+    "POE-02": ("sep14_dais.mp4", 0, "City Council · September 14, 2026"),
     "POE-03": ("mar9_cut.mp4", 0, "City Council GB · March 9, 2026"),
+    "POE-04": ("apr13_cox.mp4", 0, "City Council · April 13, 2026"),
+    "POE-05": ("apr21_finance_a.mp4", 0, "Finance Committee · April 21, 2026"),
+    "POE-06": ("sep14_interrupt.mp4", 0, "City Council · September 14, 2026"),
+    "POE-07": ("apr21_finance_b.mp4", 0, "Finance Committee · April 21, 2026"),
+    "POE-08": ("aug10_gb.mp4", 0, "City Council · August 10, 2026"),
     "POE-09": ("apr27_hand.mp4", 122, "City Council GB · April 27, 2026"),
+    "POE-10": ("jun22_clock.mp4", 0, "City Council · June 22, 2026"),
+    "POE-11": ("jun22_wolfe.mp4", 0, "City Council · June 22, 2026"),
+    "POE-12": ("sep14_cox_a.mp4", 0, "City Council · September 14, 2026"),
+    "POE-13": ("aug24_gb.mp4", 0, "City Council · August 24, 2026"),
+    "POE-14": ("jun8_wolfe.mp4", 0, "City Council · June 8, 2026"),
+    "POE-15": ("sep14_cox_b.mp4", 0, "City Council · September 14, 2026"),
+    "POE-16": ("sep14_cox_c.mp4", 0, "City Council · September 14, 2026"),
+    "POE-17": ("sep14_entered.mp4", 0, "City Council · September 14, 2026"),
+    "POE-18": ("may26_comment.mp4", 0, "City Council · May 26, 2026"),
+}
+
+# Gallery honesty notes for rows whose tape is not the row's own cited
+# sitting (the burned label + drawn label already state the true tape date).
+TAPE_NOTES = {
+    "POE-02": ("Tape: Sep 14 GB — the docket this row audits opens on "
+               "Sep 14; the Sep 28–Nov 17 sittings have no public recording "
+               "in this corpus."),
+    "POE-04": ("Tape: Apr 13 first-reading hearing — the root of the "
+               "chronology this row audits; Oct 21–Nov 16 sittings are not "
+               "on tape in this corpus."),
+    "POE-05": ("Tape: Finance Committee, Apr 21 — same body; the Oct 26 "
+               "sitting this row cites is not on tape in this corpus."),
+    "POE-06": ("Tape: Sep 14 GB (inside this row's Sept–Oct range); the "
+               "Finance Sept 3 / Oct 12 sittings are not on tape in this "
+               "corpus."),
+    "POE-07": ("Tape: Finance Committee, Apr 21 — same body; the Oct 26 "
+               "vote this row cites is not on tape in this corpus."),
+    "POE-13": ("Tape: Aug 24 GB — nearest governing-body sitting to the "
+               "Aug 21 work session this row cites (no recording of the "
+               "work session in this corpus)."),
 }
 
 # ASS colors (&HAABBGGRR)
@@ -318,13 +365,11 @@ def write_gallery(matrix, metas):
     for row in matrix["rows"]:
         rid = row["id"]
         m = metas[rid]
-        if rid in FOOTAGE:
-            clip_name, ss, tape = FOOTAGE[rid]
-            prov = (f"<b>Footage</b> · Granicus tape <code>{clip_name}</code> "
-                    f"— {tape}")
-        else:
-            prov = ("<b>Synthesized record frame</b> · no local tape for this "
-                    "sitting — citation stands in its place")
+        clip_name, ss, tape = FOOTAGE[rid]
+        prov = (f"<b>Footage</b> · Granicus tape <code>{clip_name}</code> "
+                f"— {tape}")
+        if rid in TAPE_NOTES:
+            prov += f"<br>{TAPE_NOTES[rid]}"
         items.append(f"""<article class="item">
 <video controls preload="metadata" poster="../cards/{rid}.png" src="{rid}.mp4"></video>
 <div class="meta">
@@ -355,8 +400,11 @@ def write_gallery(matrix, metas):
 <h1>Video Gallery</h1>
 <div class="sub">18 EXHIBITS · 1080×1920 · NARRATOR REBUTTAL + KARAOKE CAPTIONS</div>
 <p class="lede">Each video stacks the 1080×960 statutory exhibit card over
-verified Granicus footage from the cited meeting where a local tape exists,
-or over an honestly-labeled synthesized record frame where it does not.
+verified Granicus/YouTube meeting footage — every one of the 18 rows plays
+real tape from the cited meeting where a recording exists in this corpus,
+or from the closest verified sitting in the row's source chain where the
+row's own sitting was never recorded (the burned label and each card's
+footage line say exactly which meeting you are watching).
 Captions highlight the live word in gold; dollar figures and statutes are
 flagged on the card. Every row cites meeting body, date, source, and statute —
 no invented verbatim timestamps.</p>

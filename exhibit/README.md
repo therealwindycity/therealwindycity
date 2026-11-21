@@ -69,10 +69,13 @@ All 18 rows also ship as **1080×1920 MP4s** with a downloadable gallery at
 
 - **top half** = the 1080×960 statutory exhibit card (dollar figures oxblood,
   statutes pencil blue);
-- **bottom half** = verified Granicus footage from the cited meeting where a
-  local tape exists (`POE-03` Mar 9 GB, `POE-09` Apr 27 — provenance-labeled on
-  screen), otherwise an honestly-labeled **synthesized record frame**
-  ("no local tape — citation stands in its place");
+- **bottom half** = verified Granicus/YouTube meeting footage for **all 18
+  rows** — date-verified against the burned-in caption at each staged cut and
+  provenance-labeled on screen (`GRANICUS TAPE · <body> · <date>`). Where a
+  row's own sitting was never recorded in this corpus, the tape is the closest
+  verified sitting in the row's source chain and the gallery says so (e.g.
+  `POE-05`/`POE-07` show the Finance Committee's Apr 21 sitting, `POE-13`
+  shows the Aug 24 GB — the nearest tape to its Aug 21 work session);
 - **narrator VO** = the row's 55–90 word podium rebuttal (offline TTS, meSpeak
   @ 132 wpm), word-level timing by prefix synthesis;
 - **karaoke captions** burned in with the live word gold `#E5A100`; footage
@@ -89,7 +92,7 @@ cd exhibit/pipeline && npm install && cd ../..
 # 1. word timings + VO wavs          (work/timings.json, work/vo/*.wav)
 node exhibit/pipeline/tts.js
 
-# 2. cards + synthesized frames      (cards/*.png, work/frames/*.png)
+# 2. statutory cards                 (cards/*.png)
 .venv/bin/python exhibit/pipeline/cards.py
 
 # 3. composite 18 MP4s + gallery     (videos/*.mp4, videos/index.html)
