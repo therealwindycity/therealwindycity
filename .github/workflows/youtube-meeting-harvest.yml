@@ -2,6 +2,11 @@ name: youtube-meeting-harvest
 
 on:
   workflow_dispatch: {}
+  pull_request:
+    paths:
+      - '.github/workflows/youtube-meeting-harvest.yml'
+      - 'tools/youtube_meeting_harvest.py'
+      - 'tools/wyoming_youtube_channels.json'
 
 permissions:
   contents: read
