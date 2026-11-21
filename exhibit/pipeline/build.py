@@ -5,11 +5,16 @@ Per row:
   top    = exhibit/cards/POE-XX.png            (1080x960 statutory card, static)
   bottom = staged meeting clip — real Granicus/YouTube council tape for EVERY
            row (date-verified against burned-in captions on the source cut)
-  vstack -> 1080x1920, burn word-level karaoke captions (ASS, gold live word)
-  audio  = narrator VO (delayed 0.4 s); the tape ducks under the VO via
-           sidechaincompress
+  vstack -> 1080x1920; tape audio only (no synthesized VO, no burned captions;
+           the GRANICUS TAPE provenance label stays)
 
-Outputs exhibit/videos/POE-XX.mp4 + exhibit/videos/index.html (gallery).
+Outputs, per row, all under exhibit/videos/:
+  POE-XX.mp4          final composite (card + tape, tape audio)
+  POE-XX.txt          the proposed narration (row rebuttal, plain text)
+  POE-XX.card.png     the card layer, independent (1080x960)
+  POE-XX.footage.mp4  the raw footage layer, independent (staged cut as used)
+plus the gallery index.html. Video duration = LEAD + narration read-time +
+TAIL, so each cut is paced to its script even though the voice is not mixed.
 
 All 18 rows render from staged footage under pipeline/videos/ (cut from the
 verified meeting compilations in TheReelWindyCity `video/` + the local Mar 9 /
@@ -18,7 +23,7 @@ corpus, the tape is the closest verified sitting in the row's source chain
 and both the burned label and the gallery say so — no invented timestamps.
 """
 import json
-import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -30,17 +35,14 @@ PIPE = Path(__file__).resolve().parent
 ROOT = PIPE.parent                     # exhibit/
 WORK = PIPE / "work"
 CARDS = ROOT / "cards"
-FRAMES = WORK / "frames"
-VO = WORK / "vo"
-ASS = WORK / "ass"
 PROV = WORK / "prov"
 VIDEOS = ROOT / "videos"
 
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 FDIR = Path("/usr/share/fonts/truetype/dejavu")
 
-LEAD = 0.4     # silence before the VO starts
-TAIL = 1.3     # hold after the VO ends
+LEAD = 0.4     # lead-in before the narration read-time window
+TAIL = 1.3     # hold after the narration read-time window
 FPS = 30
 W, H = 1080, 1920
 HALF = 960
@@ -97,84 +99,6 @@ TAPE_NOTES = {
                "work session in this corpus)."),
 }
 
-# ASS colors (&HAABBGGRR)
-GOLD = "&H0000A1E5"     # #E5A100 live word
-BONE = "&H00EDE7D9"     # spoken
-DIM = "&H0079858A"      # upcoming
-
-def esc(t: str) -> str:
-    return t.replace("\\", "").replace("{", "").replace("}", "")
-
-def chunk_words(words):
-    """Group words into caption chunks: <=8 words, <=66 chars, break after
-    punctuation once >=3 words are in the chunk."""
-    chunks, cur, chars = [], [], 0
-    for w in words:
-        add = len(w["t"]) + (1 if cur else 0)
-        break_after = bool(re.search(r"[,.;:!?]$", w["t"])) and len(cur) >= 3
-        if cur and (chars + add > 66 or len(cur) >= 8 or break_after):
-            chunks.append(cur)
-            cur, chars = [], 0
-        cur.append(w)
-        chars += len(w["t"]) + (1 if cur[:-1] else 0)
-    if cur:
-        chunks.append(cur)
-    return chunks
-
-def tc(seconds: float) -> str:
-    if seconds < 0:
-        seconds = 0.0
-    h = int(seconds // 3600)
-    m = int((seconds % 3600) // 60)
-    s = seconds % 60
-    return f"{h}:{m:02d}:{s:05.2f}"
-
-def write_ass(row_id: str, words, path: Path):
-    chunks = chunk_words(words)
-    lines = [
-        "[Script Info]",
-        "ScriptType: v4.00+",
-        "PlayResX: 1080",
-        "PlayResY: 1920",
-        "WrapStyle: 0",
-        "ScaledBorderAndShadow: yes",
-        "",
-        "[V4+ Styles]",
-        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, "
-        "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, "
-        "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
-        "Alignment, MarginL, MarginR, MarginV, Encoding",
-        "Style: Kara,DejaVu Sans,48," + BONE + "," + DIM +
-        ",&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,3,0,2,70,70,150,1",
-        "",
-        "[Events]",
-        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
-        "Effect, Text",
-    ]
-    for ci, chunk in enumerate(chunks):
-        first_s = chunk[0]["s"] + LEAD
-        next_first = None
-        if ci + 1 < len(chunks):
-            next_first = chunks[ci + 1][0]["s"] + LEAD
-        for k, w in enumerate(chunk):
-            start = w["s"] + LEAD
-            if k < len(chunk) - 1:
-                end = chunk[k + 1]["s"] + LEAD
-            else:
-                end = w["e"] + LEAD + 0.5
-                if next_first is not None:
-                    end = min(end, next_first)
-            if end <= start:
-                end = start + 0.05
-            parts = []
-            for j, wj in enumerate(chunk):
-                color = GOLD if j == k else (BONE if j < k else DIM)
-                parts.append(r"{\c" + color + "&}" + esc(wj["t"]))
-            text = " ".join(parts)
-            lines.append(
-                f"Dialogue: 0,{tc(start)},{tc(end)},Kara,,0,0,0,,{text}")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
 def probe(path: Path):
     """Parse duration + coded size straight from the MP4 (no ffprobe here)."""
     buf = path.read_bytes()
@@ -215,93 +139,47 @@ def run(cmd):
 
 def build_row(row, timing, matrix_by_id):
     rid = row["id"]
-    vo = VO / f"{rid}.wav"
     card = CARDS / f"{rid}.png"
     img = Image.open(card)
     if img.size != (W, HALF):
         raise RuntimeError(f"{rid}: card is {img.size}, want {(W, HALF)}")
 
     duration = timing["duration"]
-    total = LEAD + duration + TAIL
+    total = LEAD + duration + TAIL          # paced to the narration read-time
     out = VIDEOS / f"{rid}.mp4"
 
-    ass_path = ASS / f"{rid}.ass"
-    write_ass(rid, timing["words"], ass_path)
+    clip_name, ss, tape = FOOTAGE[rid]
+    clip = PIPE.parent.parent / "pipeline" / "videos" / clip_name
+    if not clip.exists():
+        raise RuntimeError(f"{rid}: footage {clip} missing")
+    prov = PROV / f"{rid}.txt"
+    prov.write_text(f"GRANICUS TAPE · {tape}", encoding="utf-8")
 
-    fontsdir = str(FDIR)
-    card_in = str(card)
-    vo_in = str(vo)
-
-    if rid in FOOTAGE:
-        clip_name, ss, tape = FOOTAGE[rid]
-        clip = PIPE.parent.parent / "pipeline" / "videos" / clip_name
-        if not clip.exists():
-            raise RuntimeError(f"{rid}: footage {clip} missing")
-        prov = PROV / f"{rid}.txt"
-        prov.write_text(
-            f"GRANICUS TAPE · {tape}",
-            encoding="utf-8")
-        fc = (
-            f"[0:v]fps={FPS},format=yuv420p,setsar=1[top];"
-            f"[1:v]fps={FPS},scale=1080:-2,"
-            f"pad=1080:960:(ow-iw)/2:(oh-ih)/2:color=0x141210,"
-            f"drawtext=fontfile={FDIR / 'DejaVuSansMono.ttf'}:"
-            f"textfile={prov}:x=40:y=30:fontsize=24:"
-            f"fontcolor=0xEDE7D9:box=1:boxcolor=0x141210@0.72:"
-            f"boxborderw=10,"
-            f"format=yuv420p,setsar=1[bot];"
-            f"[top][bot]vstack[v0];"
-            f"[v0]ass={ass_path}:fontsdir={fontsdir},"
-            f"fade=t=in:st=0:d=0.35,fade=t=out:st={total - 0.55:.3f}:d=0.55[vout];"
-            f"[2:a]aformat=sample_rates=44100:channel_layouts=stereo,"
-            f"adelay={int(LEAD * 1000)}:all=1,apad=whole_dur={total:.3f}[vo];"
-            f"[vo]asplit=2[vosc][voutA];"
-            f"[1:a]aformat=sample_rates=44100:channel_layouts=stereo,"
-            f"volume=0.85[fa];"
-            f"[fa][vosc]sidechaincompress=threshold=0.02:ratio=16:"
-            f"attack=15:release=400[fd];"
-            f"[voutA][fd]amix=inputs=2:duration=longest:"
-            f"normalize=0,"
-            f"atrim=0:{total:.3f},"
-            f"afade=t=out:st={total - 0.7:.3f}:d=0.7[aout]"
-        )
-        cmd = [
-            FFMPEG, "-y",
-            "-loop", "1", "-framerate", str(FPS), "-t", f"{total:.3f}",
-            "-i", card_in,
-            "-ss", str(ss), "-t", f"{total:.3f}", "-i", str(clip),
-            "-i", vo_in,
-            "-filter_complex", fc,
-            "-map", "[vout]", "-map", "[aout]",
-        ]
-    else:
-        frame = FRAMES / f"{rid}.png"
-        # Static bottom half: the frame design is full-bleed (header band,
-        # honesty band, 48 px margins), so any crop-pan slices it — the
-        # karaoke captions already carry the motion.
-        fc = (
-            f"[0:v]fps={FPS},format=yuv420p,setsar=1[top];"
-            f"[1:v]fps={FPS},format=yuv420p,setsar=1[bot];"
-            f"[top][bot]vstack[v0];"
-            f"[v0]ass={ass_path}:fontsdir={fontsdir},"
-            f"fade=t=in:st=0:d=0.35,fade=t=out:st={total - 0.55:.3f}:d=0.55[vout];"
-            f"[2:a]aformat=sample_rates=44100:channel_layouts=stereo,"
-            f"adelay={int(LEAD * 1000)}:all=1,"
-            f"apad=whole_dur={total:.3f},"
-            f"afade=t=out:st={total - 0.7:.3f}:d=0.7[aout]"
-        )
-        cmd = [
-            FFMPEG, "-y",
-            "-loop", "1", "-framerate", str(FPS), "-t", f"{total:.3f}",
-            "-i", card_in,
-            "-loop", "1", "-framerate", str(FPS), "-t", f"{total:.3f}",
-            "-i", str(frame),
-            "-i", vo_in,
-            "-filter_complex", fc,
-            "-map", "[vout]", "-map", "[aout]",
-        ]
-
-    cmd += [
+    # Card over tape; tape audio only — no synthesized VO, no burned captions.
+    fc = (
+        f"[0:v]fps={FPS},format=yuv420p,setsar=1[top];"
+        f"[1:v]fps={FPS},scale=1080:-2,"
+        f"pad=1080:960:(ow-iw)/2:(oh-ih)/2:color=0x141210,"
+        f"drawtext=fontfile={FDIR / 'DejaVuSansMono.ttf'}:"
+        f"textfile={prov}:x=40:y=30:fontsize=24:"
+        f"fontcolor=0xEDE7D9:box=1:boxcolor=0x141210@0.72:"
+        f"boxborderw=10,"
+        f"format=yuv420p,setsar=1[bot];"
+        f"[top][bot]vstack[v0];"
+        f"[v0]fade=t=in:st=0:d=0.35,"
+        f"fade=t=out:st={total - 0.55:.3f}:d=0.55[vout];"
+        f"[1:a]aformat=sample_rates=44100:channel_layouts=stereo,"
+        f"volume=0.9,afade=t=in:st=0:d=0.35,"
+        f"atrim=0:{total:.3f},"
+        f"afade=t=out:st={total - 0.7:.3f}:d=0.7[aout]"
+    )
+    cmd = [
+        FFMPEG, "-y",
+        "-loop", "1", "-framerate", str(FPS), "-t", f"{total:.3f}",
+        "-i", str(card),
+        "-ss", str(ss), "-t", f"{total:.3f}", "-i", str(clip),
+        "-filter_complex", fc,
+        "-map", "[vout]", "-map", "[aout]",
         "-t", f"{total:.3f}",
         "-c:v", "libx264", "-preset", "fast", "-crf", "23",
         "-pix_fmt", "yuv420p", "-r", str(FPS),
@@ -311,15 +189,21 @@ def build_row(row, timing, matrix_by_id):
     ]
     run(cmd)
 
+    # Per-row source kit beside the video: the proposed narration plus the
+    # two independent visual layers (card + raw footage) for re-cutting.
+    (VIDEOS / f"{rid}.txt").write_text(
+        row["rebuttal"].strip() + "\n", encoding="utf-8")
+    shutil.copyfile(card, VIDEOS / f"{rid}.card.png")
+    shutil.copyfile(clip, VIDEOS / f"{rid}.footage.mp4")
+
     meta = probe(out)
     if (meta["w"], meta["h"]) != (W, H):
         raise RuntimeError(f"{rid}: size {meta['w']}x{meta['h']} != 1080x1920")
     if meta["duration"] is None or abs(meta["duration"] - total) > 0.6:
         raise RuntimeError(
             f"{rid}: duration {meta['duration']} != expected {total:.2f}")
-    kind = "footage" if rid in FOOTAGE else "frame"
     print(f'{rid}: {meta["duration"]:.1f}s 1080x1920 '
-          f'({out.stat().st_size // 1024} KB, {kind})')
+          f'({out.stat().st_size // 1024} KB, tape + txt/card/footage layers)')
     return meta
 
 GALLERY_CSS = """
@@ -347,11 +231,13 @@ h1{font-size:44px;margin:0 0 6px;color:#A62B1C}
 .stat{font-size:14px;line-height:1.45;color:#181614;border-left:3px solid #24456B;padding-left:9px}
 .prov{font:11.5px/1.5 ui-monospace,Menlo,monospace;color:#5A564C}
 .prov b{color:#A62B1C;font-weight:700}
-.acts{margin-top:auto;display:flex;gap:10px;align-items:center}
-.acts a{font:700 13px/1 ui-monospace,Menlo,monospace;text-decoration:none;
-  padding:9px 14px;border-radius:4px;letter-spacing:.04em}
+.acts{margin-top:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.acts a{font:700 12.5px/1 ui-monospace,Menlo,monospace;text-decoration:none;
+  padding:8px 11px;border-radius:4px;letter-spacing:.03em}
 .dl{background:#24456B;color:#EDE7D9}
 .dl:hover{background:#181614}
+.lay{color:#24456B;border:1px solid #B9B1A2;background:#F4EFE3}
+.lay:hover{background:#24456B;color:#EDE7D9;border-color:#24456B}
 .open{color:#A62B1C;border:1px solid #A62B1C}
 .open:hover{background:#A62B1C;color:#EDE7D9}
 footer{max-width:1120px;margin:0 auto;padding:0 24px 48px;font-size:14.5px;
@@ -366,8 +252,9 @@ def write_gallery(matrix, metas):
         rid = row["id"]
         m = metas[rid]
         clip_name, ss, tape = FOOTAGE[rid]
-        prov = (f"<b>Footage</b> · Granicus tape <code>{clip_name}</code> "
-                f"— {tape}")
+        used = f" @+{ss}s" if ss else ""
+        prov = (f"<b>Footage</b> · Granicus tape <code>{clip_name}</code>"
+                f"{used} — {tape}")
         if rid in TAPE_NOTES:
             prov += f"<br>{TAPE_NOTES[rid]}"
         items.append(f"""<article class="item">
@@ -379,8 +266,11 @@ def write_gallery(matrix, metas):
 <div class="stat">{row['statute']}</div>
 <div class="prov">{prov}</div>
 <div class="acts">
-<a class="dl" href="{rid}.mp4" download>⬇ Download MP4</a>
-<a class="open" href="../index.html">Open in matrix →</a>
+<a class="dl" href="{rid}.mp4" download>⬇ MP4</a>
+<a class="lay" href="{rid}.txt" download>Narration .txt</a>
+<a class="lay" href="{rid}.footage.mp4" download>Footage layer</a>
+<a class="lay" href="{rid}.card.png" download>Card layer</a>
+<a class="open" href="../index.html">Matrix →</a>
 </div>
 </div>
 </article>""")
@@ -390,7 +280,7 @@ def write_gallery(matrix, metas):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>POE Video Gallery — 18 Statutory Exhibit Videos</title>
-<meta name="description" content="All 18 Point-of-Order Exhibit videos: 1080x1920 vertical statutory cards with narrator rebuttals, word-level karaoke captions, and verified meeting citations. Downloadable MP4s.">
+<meta name="description" content="All 18 Point-of-Order Exhibit videos: 1080x1920 statutory card over verified meeting tape (no synthesized voice, no burned captions), with the narration .txt plus independent card and footage source layers beside every MP4.">
 <style>{GALLERY_CSS}</style>
 </head>
 <body>
@@ -398,16 +288,18 @@ def write_gallery(matrix, metas):
 <span>Vol. X — Video Gallery</span></div>
 <header>
 <h1>Video Gallery</h1>
-<div class="sub">18 EXHIBITS · 1080×1920 · NARRATOR REBUTTAL + KARAOKE CAPTIONS</div>
+<div class="sub">18 EXHIBITS · 1080×1920 · CARD + REAL MEETING TAPE · SOURCE LAYERS INCLUDED</div>
 <p class="lede">Each video stacks the 1080×960 statutory exhibit card over
-verified Granicus/YouTube meeting footage — every one of the 18 rows plays
-real tape from the cited meeting where a recording exists in this corpus,
-or from the closest verified sitting in the row's source chain where the
-row's own sitting was never recorded (the burned label and each card's
-footage line say exactly which meeting you are watching).
-Captions highlight the live word in gold; dollar figures and statutes are
-flagged on the card. Every row cites meeting body, date, source, and statute —
-no invented verbatim timestamps.</p>
+verified Granicus/YouTube meeting footage with the tape's own audio — no
+synthesized voice, no burned-in captions. Every row plays real tape from the
+cited meeting where a recording exists in this corpus, or from the closest
+verified sitting in the row's source chain where the row's own sitting was
+never recorded (the burned label says exactly which meeting you are watching).
+Alongside each MP4 sit its independent source layers: the proposed narration
+as a <code>.txt</code>, the card layer as a <code>.png</code>, and the raw
+footage layer as a <code>.mp4</code> — so you can produce your own cuts.
+Every row cites meeting body, date, source, and statute — no invented
+verbatim timestamps.</p>
 </header>
 <main class="grid">
 {chr(10).join(items)}
@@ -415,7 +307,8 @@ no invented verbatim timestamps.</p>
 <footer><strong>Sourcing discipline.</strong> Same 18 rows as the
 <a href="../index.html">contradiction matrix</a> — rows 1–6 from the owner-supplied
 matrix, rows 7–18 reconstructed from this repository's verified records.
-Narration is the row's 55–90 word podium rebuttal, synthesized offline.
+Narration is the row's 55–90 word podium rebuttal, shipped as plain text
+beside each video (nothing synthesized into the audio).
 <strong>Palette.</strong> Bone #EDE7D9 · oxblood #A62B1C · pencil blue #24456B ·
 live-word gold #E5A100.</footer>
 </body>
@@ -426,7 +319,7 @@ live-word gold #E5A100.</footer>
 def main():
     matrix = json.loads((WORK / "matrix.json").read_text())
     timings = json.loads((WORK / "timings.json").read_text())
-    for sub in (ASS, PROV, VIDEOS):
+    for sub in (PROV, VIDEOS):
         sub.mkdir(parents=True, exist_ok=True)
 
     metas = {}

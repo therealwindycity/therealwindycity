@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""exhibit/pipeline/cards.py — render the 18 statutory exhibit cards (1080x960)
-and the synthesized meeting-record frames (1080x960) used as video bottoms.
+"""exhibit/pipeline/cards.py — render the 18 statutory exhibit cards (1080x960).
 
-Cards are the top half of each vertical video and live in exhibit/cards/ (committed).
-Record frames are intermediates in pipeline/work/frames/ (gitignored).
+Cards are the top half of each vertical video (and ship beside each video as
+the card source layer, exhibit/videos/POE-XX.card.png); the committed set
+lives in exhibit/cards/. No synthesized record frames — all 18 rows render
+real meeting footage.
 
 Design language matches the web exhibit: bone paper #EDE7D9, oxblood #A62B1C,
 pencil blue #24456B, ink #181614, rule #B9B1A2, live-gold #E5A100.
@@ -22,7 +23,6 @@ PIPE = Path(__file__).resolve().parent
 ROOT = PIPE.parent                      # exhibit/
 WORK = PIPE / "work"
 CARDS = ROOT / "cards"
-FRAMES = WORK / "frames"
 
 W, H = 1080, 960
 
@@ -37,12 +37,7 @@ PAPER_DEEP = (0xE4, 0xDC, 0xCB)
 PANEL = (0xE7, 0xE0, 0xD0)
 
 # Dark record-slate palette
-SLATE = (0x14, 0x12, 0x10)
-SLATE_BAND = (0x18, 0x16, 0x14)
-SLATE_RULE = (0x2A, 0x27, 0x24)
 SLATE_DIM = (0x8A, 0x85, 0x79)
-SLATE_BONE = (0xED, 0xE7, 0xD9)
-SLATE_BLUE = (0x7F, 0xA3, 0xC8)
 
 FDIR = Path("/usr/share/fonts/truetype/dejavu")
 
@@ -175,15 +170,30 @@ def render_card(row, vo_dur, out_path):
     tw = d.textlength(row["id"], font=f_stamp)
     d.text((M + (stamp_w - tw) / 2, 52), row["id"], font=f_stamp, fill=BONE)
 
-    f_date = F("DejaVuSerif-Bold.ttf", 37)
-    d.text((M + stamp_w + 26, 42), row["date"], font=f_date, fill=INK)
-    f_body = F("DejaVuSans-Bold.ttf", 23)
-    d.text((M + stamp_w + 28, 94), row["body"].upper(), font=f_body, fill=PENCIL)
-
     f_micro = F("DejaVuSansMono.ttf", 16)
     micro = "RECORD AUDIT · 2026"
-    d.text((W - M - d.textlength(micro, font=f_micro), 48), micro,
-           font=f_micro, fill=SLATE_DIM)
+    micro_len = d.textlength(micro, font=f_micro)
+    d.text((W - M - micro_len, 48), micro, font=f_micro, fill=SLATE_DIM)
+
+    # Fit date + body lines to the band between the stamp and the micro
+    # label — the longest window titles (e.g. POE-13) overflowed at
+    # fixed sizes and ran under / past "RECORD AUDIT · 2026".
+    x_date = M + stamp_w + 26
+    date_max = (W - M - micro_len - 16) - x_date
+    size = 37
+    while size > 24 and d.textlength(row["date"], font=F("DejaVuSerif-Bold.ttf", size)) > date_max:
+        size -= 2
+    f_date = F("DejaVuSerif-Bold.ttf", size)
+    d.text((x_date, 42 + (37 - size) * 0.4), row["date"], font=f_date, fill=INK)
+
+    f_body = F("DejaVuSans-Bold.ttf", 23)
+    body_text = row["body"].upper()
+    body_max = (W - M) - (M + stamp_w + 28)
+    bsize = 23
+    while bsize > 15 and d.textlength(body_text, font=F("DejaVuSans-Bold.ttf", bsize)) > body_max:
+        bsize -= 1
+    f_body = F("DejaVuSans-Bold.ttf", bsize)
+    d.text((M + stamp_w + 28, 94), body_text, font=f_body, fill=PENCIL)
 
     # Double rule under header.
     d.line([(M, 148), (W - M, 148)], fill=RULE, width=2)
@@ -267,66 +277,9 @@ def render_card(row, vo_dur, out_path):
     f_foot = F("DejaVuSansMono.ttf", 15)
     src = fit_text(d, "source: " + row["source"], f_foot, W - 2 * M - 240, 1, 0)
     d.text((M, H - 64), src, font=f_foot, fill=PENCIL)
-    right = f"VO {vo_dur:.0f}s · CARD 1080×960"
+    right = f"READ {vo_dur:.0f}s · CARD 1080×960"
     d.text((W - M - d.textlength(right, font=f_foot), H - 64), right,
            font=f_foot, fill=SLATE_DIM)
-
-    img.save(out_path)
-
-# --------------------------------------------------------- record frame ----
-
-def render_frame(row, out_path):
-    """Synthesized meeting-record slate for rows with no local tape."""
-    img = Image.new("RGB", (W, H), SLATE)
-    d = ImageDraw.Draw(img)
-
-    # Faint scan texture.
-    for y in range(0, H, 6):
-        d.line([(0, y), (W, y)], fill=(0x17, 0x15, 0x12), width=1)
-
-    # Top band.
-    d.rectangle([0, 0, W, 96], fill=SLATE_BAND)
-    d.line([(0, 96), (W, 96)], fill=OXBLOOD, width=3)
-    f_t = F("DejaVuSans-Bold.ttf", 26)
-    d.text((48, 32), "MEETING RECORD EXTRACT", font=f_t, fill=SLATE_BONE)
-    f_d = F("DejaVuSansMono.ttf", 24)
-    dt = row["date"]
-    d.text((W - 48 - d.textlength(dt, font=f_d), 34), dt,
-           font=f_d, fill=SLATE_DIM)
-
-    # Quote block (record excerpt), auto-fit. Attribution + statute are
-    # bottom-anchored at fixed y so burned-in captions (video y ~1654-1770
-    # = frame y ~694-810) never collide with them.
-    excerpt = row["record"]
-    if len(excerpt) > 260:
-        cut = excerpt[:257]
-        excerpt = cut[:cut.rfind(" ")] + "…"
-    draw_rich_block(
-        d, "“" + excerpt + "”", 70, 130, W - 140, 385, 42, SLATE_BONE,
-        line_gap=1.12, align="center")
-
-    # Attribution.
-    f_src = F("DejaVuSansMono.ttf", 23)
-    src = fit_text(d, "— " + row["source"], f_src, W - 140, 2, 0)
-    d.multiline_text((70, 530), src, font=f_src, fill=SLATE_BLUE,
-                     align="center", spacing=8)
-
-    # Statute line (2 lines max -> ends by ~670, clear of captions).
-    f_sl = F("DejaVuSans-Bold.ttf", 24)
-    sl = fit_text(d, "STATUTE · " + row["statute"], f_sl, W - 140, 2, 0)
-    d.multiline_text((70, 604), sl, font=f_sl, fill=GOLD,
-                     align="center", spacing=6)
-
-    # Bottom band: honesty label + stamp.
-    d.rectangle([0, H - 84, W, H], fill=(0x0E, 0x0D, 0x0C))
-    d.line([(0, H - 84), (W, H - 84)], fill=SLATE_RULE, width=2)
-    f_h = F("DejaVuSansMono.ttf", 19)
-    honesty = "SYNTHESIZED RECORD FRAME · no local tape — citation stands in its place"
-    d.text((48, H - 54), honesty, font=f_h, fill=SLATE_DIM)
-    f_st = F("DejaVuSans-Bold.ttf", 22)
-    stw = d.textlength(row["id"], font=f_st)
-    d.rectangle([W - 48 - stw - 28, H - 62, W - 48, H - 26], outline=OXBLOOD, width=2)
-    d.text((W - 48 - stw - 14, H - 57), row["id"], font=f_st, fill=OXBLOOD)
 
     img.save(out_path)
 
@@ -334,14 +287,11 @@ def main():
     matrix = json.loads((WORK / "matrix.json").read_text())
     timings = json.loads((WORK / "timings.json").read_text())
     CARDS.mkdir(parents=True, exist_ok=True)
-    FRAMES.mkdir(parents=True, exist_ok=True)
     for row in matrix["rows"]:
-        vo = timings["rows"][row["id"]]["duration"]
-        render_card(row, vo, CARDS / f'{row["id"]}.png')
-        render_frame(row, FRAMES / f'{row["id"]}.png')
-        print(f'{row["id"]}: card + frame rendered (VO {vo:.1f}s)')
+        read = timings["rows"][row["id"]]["duration"]
+        render_card(row, read, CARDS / f'{row["id"]}.png')
+        print(f'{row["id"]}: card rendered (READ {read:.1f}s)')
     print(f"\n{len(matrix['rows'])} cards -> {CARDS}")
-    print(f"{len(matrix['rows'])} record frames -> {FRAMES}")
 
 if __name__ == "__main__":
     sys.exit(main())

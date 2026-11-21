@@ -28,10 +28,10 @@ python3 -m http.server 8080 --directory exhibit
 | `assets/exhibit.css` | Dossier aesthetic (palette locked to the video pipeline) |
 | `assets/exhibit.js` | UI controller: search, tag chips, matrix ⇄ cards, IRAC expand, 30 s karaoke teleprompter |
 | `tests/core.test.mjs` | Dependency-free Node harness (46 checks) |
-| `videos/` | **18 vertical MP4s (1080×1920) + `index.html` gallery** — watch & download |
+| `videos/` | **18 vertical MP4s (1080×1920) + `index.html` gallery + per-row source kit** (narration `.txt`, `.card.png`, `.footage.mp4`) |
 | `cards/` | The 18 statutory exhibit cards (1080×960 PNG) composited into every video |
-| `pipeline/` | Rebuild chain: offline TTS (`tts.js`), card/frame renderer (`cards.py`), ffmpeg compositor (`build.py`) |
-| `tests/video-pipeline.test.mjs` | Dependency-free Node harness for the video deliverables (19 checks) |
+| `pipeline/` | Rebuild chain: word timings (`tts.js`), card renderer (`cards.py`), ffmpeg compositor + gallery (`build.py`) |
+| `tests/video-pipeline.test.mjs` | Dependency-free Node harness for the video deliverables (22 checks) |
 
 ## The matrix
 
@@ -70,32 +70,38 @@ All 18 rows also ship as **1080×1920 MP4s** with a downloadable gallery at
 - **top half** = the 1080×960 statutory exhibit card (dollar figures oxblood,
   statutes pencil blue);
 - **bottom half** = verified Granicus/YouTube meeting footage for **all 18
-  rows** — date-verified against the burned-in caption at each staged cut and
-  provenance-labeled on screen (`GRANICUS TAPE · <body> · <date>`). Where a
-  row's own sitting was never recorded in this corpus, the tape is the closest
-  verified sitting in the row's source chain and the gallery says so (e.g.
-  `POE-05`/`POE-07` show the Finance Committee's Apr 21 sitting, `POE-13`
-  shows the Aug 24 GB — the nearest tape to its Aug 21 work session);
-- **narrator VO** = the row's 55–90 word podium rebuttal (offline TTS, meSpeak
-  @ 132 wpm), word-level timing by prefix synthesis;
-- **karaoke captions** burned in with the live word gold `#E5A100`; footage
-  audio ducks under the VO via `sidechaincompress`;
+  rows**, playing with the **tape's own audio** — no synthesized voice, no
+  burned-in captions. Each cut is date-verified against the burned-in caption
+  of the staged clip and provenance-labeled on screen
+  (`GRANICUS TAPE · <body> · <date>`). Where a row's own sitting was never
+  recorded in this corpus, the tape is the closest verified sitting in the
+  row's source chain and the gallery says so (e.g. `POE-05`/`POE-07` show the
+  Finance Committee's Apr 21 sitting, `POE-13` shows the Aug 24 GB — the
+  nearest tape to its Aug 21 work session);
+- **per-row source kit beside every video** — independent, re-cuttable layers
+  for each row, linked from the gallery:
+  - `POE-XX.txt` — the proposed narration (the row's 55–90 word podium
+    rebuttal) as plain text;
+  - `POE-XX.card.png` — the 1080×960 card layer on its own;
+  - `POE-XX.footage.mp4` — the raw footage layer on its own (the whole staged
+    Granicus cut; `POE-09`'s POO moment sits at +122 s inside that file);
 - no invented verbatim clock timestamps anywhere — same citation discipline
   as the matrix.
 
 ### Rebuilding the videos
 
 ```bash
-# 0. one-time: node deps for the offline TTS (mespeak, declared in package.json)
+# 0. one-time: node deps for word-timing synthesis (mespeak, in package.json)
 cd exhibit/pipeline && npm install && cd ../..
 
-# 1. word timings + VO wavs          (work/timings.json, work/vo/*.wav)
+# 1. word timings (pacing + durations)  (work/timings.json)
 node exhibit/pipeline/tts.js
 
 # 2. statutory cards                 (cards/*.png)
 .venv/bin/python exhibit/pipeline/cards.py
 
-# 3. composite 18 MP4s + gallery     (videos/*.mp4, videos/index.html)
+# 3. composite 18 MP4s + source kit + gallery
+#    (videos/*.mp4, videos/POE-XX.{txt,card.png,footage.mp4}, videos/index.html)
 .venv/bin/python exhibit/pipeline/build.py
 ```
 
@@ -109,11 +115,12 @@ node exhibit/tests/core.test.mjs
 node exhibit/tests/video-pipeline.test.mjs
 ```
 
-46 + 19 checks: matrix shape, citation discipline, IRAC coverage, rebuttal
+46 + 22 checks: matrix shape, citation discipline, IRAC coverage, rebuttal
 timing, filtering, provenance, offline-safety (no external subresources),
 palette lock, controller boot in a vm + DOM stub — plus MP4 specs
-(1080×1920 / 15–60 s / audio), card sizes, caption gold, gallery completeness
-and download links, and the honesty/provenance labels.
+(1080×1920 / 15–60 s / tape audio), card sizes, per-row narration text +
+card/footage source layers, gallery completeness and layer links, and the
+honesty/provenance labels.
 
 ## Notes
 

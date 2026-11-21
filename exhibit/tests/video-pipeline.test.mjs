@@ -1,10 +1,10 @@
 // exhibit/tests/video-pipeline.test.mjs — video pipeline harness (Node only, no deps).
-// Verifies: 18 MP4s exist at 1080x1920 inside the 15–60 s band with audio;
-// 18 statutory cards (1080x960 PNG) and 18 word-timing files; gallery index
-// links every row, carries no external subresources, and every video is
-// downloadable; caption files keep the gold live-word color and every one of
-// the 18 rows carries a GRANICUS TAPE provenance label (all rows render real
-// meeting footage — no synthesized frames).
+// Verifies: 18 MP4s exist at 1080x1920 inside the 15–60 s band with tape
+// audio; 18 statutory cards (1080x960 PNG) and 18 word-timing files (pacing);
+// every row carries a GRANICUS TAPE provenance label (all rows render real
+// meeting footage — no synthesized voice, no burned captions); and each row
+// ships its narration .txt + independent card/footage source layers beside
+// the video, all linked from the offline gallery.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -92,17 +92,32 @@ const badSpec = ids.filter((id) => {
 ok('every MP4: 1080×1920, 15–60 s, has mp4a audio, ≥100 KB',
   badSpec.length === 0, badSpec.join(',') || `${ids.length}/${ids.length}`);
 
-section('captions, frames, gallery');
-const assDir = path.join(PIPE, 'work', 'ass');
-const badAss = ids.filter((id) => {
-  const f = path.join(assDir, `${id}.ass`);
+section('narration text + independent source layers beside each video');
+const badTxt = ids.filter((id) => {
+  const f = path.join(EXHIBIT, 'videos', `${id}.txt`);
   if (!fs.existsSync(f)) return true;
-  const txt = fs.readFileSync(f, 'utf8');
-  return !txt.includes('&H0000A1E5') || !/Dialogue: 0,/.test(txt) ||
-    !txt.includes('PlayResY: 1920');
+  const n = fs.readFileSync(f, 'utf8').trim().split(/\s+/).length;
+  return n < 55 || n > 90;
 });
-ok('every ASS caption: gold live word, dialog events, 1920 playfield',
-  badAss.length === 0, badAss.join(',') || `${ids.length}/${ids.length}`);
+ok('every row ships its narration as videos/POE-XX.txt (55–90 words)',
+  badTxt.length === 0, badTxt.join(',') || `${ids.length}/${ids.length}`);
+
+const badCardLayer = ids.filter((id) => {
+  const f = path.join(EXHIBIT, 'videos', `${id}.card.png`);
+  if (!fs.existsSync(f)) return true;
+  return pngSize(f)?.w !== 1080 || pngSize(f)?.h !== 960;
+});
+ok('every row ships its card layer (1080×960 PNG beside the video)',
+  badCardLayer.length === 0, badCardLayer.join(',') || `${ids.length}/${ids.length}`);
+
+const badFootageLayer = ids.filter((id) => {
+  const f = path.join(EXHIBIT, 'videos', `${id}.footage.mp4`);
+  if (!fs.existsSync(f)) return true;
+  const buf = fs.readFileSync(f);
+  return buf.length < 100_000 || buf.toString('ascii', 4, 8) !== 'ftyp';
+});
+ok('every row ships its raw footage layer (standalone MP4)',
+  badFootageLayer.length === 0, badFootageLayer.join(',') || `${ids.length}/${ids.length}`);
 
 const provDir = path.join(PIPE, 'work', 'prov');
 const badProv = ids.filter((id) => {
@@ -130,6 +145,10 @@ if (fs.existsSync(galleryPath)) {
     (g.match(/Granicus tape/g) || []).length === 18);
   ok('gallery carries no synthesized-frame fallback text',
     !g.includes('Synthesized record frame'));
+  ok('gallery links all 18 narration/card/footage layer files',
+    ids.every((id) => g.includes(`href="${id}.txt"`) &&
+      g.includes(`href="${id}.card.png"`) &&
+      g.includes(`href="${id}.footage.mp4"`)));
 }
 
 section('app integration + honesty labels');
@@ -145,8 +164,6 @@ const footageIds = new Set(
 ok('build.py FOOTAGE wires all 18 rows to a staged clip',
   ids.every((id) => footageIds.has(id)),
   `${ids.filter((id) => footageIds.has(id)).length}/18`);
-ok('caption gold matches gallery gold (single source of truth)',
-  buildSrc.includes('#E5A100'));
 
 console.log(`\n${'─'.repeat(60)}`);
 console.log(`POE video pipeline harness: ${pass} pass, ${fail} fail`);

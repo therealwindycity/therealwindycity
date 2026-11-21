@@ -1,5 +1,11 @@
 #!/usr/bin/env node
-/* exhibit/pipeline/tts.js — narrator voiceovers + word-level karaoke timings.
+/* exhibit/pipeline/tts.js — word timings for narration pacing.
+ *
+ * The videos carry the tape's own audio only (no synthesized voice, no
+ * burned captions); this script now feeds the pipeline's pacing —
+ * work/timings.json drives each video's duration and the per-row
+ * narration read-time printed on the cards. The legacy meSpeak VO wavs it
+ * also writes to work/vo/ are intermediates no longer mixed into anything.
  *
  * Offline TTS: npm `mespeak` (eSpeak compiled to JS). The Python edge-tts
  * client is installed but its speech endpoint (speech.platform.bing.com) is
