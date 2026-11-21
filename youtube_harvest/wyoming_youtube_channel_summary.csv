@@ -1,17 +1,17 @@
-Entity Source,Official Channel Name,Channel URL,Channel ID,Videos Enumerated,Meeting Videos,Status,Source Note
-Wyoming Legislature,,https://www.youtube.com/@WyomingLegislature,,4088,3766,OK,Official Wyoming Legislature channel; meeting playlists are organized by session and committee.
-Cheyenne City Council,,https://www.youtube.com/channel/UC_SbB-4DCUA-NPDtkw2UA5A,,909,680,OK,"Official City of Cheyenne channel; includes council, boards, committees, and work sessions."
-Laramie County Commissioners,,https://www.youtube.com/@LaramieCountyGovernment,,13,0,OK,Official Laramie County Government channel.
-Casper City Council,,https://www.youtube.com/channel/UCK-zvDPcmvu0mPRD2LPc6ng,,713,674,OK,"Official City of Casper, Wyoming channel."
-Laramie City Council,,https://www.youtube.com/@cityoflaramie,,622,232,OK,"Official Laramie, Wyoming - City Government channel."
-Sheridan City Council,,https://www.youtube.com/@cityofsheridan1890,,149,89,OK,"Official City of Sheridan, Wyoming channel."
-Gillette City Council,,https://www.youtube.com/channel/UClJ7WUau0WBBQNRQcTz_xAA,,169,1,OK,Official City of Gillette channel.
-Jackson Town Council,,https://www.youtube.com/@TownofJacksonWY,,29,1,OK,"Official Town of Jackson, Wyoming channel."
-Sweetwater County Commissioners,,https://www.youtube.com/channel/UCPe1fuV_mrPq8dVoZ3FttNA,,483,469,OK,Official Sweetwater County Government public-meeting broadcast channel.
-Natrona County Commissioners,,https://www.youtube.com/channel/UCASaHUpncE4V3GngjMjHAaQ,,401,395,OK,Official Natrona County Government channel.
-Wyoming Department of Transportation,,https://www.youtube.com/channel/UCzsQBIL6elIfQZmmKZQwO_Q,,675,12,OK,Official WYDOT channel.
-Wyoming Governor's Office,,https://www.youtube.com/@GovernorMarkGordon,,29,3,OK,Official Governor Mark Gordon channel.
-Wyoming Game and Fish Department,,https://www.youtube.com/@wygameandfish,,1009,19,OK,Official Wyoming Game and Fish Department channel.
-Wyoming Office of State Lands & Investments,,https://www.youtube.com/@wy_osli,,108,103,OK,Official OSLI channel; includes State Board of Land Commissioners and other public meetings.
-Rawlins,,https://www.youtube.com/channel/UCMqh3RaXOV4qFKoZRRA3swQ,,300,254,OK,City of Rawlins channel; retained only where videos match meeting criteria.
-Riverton,,https://www.youtube.com/channel/UC-0kxVg9IPOycbcbo_RbJmg,,472,467,OK,CityofRiverton channel; retained only where videos match meeting criteria.
+Entity Source,Official Channel Name,Channel URL,Channel ID,Videos Enumerated,Meeting Videos,Earliest Upload,Latest Upload,Earliest Meeting Upload,Latest Meeting Upload,Status,Source Note
+Wyoming Legislature,,https://www.youtube.com/@WyomingLegislature,,4088,3973,,,,,OK,Official Wyoming Legislature channel; meeting playlists are organized by session and committee.
+Cheyenne City Council,,https://www.youtube.com/channel/UC_SbB-4DCUA-NPDtkw2UA5A,,909,681,,,,,OK,"Official City of Cheyenne channel; includes council, boards, committees, and work sessions."
+Laramie County Commissioners,,https://www.youtube.com/@LaramieCountyGovernment,,13,3,,,,,OK,Official Laramie County Government channel.
+Casper City Council,,https://www.youtube.com/channel/UCK-zvDPcmvu0mPRD2LPc6ng,,713,675,,,,,OK,"Official City of Casper, Wyoming channel."
+Laramie City Council,,https://www.youtube.com/@cityoflaramie,,622,232,,,,,OK,"Official Laramie, Wyoming - City Government channel."
+Sheridan City Council,,https://www.youtube.com/@cityofsheridan1890,,149,89,,,,,OK,"Official City of Sheridan, Wyoming channel."
+Gillette City Council,,https://www.youtube.com/channel/UClJ7WUau0WBBQNRQcTz_xAA,,169,1,,,,,OK,Official City of Gillette channel.
+Jackson Town Council,,https://www.youtube.com/@TownofJacksonWY,,29,1,,,,,OK,"Official Town of Jackson, Wyoming channel."
+Sweetwater County Commissioners,,https://www.youtube.com/channel/UCPe1fuV_mrPq8dVoZ3FttNA,,483,473,,,,,OK,Official Sweetwater County Government public-meeting broadcast channel.
+Natrona County Commissioners,,https://www.youtube.com/channel/UCASaHUpncE4V3GngjMjHAaQ,,401,399,,,,,OK,Official Natrona County Government channel.
+Wyoming Department of Transportation,,https://www.youtube.com/channel/UCzsQBIL6elIfQZmmKZQwO_Q,,675,19,,,,,OK,Official WYDOT channel.
+Wyoming Governor's Office,,https://www.youtube.com/@GovernorMarkGordon,,29,3,,,,,OK,Official Governor Mark Gordon channel.
+Wyoming Game and Fish Department,,https://www.youtube.com/@wygameandfish,,1009,24,,,,,OK,Official Wyoming Game and Fish Department channel.
+Wyoming Office of State Lands & Investments,,https://www.youtube.com/@wy_osli,,108,103,,,,,OK,Official OSLI channel; includes State Board of Land Commissioners and other public meetings.
+Rawlins,,https://www.youtube.com/channel/UCMqh3RaXOV4qFKoZRRA3swQ,,300,256,,,,,OK,City of Rawlins channel; retained only where videos match meeting criteria.
+Riverton,,https://www.youtube.com/channel/UC-0kxVg9IPOycbcbo_RbJmg,,472,467,,,,,OK,CityofRiverton channel; retained only where videos match meeting criteria.
