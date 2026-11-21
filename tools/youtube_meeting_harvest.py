@@ -19,11 +19,14 @@ OUT_DIR = ROOT / "youtube_harvest"
 
 MEETING_RE = re.compile(
     r"\b("
-    r"meeting|meetings|council|commission|committee|board|hearing|hearings|"
-    r"session|sessions|forum|workshop|work\s+session|floor\s+session|"
-    r"budget\s+session|general\s+session|public\s+input|town\s+hall|"
-    r"special\s+meeting|regular\s+meeting|governing\s+body|planning|"
-    r"zoning|briefing|oral\s+argument|q\s*&\s*a|question\s+and\s+answer"
+    r"meetings?|councils?|commission|commissioner|commissioners|committees?|"
+    r"boards?|hearings?|sessions?|forum|forums|workshop|workshops|"
+    r"work\s+session|floor\s+session|budget\s+session|general\s+session|"
+    r"public\s+input|town\s+hall|special\s+meeting|regular\s+meeting|"
+    r"governing\s+body|planning|zoning|briefing|oral\s+argument|"
+    r"appropriations|judiciary|revenue|education|agriculture|transportation|"
+    r"select\s+committee|joint|senate|house|management\s+council|"
+    r"q\s*&\s*a|question\s+and\s+answer"
     r")\b",
     re.I,
 )
@@ -72,6 +75,31 @@ def run_ytdlp(url: str) -> list[dict]:
     raise RuntimeError(last_error or "yt-dlp produced no output")
 
 
+def resolve_channel(url: str) -> dict:
+    """Resolve a handle/custom URL to a stable channel ID and display name."""
+    cmd = [
+        "yt-dlp",
+        "--dump-single-json",
+        "--skip-download",
+        "--playlist-end",
+        "1",
+        "--no-warnings",
+        url,
+    ]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+        if proc.returncode == 0 and proc.stdout.strip():
+            info = json.loads(proc.stdout)
+            return {
+                "id": info.get("id") or info.get("channel_id") or "",
+                "name": info.get("channel") or info.get("uploader") or info.get("title") or "",
+                "url": info.get("channel_url") or info.get("webpage_url") or url,
+            }
+    except Exception:
+        pass
+    return {"id": "", "name": "", "url": url}
+
+
 def video_url(video_id: str) -> str:
     return f"https://www.youtube.com/watch?v={video_id}"
 
@@ -99,13 +127,11 @@ def main() -> int:
             error = str(exc)
             print(f"[harvest] FAILED {entity}: {error}", file=sys.stderr, flush=True)
 
+        resolved = resolve_channel(entered_url)
         channel_ids = sorted({e.get("channel_id") or "" for e in entries if e.get("channel_id")})
-        channel_id = channel_ids[0] if channel_ids else ""
-        resolved_url = channel_url(channel_id) or entered_url
-        channel_name = next(
-            (e.get("channel") or e.get("uploader") or "" for e in entries if e.get("channel") or e.get("uploader")),
-            "",
-        )
+        channel_id = channel_ids[0] if channel_ids else resolved["id"]
+        resolved_url = channel_url(channel_id) or resolved["url"] or entered_url
+        channel_name = resolved["name"]
 
         for e in entries:
             vid = e.get("id") or e.get("url") or ""
@@ -131,15 +157,22 @@ def main() -> int:
             if row["Meeting Match"] == "YES":
                 meeting_rows.append(row)
 
-        meeting_count = sum(1 for r in all_rows if r["Entity Source"] == entity and r["Meeting Match"] == "YES")
+        entity_rows = [r for r in all_rows if r["Entity Source"] == entity]
+        entity_meeting_rows = [r for r in entity_rows if r["Meeting Match"] == "YES"]
+        dates = sorted(r["Upload Date"] for r in entity_rows if r["Upload Date"])
+        meeting_dates = sorted(r["Upload Date"] for r in entity_meeting_rows if r["Upload Date"])
         summary_rows.append(
             {
                 "Entity Source": entity,
                 "Official Channel Name": channel_name,
                 "Channel URL": resolved_url,
                 "Channel ID": channel_id,
-                "Videos Enumerated": sum(1 for r in all_rows if r["Entity Source"] == entity),
-                "Meeting Videos": meeting_count,
+                "Videos Enumerated": len(entity_rows),
+                "Meeting Videos": len(entity_meeting_rows),
+                "Earliest Upload": dates[0] if dates else "",
+                "Latest Upload": dates[-1] if dates else "",
+                "Earliest Meeting Upload": meeting_dates[0] if meeting_dates else "",
+                "Latest Meeting Upload": meeting_dates[-1] if meeting_dates else "",
                 "Status": error or "OK",
                 "Source Note": item.get("note", ""),
             }
@@ -160,7 +193,8 @@ def main() -> int:
     ]
     summary_fields = [
         "Entity Source", "Official Channel Name", "Channel URL", "Channel ID",
-        "Videos Enumerated", "Meeting Videos", "Status", "Source Note",
+        "Videos Enumerated", "Meeting Videos", "Earliest Upload", "Latest Upload",
+        "Earliest Meeting Upload", "Latest Meeting Upload", "Status", "Source Note",
     ]
     write_csv("wyoming_youtube_all_videos.csv", all_rows, all_fields)
     write_csv("wyoming_youtube_meeting_videos.csv", meeting_rows, all_fields)
