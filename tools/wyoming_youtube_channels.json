@@ -1,0 +1,82 @@
+[
+  {
+    "entity": "Wyoming Legislature",
+    "url": "https://www.youtube.com/@WyomingLegislature",
+    "note": "Official Wyoming Legislature channel; meeting playlists are organized by session and committee."
+  },
+  {
+    "entity": "Cheyenne City Council",
+    "url": "https://www.youtube.com/channel/UC_SbB-4DCUA-NPDtkw2UA5A",
+    "note": "Official City of Cheyenne channel; includes council, boards, committees, and work sessions."
+  },
+  {
+    "entity": "Laramie County Commissioners",
+    "url": "https://www.youtube.com/@LaramieCountyGovernment",
+    "note": "Official Laramie County Government channel."
+  },
+  {
+    "entity": "Casper City Council",
+    "url": "https://www.youtube.com/channel/UCK-zvDPcmvu0mPRD2LPc6ng",
+    "note": "Official City of Casper, Wyoming channel."
+  },
+  {
+    "entity": "Laramie City Council",
+    "url": "https://www.youtube.com/@cityoflaramie",
+    "note": "Official Laramie, Wyoming - City Government channel."
+  },
+  {
+    "entity": "Sheridan City Council",
+    "url": "https://www.youtube.com/@cityofsheridan1890",
+    "note": "Official City of Sheridan, Wyoming channel."
+  },
+  {
+    "entity": "Gillette City Council",
+    "url": "https://www.youtube.com/channel/UClJ7WUau0WBBQNRQcTz_xAA",
+    "note": "Official City of Gillette channel."
+  },
+  {
+    "entity": "Jackson Town Council",
+    "url": "https://www.youtube.com/@TownofJacksonWY",
+    "note": "Official Town of Jackson, Wyoming channel."
+  },
+  {
+    "entity": "Sweetwater County Commissioners",
+    "url": "https://www.youtube.com/channel/UCPe1fuV_mrPq8dVoZ3FttNA",
+    "note": "Official Sweetwater County Government public-meeting broadcast channel."
+  },
+  {
+    "entity": "Natrona County Commissioners",
+    "url": "https://www.youtube.com/channel/UCASaHUpncE4V3GngjMjHAaQ",
+    "note": "Official Natrona County Government channel."
+  },
+  {
+    "entity": "Wyoming Department of Transportation",
+    "url": "https://www.youtube.com/channel/UCzsQBIL6elIfQZmmKZQwO_Q",
+    "note": "Official WYDOT channel."
+  },
+  {
+    "entity": "Wyoming Governor's Office",
+    "url": "https://www.youtube.com/@GovernorMarkGordon",
+    "note": "Official Governor Mark Gordon channel."
+  },
+  {
+    "entity": "Wyoming Game and Fish Department",
+    "url": "https://www.youtube.com/@wygameandfish",
+    "note": "Official Wyoming Game and Fish Department channel."
+  },
+  {
+    "entity": "Wyoming Office of State Lands & Investments",
+    "url": "https://www.youtube.com/@wy_osli",
+    "note": "Official OSLI channel; includes State Board of Land Commissioners and other public meetings."
+  },
+  {
+    "entity": "Rawlins",
+    "url": "https://www.youtube.com/channel/UCMqh3RaXOV4qFKoZRRA3swQ",
+    "note": "City of Rawlins channel; retained only where videos match meeting criteria."
+  },
+  {
+    "entity": "Riverton",
+    "url": "https://www.youtube.com/channel/UC-0kxVg9IPOycbcbo_RbJmg",
+    "note": "CityofRiverton channel; retained only where videos match meeting criteria."
+  }
+]
