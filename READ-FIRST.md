@@ -223,3 +223,15 @@ auto-redeploys from `main`).
   82/82 WorkDesk core tests, all active `.py` files compile on Python 3.11,
   twins identical. Remote Actions runs, Streamlit runtime, and GitHub Pages
   enablement (still needed in repo Settings for `workdesk-pages`) not verified.
+
+- 2026-11-21 07:05Z — arena-agent-poe-exhibit: shipped `exhibit/` — additive
+  static Point-of-Order Exhibit (no build, no network): 18-row transcript-vs-
+  document contradiction matrix (rows 1–6 from owner-supplied matrix, rows 7–18
+  from repo-verified records incl. the three video seed cases and the OMA pin-cite
+  correction carried in-row), per-occurrence IRAC on every row, interactive
+  30-second podium rebuttal with word-paced karaoke teleprompter, dossier palette
+  (#EDE7D9/#A62B1C/#24456B). Citation discipline enforced by harness: body+date+
+  source+statute on every row, no invented clock timestamps, repo source files
+  spot-checked on disk. `node exhibit/tests/core.test.mjs` → 46/46; static smoke
+  on :8091 all-200. Scope: `exhibit/**` + this entry only; twins byte-identical
+  (md5 match), nothing else touched. Remote Pages enablement not attempted.
