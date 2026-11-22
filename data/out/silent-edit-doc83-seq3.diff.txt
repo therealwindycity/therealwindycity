@@ -1,0 +1,71 @@
+--- seq2 (2026-11-21T19:23:19Z)
++++ seq3 (2026-11-22T06:58:26Z)
+@@ -114,7 +114,7 @@
+ Laramie County sending off $216K grant request to Meta for safer school crossings
+ by
+ Garrett Grochowski
+-6 hours ago
++November 18, 2026
+ November 18, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -149,36 +149,35 @@
+ Search for:
+ Search
+ Popular
+-Former Cheyenne nonprofit director charged with embezzling $10K in organization funds
+-Laramie County Recent Arrests (11/16/26–11/17/26)
+-Odorant leak cause of emergency calls in south Cheyenne on Tuesday
+-Laramie County Recent Arrests (11/17/26–11/18/26)
+-Temporary laborer held on $500K bond after reportedly accidentally shooting coworker
+-Latest News
+-Detention conditions at Wyoming Boys’ School were ‘well below the standard of care,’ expert witness testifies
++Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
++Laramie County Recent Arrests (11/19/26–11/20/26)
++Cheyenne man charged with homicide of 10-month-old girl
++North Cheyenne neighborhood to fill in with more houses, apartments upon plat approvals next week
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
++Latest News
++Former Wyoming Boys’ School resident suing for alleged abuse told staff they were ‘like family,’ witness testifies
+ by
+ Wyofile
+-2 hours ago
+-Cheyenne’s Big Boy leaving town for Denver Nov. 21 to raise money for Make-a-Wish
++4 hours ago
++Obituaries: Kylander; Sharp; Thiel
++by
++Cap City Staff
++20 hours ago
++November 20, 2026
++Feds back $4B project to connect eastern and western electricity grids
++by
++Wyofile
++21 hours ago
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
+ by
+ Garrett Grochowski
+-4 hours ago
+-November 18, 2026
+-Cheyenne Depot Plaza, downtown lighting up with Christmas cheer Nov. 21
+-by
+-Garrett Grochowski
+-4 hours ago
+-November 18, 2026
+-Obituaries: Chandler; Hixon; Jackson; Martinez; Robinson; Vernon
++22 hours ago
++November 20, 2026
++(LETTER) Republican voters deserve honesty, transparency, accountability
+ by
+ Cap City Staff
+-5 hours ago
+-November 18, 2026
+-Cheyenne native Tristan Johnson named Chamber of Commerce VP of operations
+-by
+-Garrett Grochowski
+-6 hours ago
+-November 18, 2026
++22 hours ago
++November 20, 2026
+ Facebook Page
+ Instagram Page
+ Obituaries
