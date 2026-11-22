@@ -1,0 +1,68 @@
+--- seq1 (2026-11-22T06:56:35Z)
++++ seq2 (2026-11-22T19:46:13Z)
+@@ -114,8 +114,8 @@
+ See downtown Cheyenne buzzing with holiday spirit Saturday
+ by
+ Garrett Grochowski
+-4 hours ago
+-November 21, 2026
++17 hours ago
++November 22, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+ Facebook
+@@ -126,7 +126,7 @@
+ Share on Make us preferred on Google (Opens in new window)
+ Make us preferred on Google
+ Cheyenne celebrates the start of the holiday season Nov. 21, 2026 (Garrett Grochowski, Cap City News)
+-CHEYENNE, Wyo. — Downtown Cheyenne came alive with holiday lights and spirits Saturday. Starting with the inaugural Holiday Night Market and ending with the official Depot Plaza lighting ceremony, the cozy winter feelings downtown were infectious.
++CHEYENNE, Wyo. — Downtown Cheyenne came alive with holiday lights and spirit Saturday. Starting with the inaugural Holiday Night Market and ending with the official Depot Plaza lighting ceremony, the cozy winter feelings downtown were infectious.
+ Cheyenne residents participated in three main events downtown Nov. 21
+ . The Holiday Night Market took over 17th Street, with vendors selling all sorts of wares under the warm string lights decorating the road.
+ Nearby, crowds gathered in the Depot Plaza in anticipation for the lighting of the Christmas Tree and the Depot itself. Before Cheyenne could count down and turn the lights on, the Lighting the Legacy mounted wreath procession had to wrap up its journey downtown from the Wyoming Capitol. On the way, participants honored Capitol Avenue’s many bronze statues with evergreen wreaths.
+@@ -158,31 +158,31 @@
+ North Cheyenne neighborhood to fill in with more houses, apartments upon plat approvals next week
+ Cheyenne man federally indicted for alleged $270K wire fraud scheme
+ Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
+-Obituaries: Kylander; Sharp; Thiel
+-Latest News
++Laramie County weekly arrest report (11/13/26–11/20/26)
++Latest News
++Laramie County health and food inspections (11/13/26–11/19/26)
++by
++Nick Perkins
++4 hours ago
++November 22, 2026
++‘My job’s gone’: Southwest Wyoming braces for impact of trona layoffs
++by
++Wyofile
++5 hours ago
+ Sublette County attorney warned commissioners that targeting billionaire Ricketts’ resort is legally ‘dangerous’
+ by
+ Wyofile
+-8 hours ago
++21 hours ago
+ Laramie County weekly arrest report (11/13/26–11/20/26)
+ by
+ Nick Perkins
+-8 hours ago
++21 hours ago
+ November 21, 2026
+ Chilly, breezy weekend in Cheyenne before midweek warmup
+ by
+ Nick Perkins
+-11 hours ago
++24 hours ago
+ November 21, 2026
+-Former Wyoming Boys’ School resident suing for alleged abuse told staff they were ‘like family,’ witness testifies
+-by
+-Wyofile
+-15 hours ago
+-Obituaries: Kylander; Sharp; Thiel
+-by
+-Cap City Staff
+-November 20, 2026
+-November 20, 2026
+ Facebook Page
+ Instagram Page
+ Obituaries
