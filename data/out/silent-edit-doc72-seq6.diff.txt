@@ -1,0 +1,60 @@
+--- seq5 (2026-11-24T00:01:00Z)
++++ seq6 (2026-11-24T10:01:51Z)
+@@ -158,36 +158,34 @@
+ Search for:
+ Search
+ Popular
+-Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
++Laramie County health and food inspections (11/13/26–11/19/26)
++Laramie County weekly arrest report (11/13/26–11/20/26)
++See downtown Cheyenne buzzing with holiday spirit Saturday
+ Laramie County Recent Arrests (11/19/26–11/20/26)
+-Cheyenne man charged with homicide of 10-month-old girl
+ Cheyenne man federally indicted for alleged $270K wire fraud scheme
+-North Cheyenne neighborhood to fill in with more houses, apartments upon plat approvals next week
+-Latest News
+-Obituaries: Kylander; Sharp; Thiel
+-by
+-Cap City Staff
+-8 hours ago
+-November 20, 2026
+-Feds back $4B project to connect eastern and western electricity grids
++Latest News
++Can ‘direct primary care’ help Wyoming’s healthcare woes? Powell doctors think so.
+ by
+ Wyofile
+ 9 hours ago
+-Cheyenne man federally indicted for alleged $270K wire fraud scheme
++Laramie County health and food inspections (11/13/26–11/19/26)
++by
++Nick Perkins
++16 hours ago
++November 22, 2026
++‘My job’s gone’: Southwest Wyoming braces for impact of trona layoffs
++by
++Wyofile
++17 hours ago
++See downtown Cheyenne buzzing with holiday spirit Saturday
+ by
+ Garrett Grochowski
+-10 hours ago
+-November 20, 2026
+-(LETTER) Republican voters deserve honesty, transparency, accountability
+-by
+-Cap City Staff
+-10 hours ago
+-November 20, 2026
+-North Cheyenne neighborhood to fill in with more houses, apartments upon plat approvals next week
+-by
+-Garrett Grochowski
+-12 hours ago
+-November 20, 2026
++November 21, 2026
++November 22, 2026
++Sublette County attorney warned commissioners that targeting billionaire Ricketts’ resort is legally ‘dangerous’
++by
++Wyofile
++November 21, 2026
+ Facebook Page
+ Instagram Page
+ Obituaries

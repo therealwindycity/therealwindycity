@@ -1,0 +1,68 @@
+--- seq1 (2026-11-23T23:59:18Z)
++++ seq2 (2026-11-24T10:00:10Z)
+@@ -115,7 +115,7 @@
+ Verdict follows eight-day trial that scrutinized practices at state-run juvenile facility in Worland.
+ by
+ Wyofile
+-4 hours ago
++15 hours ago
+ November 23, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -162,34 +162,33 @@
+ Popular
+ Three Cheyenne residents, including juvenile, seriously injured in I-25 crash south of Colorado border Sunday
+ Laramie County Recent Arrests (11/20/26–11/23/26)
++$10K bond upheld for man charged with late-night Depot Plaza assault
+ Laramie County health and food inspections (11/13/26–11/19/26)
+-Laramie County weekly arrest report (11/13/26–11/20/26)
+-See downtown Cheyenne buzzing with holiday spirit Saturday
+-Latest News
+-Cheyenne agriculture reforms up for final reading by city council tonight
+-by
+-Garrett Grochowski
+-49 minutes ago
++Rebecca Bextel, former governor candidate known for Checkgate, arrested for suspected drunk driving
++Latest News
++Former owner of Cheyenne restaurant Napoli’s planning new Mediterranean eatery
++by
++Garrett Grochowski
++4 hours ago
++November 23, 2026
++Cheyenne advances construction regulations, officially removes noise rules ahead of final vote
++by
++Garrett Grochowski
++4 hours ago
++November 24, 2026
++Rebecca Bextel, former governor candidate known for Checkgate, arrested for suspected drunk driving
++by
++Wyofile
++11 hours ago
++Cheyenne agriculture reforms up for final reading by City Council tonight
++by
++Garrett Grochowski
++12 hours ago
+ November 23, 2026
+ Three Cheyenne residents, including juvenile, seriously injured in I-25 crash south of Colorado border Sunday
+ by
+ Garrett Grochowski
+-3 hours ago
+-November 23, 2026
+-$10K bond upheld for man charged with late-night Depot Plaza assault
+-by
+-Garrett Grochowski
+-4 hours ago
+-November 23, 2026
+-Laramie County Recent Arrests (11/20/26–11/23/26)
+-by
+-Klark Byrd
+-6 hours ago
+-November 23, 2026
+-Holiday travel gets cheaper as Laramie County, national gas prices slide
+-by
+-Klark Byrd
+-7 hours ago
++15 hours ago
+ November 23, 2026
+ Facebook Page
+ Instagram Page

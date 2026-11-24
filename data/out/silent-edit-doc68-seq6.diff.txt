@@ -1,0 +1,70 @@
+--- seq5 (2026-11-24T00:00:48Z)
++++ seq6 (2026-11-24T10:01:39Z)
+@@ -114,7 +114,7 @@
+ Cheyenne Frontier FFA team earns top awards during national convention
+ by
+ Dan Cepeda
+-5 hours ago
++November 19, 2026
+ November 19, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -150,36 +150,34 @@
+ Search for:
+ Search
+ Popular
+-Former Cheyenne nonprofit director charged with embezzling $10K in organization funds
+-Temporary laborer held on $500K bond after reportedly accidentally shooting coworker
+-Laramie County Recent Arrests (11/17/26–11/18/26)
+-Man arrested for reportedly destroying Cheyenne hotel room, shattering window
+-Cheyenne man, claiming man he reportedly attacked was sex offender, charged with aggravated assault
+-Latest News
+-Cheyenne Happenings (11/20, 11/21): Christmas Craft Show, Holiday Night Market, more
++Laramie County health and food inspections (11/13/26–11/19/26)
++Laramie County weekly arrest report (11/13/26–11/20/26)
++See downtown Cheyenne buzzing with holiday spirit Saturday
++Laramie County Recent Arrests (11/19/26–11/20/26)
++Cheyenne man federally indicted for alleged $270K wire fraud scheme
++Latest News
++Can ‘direct primary care’ help Wyoming’s healthcare woes? Powell doctors think so.
++by
++Wyofile
++9 hours ago
++Laramie County health and food inspections (11/13/26–11/19/26)
+ by
+ Nick Perkins
+-2 hours ago
+-November 19, 2026
+-Laramie man gets 30 years for targeting 13-year-old for sexual abuse, CSAM possession
+-by
+-Greg Hirst
+-3 hours ago
+-November 19, 2026
+-Gordon stalls $13M grant to trona company that’s cutting 350 jobs in southwest Wyoming
++16 hours ago
++November 22, 2026
++‘My job’s gone’: Southwest Wyoming braces for impact of trona layoffs
+ by
+ Wyofile
+-3 hours ago
+-Obituaries: Prevedel; Boyd; Gross
+-by
+-Cap City Staff
+-3 hours ago
+-November 19, 2026
+-Cheyenne PD, US Marshals make pair of arrests in south Cheyenne, prompting school response
++17 hours ago
++See downtown Cheyenne buzzing with holiday spirit Saturday
+ by
+ Garrett Grochowski
+-4 hours ago
+-November 19, 2026
++November 21, 2026
++November 22, 2026
++Sublette County attorney warned commissioners that targeting billionaire Ricketts’ resort is legally ‘dangerous’
++by
++Wyofile
++November 21, 2026
+ Facebook Page
+ Instagram Page
+ Obituaries
