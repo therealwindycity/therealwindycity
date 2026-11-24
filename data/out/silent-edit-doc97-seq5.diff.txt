@@ -1,0 +1,59 @@
+--- seq4 (2026-11-24T10:23:35Z)
++++ seq5 (2026-11-24T22:32:14Z)
+@@ -233,33 +233,33 @@
+ Popular
+ Three Cheyenne residents, including juvenile, seriously injured in I-25 crash south of Colorado border Sunday
+ Laramie County Recent Arrests (11/20/26–11/23/26)
++Former owner of Cheyenne restaurant Napoli's planning new Mediterranean eatery
+ $10K bond upheld for man charged with late-night Depot Plaza assault
+-Laramie County health and food inspections (11/13/26–11/19/26)
+-Rebecca Bextel, former governor candidate known for Checkgate, arrested for suspected drunk driving
+-Latest News
++Laramie County Recent Arrests (11/23/26–11/24/26)
++Latest News
++Cheyenne passes new urban farm rules, throws out pet, nuisance exemptions for farmers
++by
++Garrett Grochowski
++1 hour ago
++November 24, 2026
++Controversial railroad ties set to be removed from Laramie’s West Side
++by
++Wyofile
++5 hours ago
++Laramie County Recent Arrests (11/23/26–11/24/26)
++by
++Klark Byrd
++6 hours ago
++November 24, 2026
++Patchy fog expected in Laramie County ahead of warm, sunny midweek
++by
++Klark Byrd
++7 hours ago
++November 24, 2026
+ Former owner of Cheyenne restaurant Napoli’s planning new Mediterranean eatery
+ by
+ Garrett Grochowski
+-4 hours ago
+-November 23, 2026
+-Cheyenne advances construction regulations, officially removes noise rules ahead of final vote
+-by
+-Garrett Grochowski
+-4 hours ago
+-November 24, 2026
+-Rebecca Bextel, former governor candidate known for Checkgate, arrested for suspected drunk driving
+-by
+-Wyofile
+-11 hours ago
+-Cheyenne agriculture reforms up for final reading by City Council tonight
+-by
+-Garrett Grochowski
+-12 hours ago
+-November 23, 2026
+-Three Cheyenne residents, including juvenile, seriously injured in I-25 crash south of Colorado border Sunday
+-by
+-Garrett Grochowski
+-15 hours ago
++14 hours ago
+ November 23, 2026
+ Facebook Page
+ Instagram Page
