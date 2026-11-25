@@ -1,0 +1,68 @@
+--- seq7 (2026-11-25T08:43:26Z)
++++ seq8 (2026-11-25T09:05:00Z)
+@@ -154,36 +154,37 @@
+ Search for:
+ Search
+ Popular
++Former owner of Cheyenne restaurant Napoli's planning new Mediterranean eatery
++Laramie County Recent Arrests (11/23/26–11/24/26)
+ Three Cheyenne residents, including juvenile, seriously injured in I-25 crash south of Colorado border Sunday
+-Laramie County Recent Arrests (11/20/26–11/23/26)
+-$10K bond upheld for man charged with late-night Depot Plaza assault
+-Laramie County health and food inspections (11/13/26–11/19/26)
+-Rebecca Bextel, former governor candidate known for Checkgate, arrested for suspected drunk driving
+-Latest News
+-Former owner of Cheyenne restaurant Napoli’s planning new Mediterranean eatery
+-by
+-Garrett Grochowski
+-4 hours ago
+-November 23, 2026
+-Cheyenne advances construction regulations, officially removes noise rules ahead of final vote
+-by
+-Garrett Grochowski
+-5 hours ago
+-November 24, 2026
+-Rebecca Bextel, former governor candidate known for Checkgate, arrested for suspected drunk driving
+-by
+-Wyofile
++Laramie County sheriff releases body cam footage of fatal officer-involved shooting
++Cheyenne passes new urban farm rules, throws out pet, nuisance exemptions for farmers
++Latest News
++All-City Children’s Chorus to present ‘Branches in Bloom’ Christmas concert
++by
++Dan Cepeda
++9 hours ago
++November 24, 2026
++Cheyenne to discuss future of 1960s-era airport terminal at special meeting
++by
++Garrett Grochowski
++9 hours ago
++November 24, 2026
++Obituaries: Abreu; Baccei; Barkell; Gregorio; Gray; Howard; McNulty; Webber
++by
++Cap City Staff
+ 11 hours ago
+-Cheyenne agriculture reforms up for final reading by City Council tonight
+-by
+-Garrett Grochowski
+-13 hours ago
+-November 23, 2026
+-Three Cheyenne residents, including juvenile, seriously injured in I-25 crash south of Colorado border Sunday
+-by
+-Garrett Grochowski
+-15 hours ago
+-November 23, 2026
++November 24, 2026
++Laramie County sheriff releases body cam footage of fatal officer-involved shooting
++by
++Garrett Grochowski
++12 hours ago
++November 24, 2026
++Cheyenne passes new urban farm rules, throws out pet, nuisance exemptions for farmers
++by
++Garrett Grochowski
++14 hours ago
++November 24, 2026
+ Facebook Page
+ Instagram Page
+ Obituaries

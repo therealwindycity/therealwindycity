@@ -1,0 +1,29 @@
+--- seq1 (2026-11-25T08:42:23Z)
++++ seq2 (2026-11-25T09:03:57Z)
+@@ -158,22 +158,22 @@
+ Obituaries: Abreu; Baccei; Barkell; Gregorio; Gray; Howard; McNulty; Webber
+ by
+ Cap City Staff
+-10 hours ago
++11 hours ago
+ November 24, 2026
+ Laramie County sheriff releases body cam footage of fatal officer-involved shooting
+ by
+ Garrett Grochowski
+-11 hours ago
++12 hours ago
+ November 24, 2026
+ Cheyenne passes new urban farm rules, throws out pet, nuisance exemptions for farmers
+ by
+ Garrett Grochowski
+-13 hours ago
++14 hours ago
+ November 24, 2026
+ Controversial railroad ties set to be removed from Laramie’s West Side
+ by
+ Wyofile
+-17 hours ago
++18 hours ago
+ Facebook Page
+ Instagram Page
+ Obituaries
