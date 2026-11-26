@@ -19,7 +19,7 @@ from __future__ import annotations
 import re
 from html.parser import HTMLParser
 
-FP_VERSION = "2"
+FP_VERSION = "3"
 
 _VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param",
          "source", "track", "wbr"}
@@ -52,6 +52,7 @@ class _Extractor(HTMLParser):
         self.h1 = 0
         self.page: list[str] = []
         self.all: list[str] = []
+        self.chrome_roots: list[int] = []  # characters of text under each outermost chrome element
         self.body_parts: list[str] = []
         self.h1_parts: list[str] = []
 
@@ -66,6 +67,8 @@ class _Extractor(HTMLParser):
         if tag in _NEVER_TEXT:
             self.never += 1
         if is_chrome:
+            if self.chrome == 0:
+                self.chrome_roots.append(0)
             self.chrome += 1
         if is_body:
             self.body += 1
@@ -102,6 +105,8 @@ class _Extractor(HTMLParser):
         self.all.append(s)
         if not self.chrome:
             self.page.append(s)
+        elif self.chrome_roots:
+            self.chrome_roots[-1] += len(s)
 
 
 def _clean(parts: list[str]) -> str:
@@ -142,9 +147,10 @@ def _content_text(html: str) -> str:
         head = _clean(ex.h1_parts[:2])
         return (head + "\n" + body).strip()
     page, full = _clean(ex.page), _clean(ex.all)
-    if len(page) < 0.25 * len(full) and len(full) > 400:
-        # stripping removed most of the page: markup we don't understand; fall back to the whole
-        # text (minus relative times) - more noise, but never a missed edit
+    total = sum(len(x) for x in ex.all)
+    if total > 400 and max(ex.chrome_roots, default=0) > 0.6 * total:
+        # one "chrome" element holds most of the page: it is really a page wrapper we failed to
+        # recognise (like ASP.NET's <form>). Use the whole text - more noise, never a missed edit.
         return full
     return page
 

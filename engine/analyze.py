@@ -17,13 +17,20 @@ _STOP = set(("the a an and or of to in for on with by is are was were be been "
              "that this it as at from we you they he she city council not but".split()))
 
 
+def term_pattern(term: str) -> "re.Pattern[str]":
+    """Case-insensitive whole-word pattern for a watchlist term (spaces match any whitespace)."""
+    body = r"\s+".join(re.escape(w) for w in term.split())
+    return re.compile(rf"(?<!\w){body}(?!\w)", re.I)
+
+
 def scan_and_alert(conn, doc_id: int, text: str) -> int:
     hits = 0
-    lowered = text.lower()
     for topic, term in db.load_watchlist():
-        idx = lowered.find(term.lower())
-        if idx == -1:
+        # whole words only: "Vantage" (the data-center company) must not match "advantage"
+        m = term_pattern(term).search(text)
+        if m is None:
             continue
+        idx = m.start()
         start = max(0, idx - 120)
         end = min(len(text), idx + 120)
         snippet = re.sub(r"\s+", " ", text[start:end]).strip()

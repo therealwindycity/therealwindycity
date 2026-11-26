@@ -11,7 +11,7 @@ from pathlib import Path
 
 from . import db
 from .analyze import scan_and_alert
-from .ingest import html_to_text
+from . import fingerprint
 
 
 def extract_document(conn, doc_id: int) -> str:
@@ -32,7 +32,9 @@ def extract_document(conn, doc_id: int) -> str:
     if raw[:5] == b"%PDF-" or name.endswith(".pdf"):
         text = _extract_pdf(path)
     elif head.startswith(b"<!doctype") or head.startswith(b"<html") or name.endswith((".html", ".htm")):
-        text = html_to_text(raw.decode("utf-8", errors="replace"))
+        # article text only, so watchlist hits and search results come from the story itself,
+        # not from sidebar headlines or a "your browser is out of date ... Microsoft Edge" banner
+        text = fingerprint.content_text(raw.decode("utf-8", errors="replace"))
     else:
         try:
             text = raw.decode("utf-8")

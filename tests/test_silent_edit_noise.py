@@ -98,6 +98,15 @@ class FingerprintTests(unittest.TestCase):
                 % (t, body) for t in ("Labor Day closures", "Thanksgiving closures"))
         self.assertEqual(fingerprint.content_text(a), fingerprint.content_text(b))
 
+    def test_small_page_with_lots_of_chrome_keeps_only_content(self):
+        # wyomingnews photo pages: a short caption plus a big menu, footer and browser-warning modal
+        chrome = ("<nav>" + "<a>Section</a>" * 80 + "</nav><footer>" + "Copyright notice. " * 40 +
+                  "</footer><div class='modal fade'><p>Your browser is out of date. Microsoft Edge</p></div>")
+        html = f"<html><body>{chrome}<h1>Photo: holiday lights</h1><p>Caption text.</p></body></html>"
+        text = fingerprint.content_text(html)
+        self.assertIn("Caption text.", text)
+        self.assertNotIn("Microsoft", text)
+
     def test_unrecognised_markup_falls_back_to_full_text(self):
         # if chrome rules would strip most of the page, keep everything rather than miss an edit
         html = "<html><body><div class='menu-wrap'><p>" + "Council minutes text. " * 40 + "</p></div></body></html>"
@@ -107,6 +116,15 @@ class FingerprintTests(unittest.TestCase):
         self.assertEqual("", fingerprint.content_text(loader_shell("DocumentViewer.php Loading…").decode()))
         self.assertEqual("", fingerprint.content_text(loader_shell("").decode()))
         self.assertNotEqual("", fingerprint.content_text(loader_shell("Budget $100").decode()))
+
+
+class WatchlistTests(unittest.TestCase):
+    def test_terms_match_whole_words_only(self):
+        from engine.analyze import term_pattern
+        self.assertIsNone(term_pattern("Vantage").search("bringing back its best gift card advantage"))
+        self.assertIsNotNone(term_pattern("Vantage").search("Vantage Data Centers filed plans"))
+        self.assertIsNotNone(term_pattern("data center").search("the proposed Data\nCenter annexation"))
+        self.assertIsNotNone(term_pattern("6th Penny").search("the 6th penny tax"))
 
 
 class PipelineTests(unittest.TestCase):
@@ -155,6 +173,21 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(report["versions_removed_as_page_chrome"], 1)
             self.assertFalse(retriage.needed(conn))
             self.assertEqual(retriage.migrate(conn), {"skipped": True})
+
+    def test_retriage_drops_watchlist_hits_from_page_chrome(self):
+        with Isolated() as conn:
+            ingest_and_diff(conn, self.URL, page())
+            doc = conn.execute("SELECT id FROM documents").fetchone()[0]
+            with conn:  # hits recorded by the old whole-page matcher
+                conn.execute("INSERT INTO alerts (document_id, term, snippet, created_at) VALUES "
+                             "(?, 'data_center_fight:Council approves', '...sidebar...', ?)", (doc, db.utcnow()))
+                conn.execute("INSERT INTO alerts (document_id, term, snippet, created_at) VALUES "
+                             "(?, 'events:Holiday Night Market', '...article...', ?)", (doc, db.utcnow()))
+            report = retriage.migrate(conn, force=True)
+            terms = [r[0] for r in conn.execute("SELECT term FROM alerts")]
+            self.assertIn("events:Holiday Night Market", terms)
+            self.assertNotIn("data_center_fight:Council approves", terms)
+            self.assertEqual(report["watchlist_alerts_removed"], 1)
 
 if __name__ == "__main__":
     unittest.main()
