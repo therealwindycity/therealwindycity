@@ -1,0 +1,64 @@
+--- seq1 (2026-11-26T08:27:25Z)
++++ seq2 (2026-11-26T12:57:40Z)
+@@ -114,7 +114,7 @@
+ Serving suspension for ‘impermissible communication’ with transfers, UW’s Sawvel to miss out on Saturday game
+ by
+ Garrett Grochowski
+-5 hours ago
++9 hours ago
+ November 25, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -142,34 +142,34 @@
+ Popular
+ Laramie County Recent Arrests (11/24/26–11/25/26)
+ Laramie County sheriff releases body cam footage of fatal officer-involved shooting
++LCSO arrests 69-year-old driver involved in fatal October car vs. bike crash
+ Cheyenne passes new urban farm rules, throws out pet, nuisance exemptions for farmers
++Cheyenne man charged with homicide of 10-month-old girl
++Latest News
++Wyoming man sentenced to 15 years in federal prison for sexual abuse of minors
++by
++Cap City Staff
++11 hours ago
++November 25, 2026
++Obituaries: Huston
++by
++Cap City Staff
++14 hours ago
++November 25, 2026
+ LCSO arrests 69-year-old driver involved in fatal October car vs. bike crash
+-Cheyenne man charged with homicide of 10-month-old girl
+-Latest News
+-Wyoming man sentenced to 15 years in federal prison for sexual abuse of minors
+-by
+-Cap City Staff
+-6 hours ago
+-November 25, 2026
+-Obituaries: Huston
+-by
+-Cap City Staff
+-9 hours ago
+-November 25, 2026
+-LCSO arrests 69-year-old driver involved in fatal October car vs. bike crash
+-by
+-Garrett Grochowski
+-10 hours ago
++by
++Garrett Grochowski
++14 hours ago
+ November 25, 2026
+ ‘Girls on the Run’ marks 10th year bringing physical and emotional health to Wyoming youth
+ by
+ Dan Cepeda
+-12 hours ago
++16 hours ago
+ November 25, 2026
+ Cheyenne to see slightly cooler day before warmer Thanksgiving
+ by
+ Garrett Grochowski
+-16 hours ago
++20 hours ago
+ November 25, 2026
+ Facebook Page
+ Instagram Page

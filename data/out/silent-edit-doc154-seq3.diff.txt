@@ -1,0 +1,66 @@
+--- seq2 (2026-11-26T08:27:46Z)
++++ seq3 (2026-11-26T12:58:02Z)
+@@ -115,7 +115,7 @@
+ Appeal asserts judge applied incorrect legal standard when striking down mandatory ultrasounds and other restrictions.
+ by
+ Wyofile
+-18 hours ago
++23 hours ago
+ November 24, 2026
+ Share this:
+ Share on Facebook (Opens in new window)
+@@ -174,34 +174,34 @@
+ Popular
+ Laramie County Recent Arrests (11/24/26–11/25/26)
+ Laramie County sheriff releases body cam footage of fatal officer-involved shooting
++LCSO arrests 69-year-old driver involved in fatal October car vs. bike crash
+ Cheyenne passes new urban farm rules, throws out pet, nuisance exemptions for farmers
++Cheyenne man charged with homicide of 10-month-old girl
++Latest News
++Serving suspension for ‘impermissible communication’ with transfers, UW’s Sawvel to miss out on Saturday game
++by
++Garrett Grochowski
++9 hours ago
++November 25, 2026
++Wyoming man sentenced to 15 years in federal prison for sexual abuse of minors
++by
++Cap City Staff
++11 hours ago
++November 25, 2026
++Obituaries: Huston
++by
++Cap City Staff
++14 hours ago
++November 25, 2026
+ LCSO arrests 69-year-old driver involved in fatal October car vs. bike crash
+-Cheyenne man charged with homicide of 10-month-old girl
+-Latest News
+-Serving suspension for ‘impermissible communication’ with transfers, UW’s Sawvel to miss out on Saturday game
+ by
+ Garrett Grochowski
+-5 hours ago
+-November 25, 2026
+-Wyoming man sentenced to 15 years in federal prison for sexual abuse of minors
+-by
+-Cap City Staff
+-6 hours ago
+-November 25, 2026
+-Obituaries: Huston
+-by
+-Cap City Staff
+-9 hours ago
+-November 25, 2026
+-LCSO arrests 69-year-old driver involved in fatal October car vs. bike crash
+-by
+-Garrett Grochowski
+-10 hours ago
++14 hours ago
+ November 25, 2026
+ ‘Girls on the Run’ marks 10th year bringing physical and emotional health to Wyoming youth
+ by
+ Dan Cepeda
+-12 hours ago
++16 hours ago
+ November 25, 2026
+ Facebook Page
+ Instagram Page
