@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write            # so the action can commit the refreshed ledger
+  actions: write             # so it can start workdesk-pages after committing
 concurrency:
   group: civic-cycle
   cancel-in-progress: false
@@ -40,6 +41,13 @@ jobs:
           else
             echo "ledger unchanged — quiet day is a true report"
           fi
+      - name: Redeploy GitHub Pages with the refreshed ledger
+        # Pushes made with GITHUB_TOKEN never trigger other workflows, so workdesk-pages (which
+        # serves public/ at /ledger/) did not redeploy after a cycle; workflow_dispatch is allowed.
+        if: ${{ env.CYCLE_COMMITTED == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run workdesk-pages.yml --ref main --repo "${{ github.repository }}"
       - name: Phone push via ntfy.sh (optional — set repo secret NTFY_TOPIC)
         if: ${{ env.CYCLE_COMMITTED == 'true' }}
         env:
