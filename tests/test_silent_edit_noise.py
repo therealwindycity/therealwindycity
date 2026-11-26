@@ -174,6 +174,31 @@ class PipelineTests(unittest.TestCase):
             self.assertFalse(retriage.needed(conn))
             self.assertEqual(retriage.migrate(conn), {"skipped": True})
 
+    def test_reindex_replaces_search_row_instead_of_appending(self):
+        with Isolated() as conn:
+            ingest_and_diff(conn, self.URL, page())
+            doc = conn.execute("SELECT id FROM documents").fetchone()[0]
+            if not conn.execute("SELECT value FROM meta WHERE key='fts_enabled'").fetchone()[0] == "1":
+                self.skipTest("no FTS5")
+            for text in ("first text", "second text", "final text"):
+                db.index_text(conn, doc, "test", "News", text)
+            rows = [r[0] for r in conn.execute("SELECT content FROM text_index WHERE doc_id = ?", (str(doc),))]
+            self.assertEqual(rows, ["final text"])
+
+    def test_dedupe_text_index_keeps_newest_row(self):
+        with Isolated() as conn:
+            ingest_and_diff(conn, self.URL, page())
+            doc = conn.execute("SELECT id FROM documents").fetchone()[0]
+            if not conn.execute("SELECT value FROM meta WHERE key='fts_enabled'").fetchone()[0] == "1":
+                self.skipTest("no FTS5")
+            with conn:  # duplicates left behind by the old bug
+                for t in ("stale one", "stale two", "newest"):
+                    conn.execute("INSERT INTO text_index (title, content, doc_id, source) VALUES (?, ?, ?, ?)",
+                                 ("News", t, str(doc), "test"))
+            db.dedupe_text_index(conn)
+            rows = [r[0] for r in conn.execute("SELECT content FROM text_index WHERE doc_id = ?", (str(doc),))]
+            self.assertEqual(rows, ["newest"])
+
     def test_retriage_drops_watchlist_hits_from_page_chrome(self):
         with Isolated() as conn:
             ingest_and_diff(conn, self.URL, page())

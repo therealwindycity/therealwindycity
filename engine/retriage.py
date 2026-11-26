@@ -151,6 +151,9 @@ def _recheck_documents(conn, docs: dict) -> list:
 
 
 def migrate(conn, force: bool = False) -> dict:
+    dupes = db.dedupe_text_index(conn)
+    if dupes:
+        print(f"[retriage] removed {dupes} superseded search-index rows", flush=True)
     if not force and not needed(conn):
         return {"skipped": True}
     docs = {r["id"]: r for r in conn.execute("SELECT * FROM documents")}

@@ -227,7 +227,9 @@ def index_text(conn, doc_id: int, source: str, title: str, content: str):
     fts = conn.execute("SELECT value FROM meta WHERE key='fts_enabled'").fetchone()
     with conn:
         if fts and fts["value"] == "1":
-            conn.execute("DELETE FROM text_index WHERE doc_id = ?", (doc_id,))
+            # doc_id is stored as TEXT; deleting with an int never matched, so every re-index
+            # appended another copy (and kept superseded - e.g. pre-redaction - text searchable)
+            conn.execute("DELETE FROM text_index WHERE doc_id = ?", (str(doc_id),))
             conn.execute(
                 "INSERT INTO text_index (title, content, doc_id, source)"
                 " VALUES (?, ?, ?, ?)",
@@ -237,6 +239,25 @@ def index_text(conn, doc_id: int, source: str, title: str, content: str):
             "UPDATE documents SET status = 'indexed' WHERE id = ?", (doc_id,)
         )
     return str(text_path)
+
+
+def dedupe_text_index(conn) -> int:
+    """Keep only the newest search-index row per document and physically purge the rest.
+
+    Cleans up after the old index_text bug (see above). Cheap no-op once clean.
+    """
+    fts = conn.execute("SELECT value FROM meta WHERE key='fts_enabled'").fetchone()
+    if not fts or fts[0] != "1":
+        return 0
+    with conn:
+        n = conn.execute(
+            "DELETE FROM text_index WHERE rowid NOT IN "
+            "(SELECT MAX(rowid) FROM text_index GROUP BY doc_id)").rowcount
+        if n:
+            conn.execute("INSERT INTO text_index(text_index) VALUES('optimize')")
+    if n:
+        conn.execute("VACUUM")  # drop the freed pages so superseded text is gone from the file
+    return n
 
 
 def search(conn, query: str) -> list[dict]:
