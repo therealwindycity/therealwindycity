@@ -17,7 +17,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from xml.etree import ElementTree
 
-from . import db
+from . import db, fingerprint
 
 _LAST_HIT: dict[str, float] = {}
 _ROBOTS: dict[str, urllib.robotparser.RobotFileParser] = {}
@@ -163,10 +163,10 @@ def _hashable_bytes(url: str, raw: bytes) -> bytes:
     normalized extracted TEXT (whitespace collapsed, boilerplate-safe), since
     CMS pages embed rotating nonces that are not content changes."""
     if _is_htmlish(url, raw):
-        text = html_to_text(raw.decode("utf-8", errors="replace"))
-        text = re.sub(r"[ \t]+", " ", text)
-        text = re.sub(r"\n\s*\n+", "\n", text).strip()
-        return text.encode("utf-8")
+        # Article text only: sidebars, menus, "Latest News" lists and relative times ("3 hours
+        # ago") change every crawl and are not edits. See engine/fingerprint.py.
+        text = fingerprint.content_text(raw.decode("utf-8", errors="replace"))
+        return fingerprint.canonical(text).encode("utf-8")
     return raw
 
 
@@ -273,6 +273,8 @@ def crawl_fixture(conn, source_name: str, fixture_dir: str) -> int:
 
 
 def crawl_all(conn) -> int:
+    from . import retriage  # one-time re-check of past silent edits when the fingerprint changes
+    retriage.migrate(conn)
     cfg = db.load_config()
     db.sync_sources(conn)
     total = 0

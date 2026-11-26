@@ -11,19 +11,15 @@ import difflib
 from pathlib import Path
 
 from . import db
-from .ingest import html_to_text
+from . import fingerprint
 
 
 def _text_of(local_path: str | Path) -> str:
     path = Path(local_path)
     raw = path.read_bytes()
-    head = raw[:1024].lstrip().lower()
-    if (
-        path.name.lower().endswith((".html", ".htm"))
-        or head.startswith(b"<!doctype")
-        or head.startswith(b"<html")
-    ):
-        return html_to_text(raw.decode("utf-8", errors="replace"))
+    if fingerprint.looks_like_html(raw, path.name):
+        # Same article-only text the fingerprint uses, so a diff shows what changed in the story.
+        return fingerprint.content_text(raw.decode("utf-8", errors="replace"))
     try:
         return raw.decode("utf-8", errors="replace")
     except Exception:
@@ -42,8 +38,14 @@ def diff_document(conn, doc_id: int, new_seq: int) -> str:
     new = _find_capture(doc_id, cur["sha256"], conn=conn)
     if old is None or new is None:
         return f"doc {doc_id}: snapshot missing for diff"
-    old_lines = _text_of(str(old)).splitlines()
-    new_lines = _text_of(str(new)).splitlines()
+    old_text, new_text = _text_of(str(old)), _text_of(str(new))
+    if fingerprint.canonical(old_text) == fingerprint.canonical(new_text):
+        # only page chrome differed (sidebar times/lists, menus): not a version of the document.
+        # Drop the row so every "silent edits" count stays honest; the snapshot file is kept.
+        with conn:
+            conn.execute("DELETE FROM versions WHERE id = ?", (cur["id"],))
+        return f"doc {doc_id}: page chrome changed, article unchanged (no version, no alert)"
+    old_lines, new_lines = old_text.splitlines(), new_text.splitlines()
     diff = list(difflib.unified_diff(
         old_lines, new_lines, lineterm="",
         fromfile=f"seq{prev['seq']} ({prev['captured_at']})",

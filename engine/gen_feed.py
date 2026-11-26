@@ -15,6 +15,29 @@ def _esc(s) -> str:
     return html.escape(str(s or ""), quote=True)
 
 
+def collect_items(conn) -> list[tuple]:
+    """(timestamp, title, url, description) for the feed, newest first.
+
+    SILENT-EDIT alerts are excluded from the watchlist part: each edit is already listed once from
+    the versions table, and listing the alert too made every edit appear twice.
+    """
+    items = []
+    for r in conn.execute(
+            "SELECT a.created_at ts, a.term, a.snippet, d.url, d.title "
+            "FROM alerts a JOIN documents d ON d.id=a.document_id "
+            "WHERE a.term <> 'SILENT-EDIT' ORDER BY a.id DESC LIMIT 40"):
+        items.append((r["ts"], f"WATCHLIST: “{r['term']}” — {r['title']}",
+                      r["url"], r["snippet"]))
+    for r in conn.execute(
+            "SELECT v.captured_at ts, v.change_summary, d.url, d.title "
+            "FROM versions v JOIN documents d ON d.id=v.document_id "
+            "WHERE v.seq>1 ORDER BY v.id DESC LIMIT 20"):
+        items.append((r["ts"], f"SILENT EDIT: {r['title']}", r["url"],
+                      r["change_summary"]))
+    items.sort(key=lambda x: x[0] or "", reverse=True)
+    return items[:50]
+
+
 def main():
     import sys
     root = Path(__file__).resolve().parent.parent
@@ -29,22 +52,8 @@ def main():
         return
 
     conn = db.connect()
-    items = []
-    for r in conn.execute(
-            "SELECT a.created_at ts, a.term, a.snippet, d.url, d.title "
-            "FROM alerts a JOIN documents d ON d.id=a.document_id "
-            "ORDER BY a.id DESC LIMIT 40"):
-        items.append((r["ts"], f"WATCHLIST: “{r['term']}” — {r['title']}",
-                      r["url"], r["snippet"]))
-    for r in conn.execute(
-            "SELECT v.captured_at ts, v.change_summary, d.url, d.title "
-            "FROM versions v JOIN documents d ON d.id=v.document_id "
-            "WHERE v.seq>1 ORDER BY v.id DESC LIMIT 20"):
-        items.append((r["ts"], f"SILENT EDIT: {r['title']}", r["url"],
-                      r["change_summary"]))
+    items = collect_items(conn)
     conn.close()
-    items.sort(key=lambda x: x[0] or "", reverse=True)
-    items = items[:50]
 
     now = datetime.now(timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT")
     body = "\n".join(
