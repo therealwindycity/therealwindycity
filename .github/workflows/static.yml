@@ -2,9 +2,9 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+  # Manual only. workdesk-pages.yml is the Pages deployer for this repo (WorkDesk at / and the civic
+  # ledger at /ledger/). This starter workflow published the bare repo root, which has no index.html,
+  # so each push to main replaced the site with a 404 (last happened 2026-11-21).
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
