@@ -1,0 +1,649 @@
+{
+ "fingerprint_version": "3",
+ "generated_at": "2026-11-26T13:22:42Z",
+ "versions_removed_as_page_chrome": 0,
+ "edits_kept": 4,
+ "watchlist_alerts_removed": 76,
+ "captures_missing": 0,
+ "kept": [
+  {
+   "document_id": 1,
+   "seq": 2,
+   "captured_at": "2026-11-21T07:13:43Z",
+   "summary": "107 lines added, 3 removed",
+   "title": "English (United States)  Select this as your preferred language"
+  },
+  {
+   "document_id": 2,
+   "seq": 2,
+   "captured_at": "2026-11-21T07:13:46Z",
+   "summary": "107 lines added, 3 removed",
+   "title": "Spanish  Select this as your preferred language"
+  },
+  {
+   "document_id": 7,
+   "seq": 2,
+   "captured_at": "2026-11-21T07:15:41Z",
+   "summary": "107 lines added, 3 removed",
+   "title": "Minutes and Agendas"
+  },
+  {
+   "document_id": 92,
+   "seq": 2,
+   "captured_at": "2026-11-22T19:46:13Z",
+   "summary": "1 lines added, 1 removed",
+   "title": "See downtown Cheyenne buzzing with holiday spirit Saturday"
+  }
+ ],
+ "removed": [],
+ "watchlist_removed": [
+  {
+   "document_id": 10,
+   "title": "Obituaries: Chambers; Price",
+   "url": "https://capcity.news/latest-news/2026/09/05/obituaries-chambers-price/",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026hem never failed. Their love and loyalty to each other never faded. She and Al raised their three children, took full advantage of their many years of retirement, and enjoyed 68 years of marriage until his death in March of 2018. Jackie enj\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 60,
+   "title": "Wyoming voters soundly rejected a major property tax cut. Here\u2019s why.",
+   "url": "https://capcity.news/wyoming-news/2026/11/20/wyoming-voters-soundly-rejected-a-major-property-tax-cut-heres-why/",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026ir homes, she said. Her own property tax bill on her home has more than doubled in the past five years, but she takes advantage of the 50% exemption for seniors . She disagreed that local services would suffer, suggesting local governments\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 109,
+   "title": "Holiday Season Shortcuts to Entertain With Less Stress",
+   "url": "https://www.wyomingnews.com/online_features/food_recipes_entertaining/holiday-season-shortcuts-to-entertain-with-less-stress/image_c8ef3ff1-33b6-55ae-8309-b1ebd945a621.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 109,
+   "title": "Holiday Season Shortcuts to Entertain With Less Stress",
+   "url": "https://www.wyomingnews.com/online_features/food_recipes_entertaining/holiday-season-shortcuts-to-entertain-with-less-stress/image_c8ef3ff1-33b6-55ae-8309-b1ebd945a621.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 110,
+   "title": "Holiday Season Shortcuts to Entertain With Less Stress",
+   "url": "https://www.wyomingnews.com/online_features/food_recipes_entertaining/holiday-season-shortcuts-to-entertain-with-less-stress/article_3c3ddbba-2a27-5f73-ba23-afddd639034f.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 110,
+   "title": "Holiday Season Shortcuts to Entertain With Less Stress",
+   "url": "https://www.wyomingnews.com/online_features/food_recipes_entertaining/holiday-season-shortcuts-to-entertain-with-less-stress/article_3c3ddbba-2a27-5f73-ba23-afddd639034f.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 111,
+   "title": "Top Holiday Stress Release Gift Ideas for 2026",
+   "url": "https://www.wyomingnews.com/online_features/gift_ideas/top-holiday-stress-release-gift-ideas-for-2026/image_6a71c602-aa72-5ace-a8d9-34b125e337e9.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 111,
+   "title": "Top Holiday Stress Release Gift Ideas for 2026",
+   "url": "https://www.wyomingnews.com/online_features/gift_ideas/top-holiday-stress-release-gift-ideas-for-2026/image_6a71c602-aa72-5ace-a8d9-34b125e337e9.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 112,
+   "title": "Top Holiday Stress Release Gift Ideas for 2026",
+   "url": "https://www.wyomingnews.com/online_features/gift_ideas/top-holiday-stress-release-gift-ideas-for-2026/article_72250031-fc79-5f15-bf74-15f87d427571.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 112,
+   "title": "Top Holiday Stress Release Gift Ideas for 2026",
+   "url": "https://www.wyomingnews.com/online_features/gift_ideas/top-holiday-stress-release-gift-ideas-for-2026/article_72250031-fc79-5f15-bf74-15f87d427571.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 113,
+   "title": "Jeje Studios Launches Wild West Brawl, a Free PvP Auto Battler Card Game for iPhone and Android, on the App Store and Google Play",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/jeje-studios-launches-wild-west-brawl-a-free-pvp-auto-battler-card-game-for-iphone/article_d418b36b-19ba-5c4b-9d53-35dbef38f134.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 113,
+   "title": "Jeje Studios Launches Wild West Brawl, a Free PvP Auto Battler Card Game for iPhone and Android, on the App Store and Google Play",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/jeje-studios-launches-wild-west-brawl-a-free-pvp-auto-battler-card-game-for-iphone/article_d418b36b-19ba-5c4b-9d53-35dbef38f134.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 114,
+   "title": "92% of surveyed practitioners say brief between-session practices are important",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/92-of-surveyed-practitioners-say-brief-between-session-practices-are-important/article_7791fbff-b8bc-5c59-83ba-83620ecfec03.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 114,
+   "title": "92% of surveyed practitioners say brief between-session practices are important",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/92-of-surveyed-practitioners-say-brief-between-session-practices-are-important/article_7791fbff-b8bc-5c59-83ba-83620ecfec03.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 115,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/image_ce821d04-4897-56d6-bfc6-402769b17550.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 115,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/image_ce821d04-4897-56d6-bfc6-402769b17550.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 116,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/image_29ea81ec-72a4-525a-ba49-ddebec58e856.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 116,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/image_29ea81ec-72a4-525a-ba49-ddebec58e856.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 117,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/image_0f58cf5e-f730-55ad-8d0f-9cd88bdd3d39.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 117,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/image_0f58cf5e-f730-55ad-8d0f-9cd88bdd3d39.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 118,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/article_0fcabb31-8c9a-519c-a361-52ed9a1f3f5c.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 118,
+   "title": "When Water Meets Electricity: How ELEGRP Advances Electrical Safety",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/when-water-meets-electricity-how-elegrp-advances-electrical-safety/article_0fcabb31-8c9a-519c-a361-52ed9a1f3f5c.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 119,
+   "title": "Black Friday Golf Cart Deals: Backyard Escapism Makes the Long-Range Battery and Soundbar Free On Every Custom Electric Golf Cart. $2,599 In Upgrades To 4, 6 and 8-Seater Street Legal LSVs",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/black-friday-golf-cart-deals-backyard-escapism-makes-the-long-range-battery-and-soundbar-free/article_fc31a754-9952-5775-bcbb-7ab8b106a8c4.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 119,
+   "title": "Black Friday Golf Cart Deals: Backyard Escapism Makes the Long-Range Battery and Soundbar Free On Every Custom Electric Golf Cart. $2,599 In Upgrades To 4, 6 and 8-Seater Street Legal LSVs",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/black-friday-golf-cart-deals-backyard-escapism-makes-the-long-range-battery-and-soundbar-free/article_fc31a754-9952-5775-bcbb-7ab8b106a8c4.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 120,
+   "title": "RCL Mechanical Shares a Winter Boiler Maintenance Checklist for Taunton Homeowners",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/rcl-mechanical-shares-a-winter-boiler-maintenance-checklist-for-taunton-homeowners/article_cad0d397-fc15-5344-aecf-fabc5592625c.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 120,
+   "title": "RCL Mechanical Shares a Winter Boiler Maintenance Checklist for Taunton Homeowners",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/rcl-mechanical-shares-a-winter-boiler-maintenance-checklist-for-taunton-homeowners/article_cad0d397-fc15-5344-aecf-fabc5592625c.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 121,
+   "title": "The Clean Plumbers Helps Tampa Bay Homeowners Prevent Hidden Plumbing Leaks and Water Damage Before Holiday Travel",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/the-clean-plumbers-helps-tampa-bay-homeowners-prevent-hidden-plumbing-leaks-and-water-damage-before/article_416f00fb-e178-5b5c-aaa8-b1a2de94ba33.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 121,
+   "title": "The Clean Plumbers Helps Tampa Bay Homeowners Prevent Hidden Plumbing Leaks and Water Damage Before Holiday Travel",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/the-clean-plumbers-helps-tampa-bay-homeowners-prevent-hidden-plumbing-leaks-and-water-damage-before/article_416f00fb-e178-5b5c-aaa8-b1a2de94ba33.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 122,
+   "title": "Octane Air Conditioning & Heating LLC Encourages Mesa and East Valley Homeowners to Schedule HVAC Maintenance Before Winter",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/octane-air-conditioning-heating-llc-encourages-mesa-and-east-valley-homeowners-to-schedule-hvac-maintenance/article_21e07b34-8f09-59fa-992f-77ce7f3e0cdc.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 122,
+   "title": "Octane Air Conditioning & Heating LLC Encourages Mesa and East Valley Homeowners to Schedule HVAC Maintenance Before Winter",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/octane-air-conditioning-heating-llc-encourages-mesa-and-east-valley-homeowners-to-schedule-hvac-maintenance/article_21e07b34-8f09-59fa-992f-77ce7f3e0cdc.html",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026ing LLC is encouraging homeowners throughout Mesa, Gilbert, Chandler, and surrounding East Valley communities to take advantage of the fall season by scheduling professional HVAC maintenance. After months of heavy air conditioning use durin\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 122,
+   "title": "Octane Air Conditioning & Heating LLC Encourages Mesa and East Valley Homeowners to Schedule HVAC Maintenance Before Winter",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/octane-air-conditioning-heating-llc-encourages-mesa-and-east-valley-homeowners-to-schedule-hvac-maintenance/article_21e07b34-8f09-59fa-992f-77ce7f3e0cdc.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 123,
+   "title": "Emergency Plumbing Heating & Air Helps Delaware and Columbus Homeowners Prevent Clogged Drains During the Holiday Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/emergency-plumbing-heating-air-helps-delaware-and-columbus-homeowners-prevent-clogged-drains-during-the-holiday/article_9812791b-8cf5-5ca8-bf16-688540d80e49.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 123,
+   "title": "Emergency Plumbing Heating & Air Helps Delaware and Columbus Homeowners Prevent Clogged Drains During the Holiday Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/emergency-plumbing-heating-air-helps-delaware-and-columbus-homeowners-prevent-clogged-drains-during-the-holiday/article_9812791b-8cf5-5ca8-bf16-688540d80e49.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 124,
+   "title": "Best AI Search (GEO/AEO) Agencies for Data Center Companies (2026) Report Published by Lockhart Research",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/best-ai-search-geo-aeo-agencies-for-data-center-companies-2026-report-published-by-lockhart/article_9046b696-2e5f-5c02-94ce-3816ef4cba10.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 124,
+   "title": "Best AI Search (GEO/AEO) Agencies for Data Center Companies (2026) Report Published by Lockhart Research",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/best-ai-search-geo-aeo-agencies-for-data-center-companies-2026-report-published-by-lockhart/article_9046b696-2e5f-5c02-94ce-3816ef4cba10.html",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026isibility increasingly insufficient. The report concludes that the organizations that adapt early will compound their advantage as generative systems become the default way infrastructure buyers make choices, with Algomizer standing first n\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 124,
+   "title": "Best AI Search (GEO/AEO) Agencies for Data Center Companies (2026) Report Published by Lockhart Research",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/best-ai-search-geo-aeo-agencies-for-data-center-companies-2026-report-published-by-lockhart/article_9046b696-2e5f-5c02-94ce-3816ef4cba10.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 125,
+   "title": "Patty Blackwelder of Samson Properties Closes 18001 Marsh Pine Rd at $927,000 as Her $990,000 Gullwing Dr Listing in Potomac Shores Draws Backup Offers",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/patty-blackwelder-of-samson-properties-closes-18001-marsh-pine-rd-at-927-000-as-her/article_80331869-3449-511f-945c-5115fe67c054.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 125,
+   "title": "Patty Blackwelder of Samson Properties Closes 18001 Marsh Pine Rd at $927,000 as Her $990,000 Gullwing Dr Listing in Potomac Shores Draws Backup Offers",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/patty-blackwelder-of-samson-properties-closes-18001-marsh-pine-rd-at-927-000-as-her/article_80331869-3449-511f-945c-5115fe67c054.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 126,
+   "title": "300 S Bay Front on Balboa Island Returns to the Market at $8,750,000 With Marlys Vasterling of Vance Realty Group",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/300-s-bay-front-on-balboa-island-returns-to-the-market-at-8-750-000/article_cdae073e-8168-5f68-83d6-202eafad0d39.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 126,
+   "title": "300 S Bay Front on Balboa Island Returns to the Market at $8,750,000 With Marlys Vasterling of Vance Realty Group",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/300-s-bay-front-on-balboa-island-returns-to-the-market-at-8-750-000/article_cdae073e-8168-5f68-83d6-202eafad0d39.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 127,
+   "title": "Kimberly Griffin of Keller Williams Realty at The Parks Lists Three RedTail Golf Community Homes in Sorrento, Led by a $1,350,000 Lakefront Residence on the 18th Fairway",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/kimberly-griffin-of-keller-williams-realty-at-the-parks-lists-three-redtail-golf-community-homes/article_f23ba988-a945-52ff-b05e-e7c23f694611.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 127,
+   "title": "Kimberly Griffin of Keller Williams Realty at The Parks Lists Three RedTail Golf Community Homes in Sorrento, Led by a $1,350,000 Lakefront Residence on the 18th Fairway",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/kimberly-griffin-of-keller-williams-realty-at-the-parks-lists-three-redtail-golf-community-homes/article_f23ba988-a945-52ff-b05e-e7c23f694611.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 128,
+   "title": "Monroe Realtor Kimberly Levinson Closes Two Sales on Old Colony Road in Great Oak Farm, the Community Where She Lived for 20 Years",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/monroe-realtor-kimberly-levinson-closes-two-sales-on-old-colony-road-in-great-oak-farm/article_d3344a44-f324-5b39-b013-9c2861de967f.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 128,
+   "title": "Monroe Realtor Kimberly Levinson Closes Two Sales on Old Colony Road in Great Oak Farm, the Community Where She Lived for 20 Years",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/monroe-realtor-kimberly-levinson-closes-two-sales-on-old-colony-road-in-great-oak-farm/article_d3344a44-f324-5b39-b013-9c2861de967f.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 129,
+   "title": "From Ireland to America and Back Through Time: Dermot Haughey Uncovers Generations of Family History in From Good Stock on Armaghbreague",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/from-ireland-to-america-and-back-through-time-dermot-haughey-uncovers-generations-of-family-history/article_af5ceaad-59fa-5fa9-89a1-01118daea3d8.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 129,
+   "title": "From Ireland to America and Back Through Time: Dermot Haughey Uncovers Generations of Family History in From Good Stock on Armaghbreague",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/from-ireland-to-america-and-back-through-time-dermot-haughey-uncovers-generations-of-family-history/article_af5ceaad-59fa-5fa9-89a1-01118daea3d8.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 130,
+   "title": "2026 Our Water III Concert Brings Shanghai and New York Together Through Music at the Shanghai Grand Opera House",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/2026-our-water-iii-concert-brings-shanghai-and-new-york-together-through-music-at-the/article_3a3277f5-c98f-50df-8002-aa4b8ef85105.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 130,
+   "title": "2026 Our Water III Concert Brings Shanghai and New York Together Through Music at the Shanghai Grand Opera House",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/2026-our-water-iii-concert-brings-shanghai-and-new-york-together-through-music-at-the/article_3a3277f5-c98f-50df-8002-aa4b8ef85105.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 131,
+   "title": "Award-Winning Book \u201cYou Were Not Supposed to Wake Up\u201d by Imtinan Ahmad Challenges the Systems Shaping Modern Life",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/award-winning-book-you-were-not-supposed-to-wake-up-by-imtinan-ahmad-challenges-the/image_95b8b615-cc8c-5ac7-9a8a-eb96729997b1.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 131,
+   "title": "Award-Winning Book \u201cYou Were Not Supposed to Wake Up\u201d by Imtinan Ahmad Challenges the Systems Shaping Modern Life",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/award-winning-book-you-were-not-supposed-to-wake-up-by-imtinan-ahmad-challenges-the/image_95b8b615-cc8c-5ac7-9a8a-eb96729997b1.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 132,
+   "title": "Award-Winning Book \u201cYou Were Not Supposed to Wake Up\u201d by Imtinan Ahmad Challenges the Systems Shaping Modern Life",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/award-winning-book-you-were-not-supposed-to-wake-up-by-imtinan-ahmad-challenges-the/article_8ed3daac-b703-536c-a181-1f3f37a1e293.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 132,
+   "title": "Award-Winning Book \u201cYou Were Not Supposed to Wake Up\u201d by Imtinan Ahmad Challenges the Systems Shaping Modern Life",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/award-winning-book-you-were-not-supposed-to-wake-up-by-imtinan-ahmad-challenges-the/article_8ed3daac-b703-536c-a181-1f3f37a1e293.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 133,
+   "title": "Dermot Haughey Brings Generations of Irish Family History to Life in His Heartwarming Memoir From Good Stock on Armaghbreague",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/dermot-haughey-brings-generations-of-irish-family-history-to-life-in-his-heartwarming-memoir-from/article_ad4620be-b97d-5398-8fc7-93e058a1f0aa.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 133,
+   "title": "Dermot Haughey Brings Generations of Irish Family History to Life in His Heartwarming Memoir From Good Stock on Armaghbreague",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/dermot-haughey-brings-generations-of-irish-family-history-to-life-in-his-heartwarming-memoir-from/article_ad4620be-b97d-5398-8fc7-93e058a1f0aa.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 134,
+   "title": "Christian Lee Allbert Highlights the Role of ChiGong in Everyday Wellness",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/christian-lee-allbert-highlights-the-role-of-chigong-in-everyday-wellness/article_62506ba7-8372-52c7-87ce-b16c5332167a.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 134,
+   "title": "Christian Lee Allbert Highlights the Role of ChiGong in Everyday Wellness",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/christian-lee-allbert-highlights-the-role-of-chigong-in-everyday-wellness/article_62506ba7-8372-52c7-87ce-b16c5332167a.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 135,
+   "title": "Northwest Plumbing, Heating & AC Highlights Furnace Repair and Plumbing Readiness Ahead of Cold Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/northwest-plumbing-heating-ac-highlights-furnace-repair-and-plumbing-readiness-ahead-of-cold-season/image_89ca7fa9-5514-52d9-a10c-e583410156eb.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 135,
+   "title": "Northwest Plumbing, Heating & AC Highlights Furnace Repair and Plumbing Readiness Ahead of Cold Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/northwest-plumbing-heating-ac-highlights-furnace-repair-and-plumbing-readiness-ahead-of-cold-season/image_89ca7fa9-5514-52d9-a10c-e583410156eb.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 136,
+   "title": "Northwest Plumbing, Heating & AC Highlights Furnace Repair and Plumbing Readiness Ahead of Cold Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/northwest-plumbing-heating-ac-highlights-furnace-repair-and-plumbing-readiness-ahead-of-cold-season/article_13577a4a-5609-565a-9232-98e1435d9e1a.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 136,
+   "title": "Northwest Plumbing, Heating & AC Highlights Furnace Repair and Plumbing Readiness Ahead of Cold Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/northwest-plumbing-heating-ac-highlights-furnace-repair-and-plumbing-readiness-ahead-of-cold-season/article_13577a4a-5609-565a-9232-98e1435d9e1a.html",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026link Save Facebook Twitter WhatsApp SMS Email Print Copy article link Save DAVENPORT, Iowa - November 24, 2026 - PRESSADVANTAGE - Northwest Plumbing, Heating & AC is drawing attention to the importance of furnace repair and winter plumbing\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 136,
+   "title": "Northwest Plumbing, Heating & AC Highlights Furnace Repair and Plumbing Readiness Ahead of Cold Season",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/northwest-plumbing-heating-ac-highlights-furnace-repair-and-plumbing-readiness-ahead-of-cold-season/article_13577a4a-5609-565a-9232-98e1435d9e1a.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 137,
+   "title": "Denver Real Estate School Encourages Future Colorado Agents to Begin Licensing Courses This Winter",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/denver-real-estate-school-encourages-future-colorado-agents-to-begin-licensing-courses-this-winter/article_6a2cac97-7e32-5be3-8456-1eed73166bc8.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 137,
+   "title": "Denver Real Estate School Encourages Future Colorado Agents to Begin Licensing Courses This Winter",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/denver-real-estate-school-encourages-future-colorado-agents-to-begin-licensing-courses-this-winter/article_6a2cac97-7e32-5be3-8456-1eed73166bc8.html",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026link Save Facebook Twitter WhatsApp SMS Email Print Copy article link Save WESTMINSTER, CO - November 24, 2026 - PRESSADVANTAGE - WESTMINSTER, Colo., November 2026 \u2013 Denver Real Estate School, a Colorado state-approved real estate pre-licen\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 137,
+   "title": "Denver Real Estate School Encourages Future Colorado Agents to Begin Licensing Courses This Winter",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/denver-real-estate-school-encourages-future-colorado-agents-to-begin-licensing-courses-this-winter/article_6a2cac97-7e32-5be3-8456-1eed73166bc8.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 138,
+   "title": "Beyond the Blackout: Lloyd Manchester Brings Forgotten Survival Skills and the Strength of Community to Life in EMP Survival Texas Style",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/beyond-the-blackout-lloyd-manchester-brings-forgotten-survival-skills-and-the-strength-of-community-to/article_369c883f-eb9d-5991-896c-f3b24d6958fe.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 138,
+   "title": "Beyond the Blackout: Lloyd Manchester Brings Forgotten Survival Skills and the Strength of Community to Life in EMP Survival Texas Style",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/beyond-the-blackout-lloyd-manchester-brings-forgotten-survival-skills-and-the-strength-of-community-to/article_369c883f-eb9d-5991-896c-f3b24d6958fe.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 139,
+   "title": "Local Marketing Plus SEO Advises Local Service Businesses After Google Makes Gemini 4 Hydrogen the Default in AI Mode",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/local-marketing-plus-seo-advises-local-service-businesses-after-google-makes-gemini-4-hydrogen-the/article_4c5e21d2-9d81-55fd-a551-c8e7c1d602a9.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 139,
+   "title": "Local Marketing Plus SEO Advises Local Service Businesses After Google Makes Gemini 4 Hydrogen the Default in AI Mode",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/local-marketing-plus-seo-advises-local-service-businesses-after-google-makes-gemini-4-hydrogen-the/article_4c5e21d2-9d81-55fd-a551-c8e7c1d602a9.html",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026cle link Save Facebook Twitter WhatsApp SMS Email Print Copy article link Save KELOWNA, BC - November 24, 2026 - PRESSADVANTAGE - Kelowna, BC - Nov. 23, 2026 - Google has made Gemini 4 Hydrogen the default model in AI Mode and is using it f\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 139,
+   "title": "Local Marketing Plus SEO Advises Local Service Businesses After Google Makes Gemini 4 Hydrogen the Default in AI Mode",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/local-marketing-plus-seo-advises-local-service-businesses-after-google-makes-gemini-4-hydrogen-the/article_4c5e21d2-9d81-55fd-a551-c8e7c1d602a9.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 140,
+   "title": "Answer engine optimization gets new tactics and free tools as AEO relaunches aeo.so",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/answer-engine-optimization-gets-new-tactics-and-free-tools-as-aeo-relaunches-aeo-so/article_2b7c82c2-6b16-50d6-a6b1-c2e65ac2cc23.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 140,
+   "title": "Answer engine optimization gets new tactics and free tools as AEO relaunches aeo.so",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/answer-engine-optimization-gets-new-tactics-and-free-tools-as-aeo-relaunches-aeo-so/article_2b7c82c2-6b16-50d6-a6b1-c2e65ac2cc23.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 141,
+   "title": "Torey Alston Calls for a New Approach to Community College Success",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/torey-alston-calls-for-a-new-approach-to-community-college-success/article_1b501f3d-5e16-5c96-8c13-73ee24cf50da.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 141,
+   "title": "Torey Alston Calls for a New Approach to Community College Success",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/torey-alston-calls-for-a-new-approach-to-community-college-success/article_1b501f3d-5e16-5c96-8c13-73ee24cf50da.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 142,
+   "title": "Komline Breaks Ground on 20,000-Square-Foot Expansion in Gordonsville",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/komline-breaks-ground-on-20-000-square-foot-expansion-in-gordonsville/article_a54da2d9-b8e4-5cae-9dbc-9fade13bc260.html",
+   "term": "data_center_fight:Microsoft",
+   "snippet": "\u2026r is out of date and potentially vulnerable to security risks. We recommend switching to one of the following browsers: Microsoft Edge Google Chrome Firefox \u00a9 Copyright 2026 Wyoming Tribune Eagle 702 W. Lincolnway, Cheyenne, WY | Terms of U\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 142,
+   "title": "Komline Breaks Ground on 20,000-Square-Foot Expansion in Gordonsville",
+   "url": "https://www.wyomingnews.com/online_features/press_releases/komline-breaks-ground-on-20-000-square-foot-expansion-in-gordonsville/article_a54da2d9-b8e4-5cae-9dbc-9fade13bc260.html",
+   "term": "water_and_utility:BOPU",
+   "snippet": "\u2026oming wins in permitting reform package Time magazine names LCCC to its America's Best Community Colleges list for 2027 BOPU: Don\u2019t invite a F.O.G. clog to Thanksgiving VOA Northern Rockies to serve hundreds of Thanksgiving meals UW: New fe\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  },
+  {
+   "document_id": 155,
+   "title": "Capitol Cinema offering free refillable WyoMovies popcorn tub and free movie tickets now through Sunday with qualifying gift card purchases",
+   "url": "https://capcity.news/promoted/2026/11/25/capitol-cinema-offering-free-refillable-wyomovies-popcorn-tub-and-free-movie-tickets-now-through-sunday-with-qualifying-gift-card-purchases/",
+   "term": "data_center_fight:Vantage",
+   "snippet": "\u2026d Capitol Cinema are bringing back its best gift card deals of the year, and shoppers who get an early start can take advantage of free movie tickets, a free refillable popcorn bucket, and StudioCash back for Studio Rewards members. The hol\u2026",
+   "reason": "term not in the article text as a whole word (sidebar, menu or banner text, or part of another word)"
+  }
+ ]
+}
